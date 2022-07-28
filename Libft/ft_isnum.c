@@ -1,37 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_isnum.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/20 14:21:31 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/07/25 08:18:26 by mel-kora         ###   ########.fr       */
+/*   Created: 2021/11/08 18:36:30 by mel-kora          #+#    #+#             */
+/*   Updated: 2022/07/24 08:58:52 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
-
-/*libraries*/
-# include "Libft/libft.h"
-
-/*structers*/
-typedef struct s_env
+int	ft_isnum(char *s)
 {
-	char	**env;
-	int		filedes[2];
-	int		count;
-}	t_env;
+	int	i;
 
-typedef struct s_cmd
-{
-	char	*path;
-	char	**args;
-	int		fd[2];
-}	t_cmd;
-
-/*functions*/
-char	*write_history(void);
-void	get_history(char *s, long long int n);
-#endif
+	i = 0;
+	if (s[i] == '+' || s[i] == '-')
+		i++;
+	while (s[i] >= '0' && s[i] <= '9')
+		i++;
+	if (!s[i])
+		return (1);
+	return (0);
+}

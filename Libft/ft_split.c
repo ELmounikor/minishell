@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 21:23:10 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/07/22 12:43:44 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/07/24 11:04:03 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@ void	flag(char *s, char c)
 			flag[2]++;
 		else if (s[flag[0]] == 39)
 			flag[1]++;
-		if (s[flag[0]] == c && !(flag[2] % 2 == 0 && flag[1] % 2 == 0))
+		if (s[flag[0]] == ' ' && !(flag[2] % 2 == 0 && flag[1] % 2 == 0))
 			s[flag[0]] = -1;
+		if (s[flag[0]] == c && !(flag[2] % 2 == 0 && flag[1] % 2 == 0))
+			s[flag[0]] = -2;
 	}
 }
 
@@ -40,7 +42,7 @@ static int	arraysize(char const *s, char c)
 	size = 0;
 	while (s && s[i])
 	{
-		while (s[i] && s[i] == c)
+		while (s[i] && (s[i] == c || s[i] == -3))
 			i++;
 		j = i;
 		while (s[i] && s[i] != c)
@@ -66,7 +68,7 @@ static int	*wordsizes(char const *s, char c)
 	j = 0;
 	while (s[i] && j < size)
 	{
-		while (s[i] && s[i] == c)
+		while (s[i] && (s[i] == c))
 			i++;
 		sizes[j] = 0;
 		while (s[i] && s[i] != c)
@@ -129,7 +131,7 @@ char	**ft_split(char const *s, char c)
 		while (s[k] == c && s[k])
 			k++;
 		while (j < sizes[i] && s[k] && s[k] != c)
-				output[i][j++] = ft_convert(s[k++]);
+				output[i][j++] = ft_convert(s[k++], c);
 		output[i][j] = '\0';
 		output[i] = str_edit(output[i]);
 	}

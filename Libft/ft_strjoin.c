@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 12:44:23 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/07/22 12:49:57 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/07/24 10:48:18 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,11 @@ char	*str_edit(char *s)
 	return (new_s);
 }
 
-char	ft_convert(char c)
+char	ft_convert(char s, char c)
 {
-	if (c == -1)
+	if (s == -1)
 		return (' ');
-	return (c);
+	if (s == -2)
+		return (c);
+	return (s);
 }

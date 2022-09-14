@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 21:23:10 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/07/24 11:04:03 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/08/23 09:50:48 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ void	flag(char *s, char c)
 	flag[2] = 0;
 	while (s && s[++flag[0]])
 	{
-		if (s[flag[0]] == 34)
+		if (s[flag[0]] == 34 && flag[1] % 2 == 0)
 			flag[2]++;
-		else if (s[flag[0]] == 39)
+		else if (s[flag[0]] == 39 && flag[2] % 2 == 0)
 			flag[1]++;
 		if (s[flag[0]] == ' ' && !(flag[2] % 2 == 0 && flag[1] % 2 == 0))
 			s[flag[0]] = -1;

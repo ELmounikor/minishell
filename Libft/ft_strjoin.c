@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 12:44:23 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/07/24 10:48:18 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/08/28 12:05:53 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	if (s1 && !s2)
 		return (ft_strdup(s1));
 	output = (char *) malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!output || ft_strlen(s1) + ft_strlen(s2) == 0)
+	if (!output)
 		return (0);
 	while (s1[i])
 	{

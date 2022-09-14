@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-kora <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 13:15:16 by mel-kora          #+#    #+#             */
-/*   Updated: 2021/11/22 20:52:40 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/08/28 11:22:56 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ char	*ft_strtrim(char const *s1, char const *set)
 		return ((char *)s1);
 	start = get_start(s1, set);
 	end = get_end(s1, set);
+	if (end == start)
+		return (0);
 	output = (char *) malloc((end - start + 1) * sizeof(char));
 	if (!output)
 		return (0);
@@ -80,4 +82,5 @@ int	main()
 	char *s = "";
 	char *set = "";
 	printf("%s", ft_strtrim(s,set));
-}*/
+}
+*/

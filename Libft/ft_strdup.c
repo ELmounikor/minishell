@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 21:15:25 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/06/14 22:01:42 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/14 18:26:11 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*ft_strdup(const char *s1)
 	int		i;
 	char	*s2;
 
+	if (!s1)
+		return (0);
 	i = 0;
 	while (s1[i])
 		i++;

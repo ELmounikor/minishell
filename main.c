@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:53:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/07/26 10:01:09 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/14 18:01:24 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,74 +14,74 @@
 
 void	ft_exit(char **cmd)
 {
-	printf("exit\n");
 	if (!cmd)
-		exit(0);
-}
-
-char	***parsing(char *s)
-{
-	char	***data;
-	char	**input;
-	int		i;
-
-	input = ft_split(s, '|');
-	i = 0;
-	while (input[i])
 	{
-		ft_free(&s);
-		s = ft_strtrim(input[i], " ");
-		ft_free(&input[i]);
-		input[i++] = ft_strdup(s);
+		printf("exit\n");
+		exit(0);
 	}
-	ft_free(&s);
-	data = (char ***) malloc ((i + 1) * sizeof(char **));
-	if (!data)
-		return (0);
-	data[i] = NULL;
-	while (i--)
-		data[i] = ft_split(input[i], ' ');
-	ft_split_cleaner(input);
-	/*
-	i = 0;
-	while (data[i])
-		printf("'%s\n'", data[i++][0]);	input[i++] = ft_strdup(s);
-	*/
-	return (data);
 }
 
-int	main(int ac, char **av, char **env)
+t_list	*env_extractor(char **envi, int i)
 {
-	char		***cmd;
+	t_list	*env;
+
+	i = 0;
+	env = NULL;
+	while (envi[i])
+		ft_lstadd_back(&env, ft_lstnew(ft_strdup(envi[i++]), 0));
+	return (env);
+}
+
+char	*new_prompt(void)
+{
+	char	*s;
+	int		h;
+
+	write(1, "🤖sh-sm$ ", 12);
+	s = readline(NULL);
+	if (!s)
+		ft_exit(NULL);
+	h = open("Libft/.sh_history", O_RDWR | O_APPEND | O_CREAT, 0666);
+	write(h, s, ft_strlen(s));
+	write(h, "\n", 1);
+	add_history(s);
+	close(h);
+	if (!quote_check(s))
+	{
+		printf("This command has unclosed quotes >_<\n");
+		ft_free(&s);
+		return (0);
+	}
+	return (s);
+}
+
+int	main(int ac, char **av, char **envi)
+{
+	t_list		*input;
+	t_list		*env;
+	// t_cmd		*cmds;
+	t_list		*test;
 	char		*s;
 
 	av = NULL;
-	while (ac == 1)
+	// history_reloader(ac);//messup up & down keys tanchofoha apres
+	env = env_extractor(envi, ac);
+	while (1)
 	{
-		s = write_history();
-		s[ft_strlen(s) - 1] = 0;
-		cmd = parsing(s);
-		ac = 0;
-		while (cmd[ac])
+		s = new_prompt();
+		if (s)
 		{
-			if (ft_strncmp(cmd[ac][0], "exit", 5) == 0)
+			input = getter(tokenizer(s, 0, 0), env);
+			test = input;
+			while (test)
 			{
-				ft_free(&s);
-				printf("exit\n\n");
-				if (!cmd[ac][2])
-					exit(0);
+				printf("id = %d, content = %s\n", test->id, test->content);
+				test = test->next;
 			}
-			else if (ft_strncmp(cmd[ac][0], "history", 8) == 0)
-				history(cmd[ac][0]);
-			else
-				printf("%s", cmd[ac]);
-			ac++;
+			ft_lstclear(&input, &free);
+			ft_free(&s);
 		}
-		ac = 0;
-		while (cmd[ac])
-			ft_split_cleaner(cmd[ac]);
-		free(cmd);
-		ac = 1;
+		// system("leaks minishell");
 	}
-	env = NULL;
+	envi = NULL;
 }

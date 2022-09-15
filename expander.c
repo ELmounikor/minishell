@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mounikor <mounikor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:03:42 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/14 18:16:47 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/15 22:22:00 by mounikor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ t_list	*getter(t_list *token, t_list *env)
 		{
 			editor(&s, ft_strjoin(s, expander(token->next, env, 0, 0)));
 			token = token->next;
-			id = 0;
 		}
 		ft_lstadd_back(&input, ft_lstnew(s, id));
 		token = token->next;

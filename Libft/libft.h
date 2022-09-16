@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mounikor <mounikor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:35:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/03 19:25:28 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/16 17:21:28 by mounikor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,12 @@ char			*ft_strjoin_slash(char const *s1, char const *s2);
 char			*ft_strnstr(const char *hay, const char *nee, int len);
 char			*ft_substr(char const *s, unsigned int start, size_t len);
 char			ft_convert(char c, char s);
-int				ft_strlen(const char *s);
+int 			*cmd_size(t_list *lst)
+int 			cmd_count(t_list *lst);
+int				ft_lstsize(t_list *lst);
 int				ft_strncmp(const char *s1, const char *s2, int n);
 int				ft_isnum(char *s);
 int				ft_isalnum_(int c);
+int				ft_strlen(const char *s);
 long long int	ft_atoi(const char *str);
 #endif

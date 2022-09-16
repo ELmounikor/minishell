@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_checker.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mounikor <mounikor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:17:01 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/14 12:51:12 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/16 15:11:46 by mounikor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ int	throw_error(t_list *tokens)
 
 int	check(t_list *previous, t_list *current, t_list *next)
 {
-	if (current && (current->id == 44 || current->id == 4 || \
-	current->id == 77 || current->id == 7) && !current->content)
+	if (current && (current->id % 44 == 0 || current->id % 4 == 0 || \
+	current->id % 77 == 0 || current->id % 7 == 0) && !current->content)
 		return (throw_error(current));
 	else if (current && (current->id == 1 || current->id == 11 || \
 	current->id == 22) && (!(previous && next) || !(previous->id != 11 && \
@@ -74,5 +74,5 @@ t_list	*syntax_checker(t_list **tokens)
 		ft_lstclear(tokens, &free);
 		return (0);
 	}
-	return (*tokens);
 }
+	return (*tokens);

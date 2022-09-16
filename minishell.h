@@ -6,7 +6,7 @@
 /*   By: mounikor <mounikor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 14:21:31 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/16 17:23:28 by mounikor         ###   ########.fr       */
+/*   Updated: 2022/09/17 00:11:55 by mounikor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,25 +22,31 @@
 typedef struct s_env
 {
 	char	**env;
+	char	**paths;
 	int		cmd_count;
 }	t_env;
 
 typedef struct s_cmd
 {
-	char			*path;
 	char			**args;
+	char			*path;
+	char			*limiter;//use when file_fd[0] = -444
 	int				file_des[2];
-	int				pipe_des[2];
+	int				pipe_des[2];//unused
 }	t_cmd;
 
 /*functions*/
 int		quote_check(char *s);
 char	*new_prompt(void);
 void	history_reloader(int ac);
+void	free_cmds(t_cmd **cmds);
 void	history(char **cmd);
 void	ft_exit(char **cmd);
 void	get_history(char *s, long long int n);
 t_list	*tokenizer(char *s, int i, int j);
 t_list	*syntax_checker(t_list **tokens);
 t_list	*getter(t_list *tokens, t_list *env);
+t_list	*env_starter(char **envi, int i);
+t_env	*env_extractor(t_list *envi, t_list *input);
+t_cmd	*cmd_extractor(t_list *input);
 #endif

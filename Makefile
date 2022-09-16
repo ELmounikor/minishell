@@ -3,19 +3,21 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+         #
+#    By: mounikor <mounikor@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/20 12:58:47 by mel-kora          #+#    #+#              #
-#    Updated: 2022/09/14 13:12:24 by mel-kora         ###   ########.fr        #
+#    Updated: 2022/09/17 00:33:39 by mounikor         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS	=	main.c\
 			lexer.c\
-			syntax_checker.c\
 			expander.c\
+			syntax_checker.c\
+			extractors.c\
+			file_handler.c\
 			Builtins/history.c\
-			
+
 OBJS	=	${SRCS:.c=.o}
 NAME	=	minishell
 CC		=	@gcc

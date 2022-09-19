@@ -6,7 +6,7 @@
 /*   By: mounikor <mounikor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:03:42 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/16 15:30:11 by mounikor         ###   ########.fr       */
+/*   Updated: 2022/09/19 23:37:47 by mounikor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ void	editor(char **s1, char *s2)
 char	*getval(char *s1, t_list *env)
 {
 	char	**dic;
-
+/*
+	if (!ft_strncmp(s1, "?", 2))
+		return (ft_itoa(last_exit_code));*/
 	while (env)
 	{
 		dic = ft_split(env->content, '=');
@@ -45,13 +47,14 @@ char	*expander(t_list *token, t_list *env, int i, int j)
 	char	*s;
 
 	s = NULL;
-	if (token->id == 6 || token->id == 60 || token->id == 3)
+	if (token->id == 6 || token->id == 60 || token->id % 3)
 	{
 		while (token->content[i])
 		{
 			j = i;
-			while (token->content[i] && !(token->content[i] == '$' && \
-			ft_isalnum_(token->content[i + 1])))
+			while (token->content[i] && !(token->content[i] == '$' && (\
+			ft_isalnum_(token->content[i + 1]) || token->content[i + 1] \
+			== '?')))
 				i++;
 			editor(&s, ft_strjoin(s, ft_substr(token->content, j, i - j)));
 			if (token->content[i] == '$')

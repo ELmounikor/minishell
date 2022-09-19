@@ -6,7 +6,7 @@
 /*   By: mounikor <mounikor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/19 21:22:03 by mounikor         ###   ########.fr       */
+/*   Updated: 2022/09/19 22:23:47 by mounikor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int	here_doc(char	*limiter)
 		ft_free(&s);
 		s = readline("> ");
 	}
-	ft_free(&s);
 	ft_free(&limiter);
 	close(fd);
 	//problem kan khas chi random name generator bash kol here_doc yl9a file lih bohdo fin yktb l cmd input

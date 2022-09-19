@@ -6,7 +6,7 @@
 /*   By: mounikor <mounikor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:53:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/19 21:17:31 by mounikor         ###   ########.fr       */
+/*   Updated: 2022/09/19 23:15:21 by mounikor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,14 @@ int	main(int ac, char **av, char **envi)
 	char		*s;
 
 	av = NULL;
-	// history_reloader(ac);//messup up & down keys tanchofoha apres
+	history_reloader(ac);//messup up & down keys tanchofoha apres
 	env_i = env_starter(envi, ac);
 	while (1)
 	{
 		s = new_prompt();
-		if (s)
+		input = getter(tokenizer(s, 0, 0), env_i);
+		if (input)
 		{
-			input = getter(tokenizer(s, 0, 0), env_i);
 			env = env_extractor(env_i, input);
 			test = input;
 			//for token testing
@@ -70,15 +70,12 @@ int	main(int ac, char **av, char **envi)
 				printf("id = %d, content = %s\n", test->id, test->content);
 				test = test->next;
 			}
-			if (input)
-			{
-				cmds = cmd_extractor(input);
-				//excute cmds here
-				free_cmds(cmds);
-				ft_lstclear(&input, &free);
-			}
+			cmds = cmd_extractor(input); //get
+			//excute cmds here
+			free_cmds(cmds);
 			ft_split_cleaner(env->env);
 			ft_split_cleaner(env->paths);
+			ft_lstclear(&input, &free);
 			ft_free(&s);
 		}
 		// system("leaks minishell");

@@ -6,7 +6,7 @@
 /*   By: mounikor <mounikor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/15 19:49:33 by mounikor         ###   ########.fr       */
+/*   Updated: 2022/09/19 23:18:05 by mounikor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_list	*get_token(char *s, int *start, int *end, int id)
 	if (*start == *end)
 	{
 		while (s[*end] && s[*end] != ' ' && s[*end] != 39 && s[*end] != 34 && \
-		id != 11 && id != 1 && id != 22 && id != 33)
+		id != 11 && id != 1 && id != 22)
 		{
 			if (ft_strchr("<$|&>", s[*end]))
 			{
@@ -93,7 +93,7 @@ t_list	*tokenizer(char *s, int i, int j)
 	int		q[2];
 
 	tokens = NULL;
-	while (s[i])
+	while (s && s[i])
 	{
 		q[0] = 0;
 		q[1] = 0;

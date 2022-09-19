@@ -18,7 +18,7 @@ t_list	*env_starter(char **envi, int i)
 
 	i = 0;
 	env = NULL;
-	while (envi[i])
+	while (envi && envi[i])
 		ft_lstadd_back(&env, ft_lstnew(ft_strdup(envi[i++]), 0));
 	return (env);
 }

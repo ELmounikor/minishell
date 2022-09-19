@@ -6,7 +6,7 @@
 /*   By: mounikor <mounikor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:17:01 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/16 15:11:46 by mounikor         ###   ########.fr       */
+/*   Updated: 2022/09/19 21:35:37 by mounikor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,11 @@ int	throw_error(t_list *tokens)
 		printf ("syntax error near '%s'\n", tokens->content);
 	else if (tokens->next && tokens->next->content)
 		printf ("syntax error near unexpected token '%s'\n", \
-		tokens->next->content);
+		tokens->next->content);/*
+	else if (tokens->id % 77 || tokens->id % 7)
+		printf ("syntax error near unexpected token `>'\n");
+	else if (tokens->id % 4)
+		printf ("syntax error near unexpected token `<'\n");*/
 	else
 		printf ("syntax error near unexpected token `newline'\n");
 	return (0);
@@ -74,5 +78,5 @@ t_list	*syntax_checker(t_list **tokens)
 		ft_lstclear(tokens, &free);
 		return (0);
 	}
-}
 	return (*tokens);
+}

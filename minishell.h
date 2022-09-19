@@ -6,7 +6,7 @@
 /*   By: mounikor <mounikor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 14:21:31 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/17 00:31:23 by mounikor         ###   ########.fr       */
+/*   Updated: 2022/09/19 21:26:03 by mounikor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct s_cmd
 	char			**args;//cmd and its arguments
 	char			*path;//cmd executabel path
 	char			*limiter;//use when file_fd[0] = -444 in here_doc(limiter)
-	int				file_des[2];//in and out file descriptors default 0
+	int				file_des[2];//in and out file descriptors default 0 -> la l9iti chi haja mn ghir 0 overidi l corresponing pipe end with the corresponding fd
 }	t_cmd;
 
 /*functions*/

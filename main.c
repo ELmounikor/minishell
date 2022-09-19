@@ -6,7 +6,7 @@
 /*   By: mounikor <mounikor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:53:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/17 00:12:35 by mounikor         ###   ########.fr       */
+/*   Updated: 2022/09/19 21:17:31 by mounikor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	main(int ac, char **av, char **envi)
 {
 	t_list		*input;
 	t_list		*env_i;
-	// t_cmd		**cmds;
+	t_cmd		**cmds;
 	t_env		*env;
 	t_list		*test;
 	char		*s;
@@ -78,9 +78,11 @@ int	main(int ac, char **av, char **envi)
 				ft_lstclear(&input, &free);
 			}
 			ft_split_cleaner(env->env);
+			ft_split_cleaner(env->paths);
 			ft_free(&s);
 		}
 		// system("leaks minishell");
 	}
 	ft_lstclear(&env_i, &free);
+	return (0);
 }

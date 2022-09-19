@@ -6,7 +6,7 @@
 /*   By: mounikor <mounikor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/17 00:16:21 by mounikor         ###   ########.fr       */
+/*   Updated: 2022/09/19 21:22:03 by mounikor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ int	handle_outfile(char *file_name, char code, int fd)
 		out = open(file_name, O_RDWR | O_APPEND);
 	else
 		out = open(file_name, O_RDWR | O_TRUNC);
-	if (*out == -1)
-		*out = open(file_name, O_RDWR | O_CREAT, 0666);
-	if (*out == -1)
+	if (out == -1)
+		out = open(file_name, O_RDWR | O_CREAT, 0666);
+	if (out == -1)
 		perror(file_name);
 	return (out);
 }
@@ -35,12 +35,12 @@ int	here_doc(char	*limiter)
 	char	*s;
 
 	fd = open("/tmp/.tmp.t", O_WRONLY | O_TRUNC | O_CREAT, 0666)
-	s = get_next_line(0);
+	s = readline("> ");
 	while (s && ft_strncmp(s, limiter, ft_strlen(limiter) + 1))
 	{
 		ft_putstr_fd(s, fd);
 		ft_free(&s);
-		s = get_next_line(0);
+		s = readline("> ");
 	}
 	ft_free(&s);
 	ft_free(&limiter);
@@ -74,7 +74,7 @@ void    file_handler(t_list *token, int *fd_in, int *fd_out, char **limiter)
 	{
 		if (*fd_in > 0)
 			close(*fd_in);
-		*fd_in = -444;
+		*fd_in = -444;//code sent with <3
 		ft_free(limiter);
 		*limiter = ft_strjoin(token->content, "\n");
 	}

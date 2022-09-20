@@ -6,7 +6,7 @@
 /*   By: mounikor <mounikor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 19:49:40 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/19 21:17:02 by mounikor         ###   ########.fr       */
+/*   Updated: 2022/09/20 11:27:12 by mounikor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,8 @@ void	history(char **cmd)
 			cmd[0], cmd[1]);
 		else if (!cmd[2])
 			handle_input(cmd);
+		else
+			printf("sh-sm: %s: too many arguments\n", cmd[0]);
 	}
-	else
-		printf("sh-sm: %s: too many arguments\n", cmd[0]);
 	exit(1);
 }

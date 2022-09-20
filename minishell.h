@@ -6,7 +6,7 @@
 /*   By: mounikor <mounikor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 14:21:31 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/19 21:26:03 by mounikor         ###   ########.fr       */
+/*   Updated: 2022/09/20 15:38:52 by mounikor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 /*structers*/
 typedef struct s_env
 {
+	t_list	**env_i;
 	char	**env;
 	char	**paths;
 	int		cmd_count;

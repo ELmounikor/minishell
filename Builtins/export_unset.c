@@ -6,7 +6,7 @@
 /*   By: mounikor <mounikor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 19:49:40 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/20 15:07:39 by mounikor         ###   ########.fr       */
+/*   Updated: 2022/09/20 15:25:40 by mounikor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void export(char **cmd, t_list **env_i)
 	env = *env_i;
 	while (!cmd[1] && env)
 	{
-		printf("declare -x %s", env->content);
+		printf("declare -x %s\n", env->content);
 		env = env->next;
 	}
 	while (cmd[++i])

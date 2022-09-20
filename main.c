@@ -6,7 +6,7 @@
 /*   By: mounikor <mounikor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:53:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/20 11:32:07 by mounikor         ###   ########.fr       */
+/*   Updated: 2022/09/20 15:43:14 by mounikor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int main(int ac, char **av, char **envi)
 	t_list *input;
 	t_list *env_i;
 	t_cmd **cmds;
-	t_env *env;
+	t_env env;
 	char *s;
 	t_list *test;//to be removed
 
@@ -62,19 +62,19 @@ int main(int ac, char **av, char **envi)
 		input = getter(tokenizer(s, 0, 0), env_i);
 		if (input)
 		{
-			env = env_extractor(env_i, input);
-			test = input;
 			// for token testing
+			test = input;
 			while (test)
 			{
 				printf("id = %d, content = %s\n", test->id, test->content);
 				test = test->next;
 			}
-			cmds = cmd_extractor(input); // get
+			cmds = cmd_extractor(input);
+			env_extractor(&env, env_i, input);//need to be updated if cmd == export || unset ;3 can be udated using (env, NULL, NULL)
 			// excute cmds here
 			free_cmds(cmds);
-			ft_split_cleaner(env->env);
-			ft_split_cleaner(env->paths);
+			ft_split_cleaner(env->env);//free_env
+			ft_split_cleaner(env->paths);//free_env
 			ft_lstclear(&input, &free);
 			ft_free(&s);
 		}

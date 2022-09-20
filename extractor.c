@@ -14,33 +14,13 @@
 
 t_list	*env_starter(char **envi, int i)
 {
-	t_list	*env;
+	t_list	*env_i;
 
 	i = 0;
-	env = NULL;
+	env_i = NULL;
 	while (envi && envi[i])
-		ft_lstadd_back(&env, ft_lstnew(ft_strdup(envi[i++]), 0));
-	return (env);
-}
-
-t_env	*env_extractor(t_list *envi, t_list *input)
-{
-	t_env	env;
-	int		i;
-
-	env.cmd_count = cmd_count(input);
-	env.env = (char **) malloc ((ft_lstsize(envi) + 1) * sizeof(char *));
-	if (!env.env)
-		return (0);
-	i = 0;
-	while (envi)
-	{
-		env.env[i++] = ft_strdup(envi->content);
-		envi = envi->next;
-	}
-	env.env[i] = NULL;
-	env.paths = get_paths(env.env);
-	return (&env);
+		ft_lstadd_back(&env_i, ft_lstnew(ft_strdup(envi[i++]), 0));
+	return (env_i);
 }
 
 char	**get_paths(char **env)
@@ -55,6 +35,29 @@ char	**get_paths(char **env)
 	if (!path)
 		return (NULL);
 	return (ft_split(path + 5, ':'));
+}
+
+void	env_extractor(t_env *env, t_list *env_i, t_list *input)
+{
+	int		i;
+	t_list	*tmp;
+
+	if (input)
+		env->cmd_count = cmd_count(input);
+	if (env_i)
+		env->env_i = env_i;
+	env->env = (char **) malloc ((ft_lstsize(env->env_i) + 1) * sizeof(char *));
+	if (!env->env)
+		return (0);
+	i = 0;
+	tmp = env->env_i;
+	while (tmp)
+	{
+		env->env[i++] = ft_strdup(tmp->content);
+		tmp = tmp->next;
+	}
+	env->env[i] = NULL;
+	env->paths = get_paths(env->env);
 }
 
 char	*get_path(char *cmd, char **paths)

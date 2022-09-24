@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/24 17:45:09 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/24 18:09:27 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,11 @@ int	handle_infile(char *file_name, int fd)
 
 void	file_handler(t_list *token, int *fd_in, int *fd_out, char **limiter)
 {
-	if (token->id % 77 && fd_out >= 0)
+	if (token->id % 77 == 0 && fd_out >= 0)
 		*fd_out = handle_outfile(token->content, 'A', *fd_out);
-	else if (token->id % 7 && fd_out >= 0)
+	else if (token->id % 7 == 0 && fd_out >= 0)
 		*fd_out = handle_outfile(token->content, 'T', *fd_out);
-	else if (token->id % 44)
+	else if (token->id % 44 == 0)
 	{
 		if (*fd_in > 0)
 			close(*fd_in);
@@ -75,6 +75,6 @@ void	file_handler(t_list *token, int *fd_in, int *fd_out, char **limiter)
 		ft_free(limiter);
 		*limiter = ft_strjoin(token->content, "\n");
 	}
-	else if (token->id % 4)
+	else if (token->id % 4 == 0)
 		*fd_in = handle_infile(token->content, *fd_in);
 }

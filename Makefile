@@ -6,11 +6,9 @@
 #    By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/20 12:58:47 by mel-kora          #+#    #+#              #
-#    Updated: 2022/09/23 15:13:06 by mel-kora         ###   ########.fr        #
+#    Updated: 2022/09/24 18:06:09 by mel-kora         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
-# VPATH 	=	.
 
 SRCS	=	main.c\
 			lexer.c\
@@ -19,7 +17,7 @@ SRCS	=	main.c\
 			extractor.c\
 			file_handler.c\
 
-OBJS	=	${SRCS:.c=.o} # $(addprefix objs/, ${SRCS:.c=.o})
+OBJS	=	$(addprefix Libft/, ${SRCS:.c=.o})
 NAME	=	minishell
 CC		=	@gcc
 RM		=	@rm -rf
@@ -29,8 +27,8 @@ CFLAGS	=	-Wall -Werror -Wextra -fsanitize=address -g
 
 all:		${NAME} 
 
-#objs/%o : %c
-#	$(CC) $(CFLAGS) -c $< -o $@
+Libft/%o : %c
+			$(CC) $(CFLAGS) -c $< -o $@
 
 ${NAME}:	${OBJS}
 			@make -C Libft
@@ -47,7 +45,7 @@ ${NAME}:	${OBJS}
 			@echo "\033[1;33m	|_|  |_||___| |_|\_||___||___/ |_||_||___||____||____| "
 			
 clean:
-			${RM} ${OBJS} objs
+			${RM} ${OBJS}
 			@make fclean -C Libft
 			@make fclean -C Builtins
 			@echo "\033[1;91m	--------->>> files deleted :}"

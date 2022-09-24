@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_handler.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mounikor <mounikor@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/19 22:23:47 by mounikor         ###   ########.fr       */
+/*   Updated: 2022/09/23 11:12:54 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	here_doc(char	*limiter)
 	int		fd;
 	char	*s;
 
-	fd = open("/tmp/.tmp.t", O_WRONLY | O_TRUNC | O_CREAT, 0666)
+	fd = open("/tmp/.tmp.t", O_WRONLY | O_TRUNC | O_CREAT, 0666);
 	s = readline("> ");
 	while (s && ft_strncmp(s, limiter, ft_strlen(limiter) + 1))
 	{
@@ -63,20 +63,20 @@ int	handle_infile(char *file_name, int fd)
 	return (in);
 }
 
-void    file_handler(t_list *token, int *fd_in, int *fd_out, char **limiter)
+void	file_handler(t_list *token, int *fd_in, int *fd_out, char **limiter)
 {
-	if (token->id % 77 && out >= 0)
-		*fd_out = handle_outfile(token->content, 'A', fd_out);
-	else if (token->id % 7 && out >= 0)
-		*fd_out = handle_outfile(token->content, 'T', fd_out);
+	if (token->id % 77 && fd_out >= 0)
+		*fd_out = handle_outfile(token->content, 'A', *fd_out);
+	else if (token->id % 7 && fd_out >= 0)
+		*fd_out = handle_outfile(token->content, 'T', *fd_out);
 	else if (token->id % 44)
 	{
 		if (*fd_in > 0)
 			close(*fd_in);
-		*fd_in = -444;//code sent with <3
+		*fd_in = -444;
 		ft_free(limiter);
 		*limiter = ft_strjoin(token->content, "\n");
 	}
 	else if (token->id % 4)
-		*fd_in = handle_infile(token->content, fd_in);
+		*fd_in = handle_infile(token->content, *fd_in);
 }

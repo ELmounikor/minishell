@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mounikor <mounikor@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/19 23:18:05 by mounikor         ###   ########.fr       */
+/*   Updated: 2022/09/23 15:31:17 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ t_list	*token_maker(char *s, int start, int finish, int id)
 	char	*str;
 	int		i;
 
-	if ((id != 1 && id != 11 && id != 22) && s[finish + 1] && s[finish + 1] != ' ' \
-	&& s[finish + 1] != '|' && s[finish + 1] != '>' && s[finish + 1] != '<')
+	if ((id != 1 && id != 11 && id != 22) && s[finish + 1] && s[finish + 1] != \
+	' ' && s[finish + 1] != '|' && s[finish + 1] != '>' && s[finish + 1] != '<')
 		id *= 10;
 	if (finish == start)
 		return (ft_lstnew(NULL, id));

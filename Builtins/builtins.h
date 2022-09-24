@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalnum_.c                                      :+:      :+:    :+:   */
+/*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/08 19:12:23 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/23 11:27:41 by mel-kora         ###   ########.fr       */
+/*   Created: 2022/09/23 11:33:17 by mel-kora          #+#    #+#             */
+/*   Updated: 2022/09/23 11:45:42 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isalnum_(int c)
-{
-	if ((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z')
-		|| (c >= 'a' && c <= 'z') || c == '_')
-		return (1);
-	return (0);
-}
+#ifndef BUILTINS_H
+# define BUILTINS_H
 
-int	ft_isalnumstr(char *s)
-{
-	int	i;
+# include "../minishell.h"
 
-	i = 0;
-	while (s[i] && ft_isalnum_(s[i]))
-		i++;
-	return (!s[i]);
-}
+void	history(char **cmd);
+void	export_(char **cmd, t_list **env_i);
+void	unset(char **cmd, t_list **env_i);
+#endif

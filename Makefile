@@ -3,12 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mounikor <mounikor@student.42.fr>          +#+  +:+       +#+         #
+#    By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/20 12:58:47 by mel-kora          #+#    #+#              #
-#    Updated: 2022/09/19 21:29:24 by mounikor         ###   ########.fr        #
+#    Updated: 2022/09/23 15:13:06 by mel-kora         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+# VPATH 	=	.
 
 SRCS	=	main.c\
 			lexer.c\
@@ -17,7 +19,7 @@ SRCS	=	main.c\
 			extractor.c\
 			file_handler.c\
 
-OBJS	=	${SRCS:.c=.o}
+OBJS	=	${SRCS:.c=.o} # $(addprefix objs/, ${SRCS:.c=.o})
 NAME	=	minishell
 CC		=	@gcc
 RM		=	@rm -rf
@@ -26,11 +28,14 @@ RDINC	=	-I /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/editl
 CFLAGS	=	-Wall -Werror -Wextra -fsanitize=address -g
 
 all:		${NAME} 
-			
+
+#objs/%o : %c
+#	$(CC) $(CFLAGS) -c $< -o $@
+
 ${NAME}:	${OBJS}
 			@make -C Libft
 			@make -C Builtins
-			${CC} ${CFLAGS} Libft/libft.a ${OBJS} -o ${NAME} -lreadline $(LIB) $(RDINC)
+			${CC} ${CFLAGS} Libft/libft.a Builtins/builtins.a ${OBJS} -o ${NAME} -lreadline $(LIB) $(RDINC)
 			@echo "\033[1;92m	--------->>> files created :D"
 			@echo "\033[1;93m	        (        )  (    (        )       (     (     "
 			@echo "\033[1;93m	 (      )\ )  ( /(  )\ ) )\ )  ( /(       )\ )  )\ )  "
@@ -42,7 +47,7 @@ ${NAME}:	${OBJS}
 			@echo "\033[1;33m	|_|  |_||___| |_|\_||___||___/ |_||_||___||____||____| "
 			
 clean:
-			${RM} ${OBJS} ${OBJS_BONUS}
+			${RM} ${OBJS} objs
 			@make fclean -C Libft
 			@make fclean -C Builtins
 			@echo "\033[1;91m	--------->>> files deleted :}"

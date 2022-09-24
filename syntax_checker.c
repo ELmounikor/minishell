@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_checker.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mounikor <mounikor@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:17:01 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/19 21:35:37 by mounikor         ###   ########.fr       */
+/*   Updated: 2022/09/23 14:46:18 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,7 @@ int	throw_error(t_list *tokens)
 		printf ("syntax error near '%s'\n", tokens->content);
 	else if (tokens->next && tokens->next->content)
 		printf ("syntax error near unexpected token '%s'\n", \
-		tokens->next->content);/*
-	else if (tokens->id % 77 || tokens->id % 7)
-		printf ("syntax error near unexpected token `>'\n");
-	else if (tokens->id % 4)
-		printf ("syntax error near unexpected token `<'\n");*/
+		tokens->next->content);
 	else
 		printf ("syntax error near unexpected token `newline'\n");
 	return (0);
@@ -50,8 +46,10 @@ int	throw_error(t_list *tokens)
 
 int	check(t_list *previous, t_list *current, t_list *next)
 {
-	if (current && (current->id % 44 == 0 || current->id % 4 == 0 || \
-	current->id % 77 == 0 || current->id % 7 == 0) && !current->content)
+	if (current && (current->id == 44 || current->id == 4 || \
+	current->id == 440 || current->id == 40 || current->id == 770 || \
+	current->id == 70 || current->id == 77 || current->id == 7) && \
+	!current->content)
 		return (throw_error(current));
 	else if (current && (current->id == 1 || current->id == 11 || \
 	current->id == 22) && (!(previous && next) || !(previous->id != 11 && \

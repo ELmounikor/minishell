@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mounikor <mounikor@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 14:21:31 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/20 15:38:52 by mounikor         ###   ########.fr       */
+/*   Updated: 2022/09/23 11:46:20 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,14 @@
 
 /*libraries*/
 # include "Libft/libft.h"
+# include "Builtins/builtins.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 
 /*structers*/
 typedef struct s_env
 {
-	t_list	**env_i;
+	t_list	*env_i;
 	char	**env;
 	char	**paths;
 	int		cmd_count;
@@ -40,13 +41,13 @@ int		quote_check(char *s);
 char	*new_prompt(void);
 void	history_reloader(int ac);
 void	free_cmds(t_cmd **cmds);
-void	history(char **cmd);
 void	ft_exit(char **cmd);
 void	get_history(char *s, long long int n);
+void	file_handler(t_list *token, int *fd_in, int *fd_out, char **limiter);
 t_list	*tokenizer(char *s, int i, int j);
 t_list	*syntax_checker(t_list **tokens);
 t_list	*getter(t_list *tokens, t_list *env);
 t_list	*env_starter(char **envi, int i);
-t_env	*env_extractor(t_list *envi, t_list *input);
-t_cmd	*cmd_extractor(t_list *input);
+//t_env	*env_extractor(t_list *envi, t_list *input);
+t_cmd	**cmd_extractor(t_list *input);
 #endif

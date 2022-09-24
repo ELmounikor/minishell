@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mounikor <mounikor@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 21:02:44 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/16 19:58:31 by mounikor         ###   ########.fr       */
+/*   Updated: 2022/09/23 16:39:35 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,24 @@ int cmd_count(t_list *lst)
 	return (count);
 }
 
-int *cmd_size(t_list *lst)
+int	*cmd_size(t_list *lst)
 {
 	int	*size;
 	int	i;
 
 	if (!cmd_count(lst))
-		return(NULL);
+		return (NULL);
 	size = (int *) malloc(cmd_count(lst) * sizeof(int));
 	if (!size)
-		return(NULL);
+		return (NULL);
 	i = 0;
 	while (lst)
 	{
+		size[i] = 0;
 		while (lst && lst->id != 1)
 		{
-			if (lst->id % 4 && lst->id % 7 && lst->id % 77)
+			printf("id = %d, content = %s\n", lst->id, lst->content);
+			if (!lst->id || (lst->id % 4 && lst->id % 7 && lst->id % 77))
 				size[i]++;
 			lst = lst->next;
 		}

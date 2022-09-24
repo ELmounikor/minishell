@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   export_unset.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mounikor <mounikor@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 19:49:40 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/20 15:25:40 by mounikor         ###   ########.fr       */
+/*   Updated: 2022/09/23 11:45:35 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void try_delete(char *var, t_list **env_i, t_list *tmp)
+void	try_unset(char *var, t_list **env_i, t_list *tmp)
 {
 	t_list	*env;
 	char	**dic;
-	
+
 	env = *env_i;
 	while (env)
 	{
@@ -31,7 +31,7 @@ void try_delete(char *var, t_list **env_i, t_list *tmp)
 			tmp = env;
 			env = env->next;
 			ft_lstdelone(tmp, &free);
-			break;
+			break ;
 		}
 		ft_split_cleaner(dic);
 		tmp = env;
@@ -39,55 +39,61 @@ void try_delete(char *var, t_list **env_i, t_list *tmp)
 	}
 }
 
-void unset(char **cmd, t_list **env_i)
+void	unset(char **cmd, t_list **env_i)
 {
-	int exit;
-	int i;
+	int	exit_code;
+	int	i;
 
 	i = 0;
-	exit = 0;
+	exit_code = 0;
 	while (cmd[++i])
 	{
-		if (!(ft_isalnum(cmd[i]) && !ft_isnum(cmd[i])))
+		if (!(ft_isalnumstr(cmd[i]) && !ft_isnum(cmd[i])))
 		{
 			printf("unset: '%s': not valid identifier\n", cmd[i]);
-			exit = 1;
+			exit_code = 1;
 		}
 		else
-			try_delete(cmd[i], env_i, NULL);
+			try_unset(cmd[i], env_i, NULL);
 	}
-	exit(exit);
+	exit(exit_code);
 }
 
-void export(char **cmd, t_list **env_i)
+void	try_export(char **cmd, t_list **env_i, int *exit_code)
 {
-	t_list	*env;
 	char	**dic;
-	int 	exit;
-	int 	i;
+	int		i;
 
 	i = 0;
-	exit = 0;
+	while (cmd[++i])
+	{
+		dic = ft_split(cmd[i], '=');
+		if (!(ft_isalnumstr(dic[0]) && !ft_isnum(dic[0])))
+		{
+			printf("export: '%s': not valid identifier\n", dic[0]);
+			*exit_code = 1;
+		}
+		else if (dic[1])
+		{
+			try_unset(dic[0], env_i, NULL);
+			ft_lstadd_back(env_i, ft_lstnew(cmd[i], 0));
+		}
+		ft_split_cleaner(dic);
+	}
+}
+
+void	export_(char **cmd, t_list **env_i)
+{
+	t_list	*env;
+	int		exit_code;
+
+	exit_code = 0;
 	env = *env_i;
 	while (!cmd[1] && env)
 	{
 		printf("declare -x %s\n", env->content);
 		env = env->next;
 	}
-	while (cmd[++i])
-	{
-		dic = ft_split(cmd[i], '=');
-		if (!(ft_isalnum(dic[0]) && !ft_isnum(dic[0])))
-		{
-			printf("export: '%s': not valid identifier\n", dic[0]);
-			exit = 1;
-		}
-		else if (dic[1])
-		{
-			try_delete(dic[0], env_i, NULL);
-			ft_lstadd_back(env_i, ft_lstnew(cmd[i], 0));
-		}
-		ft_split_cleaner(dic);
-	}
-	exit(exit);
+	try_export(cmd, env_i, &exit_code);
+	exit(exit_code);
 }

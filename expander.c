@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mounikor <mounikor@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:03:42 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/19 23:57:11 by mounikor         ###   ########.fr       */
+/*   Updated: 2022/09/23 16:22:07 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*getval(char *s1, t_list *env)
 /*
 	if (!ft_strncmp(s1, "?", 2))
 		return (ft_itoa(last_exit_code));*/
-	while (env)
+	while (env && s1)
 	{
 		dic = ft_split(env->content, '=');
 		if (!ft_strncmp(s1, dic[0], ft_strlen(s1) + 1))
@@ -47,9 +47,9 @@ char	*expander(t_list *token, t_list *env, int i, int j)
 	char	*s;
 
 	s = NULL;
-	if (token->id == 6 || token->id == 60 || token->id % 3)
+	if (token->id && token->id % 3 == 0)
 	{
-		while (token->content[i])
+		while (token->content && token->content[i])
 		{
 			j = i;
 			while (token->content[i] && !(token->content[i] == '$' && (\

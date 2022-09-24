@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:41:31 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/14 13:58:30 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/24 16:21:57 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,3 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	output[i] = '\0';
 	return (output);
 }
-/*
-#include <stdio.h>
-int	main (void)
-{
-	char	str[] = "lorem ipsum dolor sit amet";
-	//char	*strsub;
-
-	printf("%s\n", ft_substr(str, 6, 5));
-	//printf("%s\n", ft_substr(str, 400, 20));
-}*/

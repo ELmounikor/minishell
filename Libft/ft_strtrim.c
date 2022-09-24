@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 13:15:16 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/08/28 11:22:56 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/24 16:22:04 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,3 @@ char	*ft_strtrim(char const *s1, char const *set)
 	output[i] = '\0';
 	return (output);
 }
-/*
-#include <stdio.h>
-int	main()
-{
-	char *s = "";
-	char *set = "";
-	printf("%s", ft_strtrim(s,set));
-}
-*/

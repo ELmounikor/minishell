@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:53:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/23 12:08:14 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/24 16:23:49 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char *new_prompt(void)
 	char *s;
 	int h;
 
-	// write(1, "🤖sh-sm$ ", 12);
+	//write(1, "🤖sh-sm$ ", 12);
 	s = readline("🤖sh-sm$ ");
 	if (!s)
 		ft_exit(NULL);
@@ -75,8 +75,8 @@ int main(int ac, char **av, char **envi)
 			if (cmds)
 				free_cmds(cmds);
 			ft_lstclear(&input, &free);
-			ft_free(&s);
 		}
+		ft_free(&s);
 		// system("leaks minishell");
 	}
 	ft_lstclear(&env_i, &free);

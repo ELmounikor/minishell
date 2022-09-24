@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/23 15:31:17 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/24 16:33:05 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ t_list	*token_maker(char *s, int start, int finish, int id)
 	char	*str;
 	int		i;
 
-	if ((id != 1 && id != 11 && id != 22) && s[finish + 1] && s[finish + 1] != \
-	' ' && s[finish + 1] != '|' && s[finish + 1] != '>' && s[finish + 1] != '<')
+	if ((id != 1 && id != 11 && id != 22) && s[finish] && s[finish] != \
+	' ' && s[finish] != '|' && s[finish] != '>' && s[finish] != '<')
 		id *= 10;
 	if (finish == start)
 		return (ft_lstnew(NULL, id));
@@ -27,6 +27,8 @@ t_list	*token_maker(char *s, int start, int finish, int id)
 	if (!str)
 		return (0);
 	i = 0;
+	if (start > 0 && (s[start - 1] == 39 || s[start - 1] == 34))
+		finish--;
 	while (start < finish)
 		str[i++] = s[start++];
 	str[i] = 0;
@@ -81,9 +83,9 @@ t_list	*get_token(char *s, int *start, int *end, int id)
 			return (token_maker(s, *start, *end, id));
 	}
 	else if (s[*start] == 39)
-		return (token_maker(s, *start + 1, (*end)++, 5));
+		return (token_maker(s, *start + 1, ++(*end), 5));
 	else if (s[*start] == 34)
-		return (token_maker(s, *start + 1, (*end)++, 6));
+		return (token_maker(s, *start + 1, ++(*end), 6));
 	return (0);
 }
 

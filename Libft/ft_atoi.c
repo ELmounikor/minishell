@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 18:20:01 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/07/23 16:27:26 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/24 16:22:34 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,3 @@ long long int	ft_atoi(const char *str)
 	}
 	return ((long long int) n * sign);
 }
-/*
-#include <stdlib.h>
-#include <stdio.h>
-int	main()
-{
-	char *s = "-9223372036854775809";
-	//char *s = "1000000000000000001";
-	printf("%d\n\n", ft_atoi(s));
-	printf("%d", atoi(s));
-}*/

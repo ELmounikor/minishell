@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/23 11:12:54 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/24 17:45:09 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ int	here_doc(char	*limiter)
 	}
 	ft_free(&limiter);
 	close(fd);
-	//problem kan khas chi random name generator bash kol here_doc yl9a file lih bohdo fin yktb l cmd input
-	//solution nkhli lik code fl in_file matalan -444 ola l9itih 3yti l heredoc b limiter li an3tik :3
 	return (open("/tmp/.tmp.t", O_RDWR));
 }
 

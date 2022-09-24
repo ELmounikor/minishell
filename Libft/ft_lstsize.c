@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 21:02:44 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/24 16:22:14 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/24 17:43:10 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_lstsize(t_list *lst)
 	return (lenght);
 }
 
-int cmd_count(t_list *lst)
+int	cmd_count(t_list *lst)
 {
 	int	count;
 

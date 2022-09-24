@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:53:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/24 16:23:49 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/24 17:25:53 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,9 @@ int main(int ac, char **av, char **envi)
 {
 	t_list	*input;
 	t_list	*env_i;
-	t_cmd	**cmds;
+	t_cmd	**cmd;
 	//t_env	*env;
 	char	*s;
-	//t_list	*test;//to be removed
 
 	av = NULL;
 	//history_reloader(ac); // messup up & down keys tanchofoha apres
@@ -61,19 +60,24 @@ int main(int ac, char **av, char **envi)
 		s = new_prompt();
 		input = getter(tokenizer(s, 0, 0), env_i);
 		if (input)
-		{/*
-			// for token testing
-			test = input;
-			while (test)
+		{
+			cmd = cmd_extractor(input);
+			//affichage des commandes
+			int i = 0;
+			while (cmd[i])
 			{
-				printf("id = %d, content = %s\n", test->id, test->content);
-				test = test->next;
-			}*/
-			cmds = cmd_extractor(input);
+				printf("---------------------------------\ndata of the command number %d \nargs list:\n", i + 1);
+				int j = 0;
+				while (cmd[i]->args[j])
+					printf("%s\n", cmd[i]->args[j++]);
+				printf("in_fd = %d\nout_fd = %d\nlimiter = %s\n---------------------------------\n", \
+				cmd[i]->file_des[0], cmd[i]->file_des[1], cmd[i]->limiter);
+				i++;
+			}
 			//env = env_extractor(env_i, input);//need to be updated if cmd == export || unset ;3 can be udated using (env, NULL, NULL)
 			// excute cmds here
-			if (cmds)
-				free_cmds(cmds);
+			if (cmd)
+				free_cmds(cmd);
 			ft_lstclear(&input, &free);
 		}
 		ft_free(&s);

@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/24 18:04:50 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/25 16:59:42 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ t_list	*token_maker(char *s, int start, int finish, int id)
 	char	*str;
 	int		i;
 
-	if ((id != 1 && id != 11 && id != 22) && s[finish] && s[finish] != \
-	' ' && s[finish] != '|' && s[finish] != '>' && s[finish] != '<')
+	if (id != 1 && s[finish] && s[finish] != ' ' && \
+	s[finish] != '|' && s[finish] != '>' && s[finish] != '<')
 		id *= 10;
 	if (finish == start)
 		return (ft_lstnew(NULL, id));
@@ -27,7 +27,7 @@ t_list	*token_maker(char *s, int start, int finish, int id)
 	if (!str)
 		return (0);
 	i = 0;
-	if (start > 0 && (s[start - 1] == 39 || s[start - 1] == 34))
+	if (start > 0 && (s[finish] == 39 || s[finish] == 34))
 		finish--;
 	while (start < finish)
 		str[i++] = s[start++];
@@ -46,7 +46,7 @@ int	lexer(char c, char next_c, int *id)
 		*id = 1;
 	else if (c == '$' && next_c == '?')
 		*id = 33;
-	else if (c == '$')
+	else if (c == '$' && ft_isalnum_(next_c))
 		*id = 3;
 	else if (c == '<' && next_c == '<')
 		*id = 44;
@@ -65,8 +65,8 @@ t_list	*get_token(char *s, int *start, int *end, int id)
 {
 	if (*start == *end)
 	{
-		while (s[*end] && s[*end] != ' ' && s[*end] != 39 && s[*end] != 34 && \
-		id != 11 && id != 1 && id != 22)
+		while (s[*end] && s[*end] != ' ' && s[*end] != 39 && s[*end] != 34 \
+		&& id != 1)
 		{
 			if (ft_strchr("<$|&>", s[*end]))
 			{
@@ -83,13 +83,13 @@ t_list	*get_token(char *s, int *start, int *end, int id)
 			return (token_maker(s, *start, *end, id));
 	}
 	else if (s[*start] == 39)
-		return (token_maker(s, *start + 1, ++(*end), 5));
+		return (token_maker(s, *start + 1, (*end), 5));
 	else if (s[*start] == 34)
-		return (token_maker(s, *start + 1, ++(*end), 6));
+		return (token_maker(s, *start + 1, (*end), 6));
 	return (0);
 }
 
-t_list	*tokenizer(char *s, int i, int j)
+t_list	*tokenizer(char *s, int i, int j, t_list *env_i)
 {
 	t_list	*tokens;
 	int		q[2];
@@ -114,5 +114,5 @@ t_list	*tokenizer(char *s, int i, int j)
 		}
 		ft_lstadd_back(&tokens, get_token(s, &j, &i, 0));
 	}
-	return (tokens);
+	return (getter(&tokens, env_i));
 }

@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:53:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/24 17:25:53 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/25 17:33:54 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int main(int ac, char **av, char **envi)
 	t_list	*input;
 	t_list	*env_i;
 	t_cmd	**cmd;
-	//t_env	*env;
+	// t_env	*env;
 	char	*s;
 
 	av = NULL;
@@ -58,11 +58,18 @@ int main(int ac, char **av, char **envi)
 	while (1)
 	{
 		s = new_prompt();
-		input = getter(tokenizer(s, 0, 0), env_i);
+		input = tokenizer(s, 0, 0, env_i);
 		if (input)
 		{
+			// t_list	*test;
+			// test = input;
+			// while (test)
+			// {
+				// printf("id = %d, content = %s\n", test->id, test->content);
+				// test = test->next;
+			// }
 			cmd = cmd_extractor(input);
-			//affichage des commandes
+			// affichage des commandes
 			int i = 0;
 			while (cmd[i])
 			{
@@ -74,14 +81,17 @@ int main(int ac, char **av, char **envi)
 				cmd[i]->file_des[0], cmd[i]->file_des[1], cmd[i]->limiter);
 				i++;
 			}
-			//env = env_extractor(env_i, input);//need to be updated if cmd == export || unset ;3 can be udated using (env, NULL, NULL)
+			// env = env_extractor(env_i, input);//need to be updated if cmd == export || unset ;3 can be udated using (env, NULL, NULL)
 			// excute cmds here
 			if (cmd)
 				free_cmds(cmd);
 			ft_lstclear(&input, &free);
+			printf("\n==================================================\n");
+			system("leaks minishell");
+			printf("\n==================================================\n");
+			exit(0);
 		}
 		ft_free(&s);
-		// system("leaks minishell");
 	}
 	ft_lstclear(&env_i, &free);
 	return (0);

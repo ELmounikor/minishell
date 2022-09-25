@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/24 18:05:02 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/25 16:52:03 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,32 @@ t_list	*env_starter(char **envi, int i)
 	while (envi && envi[i])
 		ft_lstadd_back(&env_i, ft_lstnew(ft_strdup(envi[i++]), 0));
 	return (env_i);
+}
+
+void	env_extractor(t_env	**env, t_list *env_i, t_list *input)
+{
+	int		i;
+	t_list	*tmp;
+
+	if (input)
+		(*env)->cmd_count = cmd_count(input);
+	if (env_i)
+		(*env)->env_i = env_i;
+	ft_split_cleaner((*env)->env);
+	(*env)->env = (char **) malloc ((ft_lstsize((*env)->env_i) + 1) * \
+	sizeof(char *));
+	if (!(*env)->env)
+		return ;
+	i = 0;
+	tmp = (*env)->env_i;
+	while (tmp)
+	{
+		(*env)->env[i++] = ft_strdup(tmp->content);
+		tmp = tmp->next;
+	}
+	(*env)->env[i] = NULL;
+	ft_split_cleaner((*env)->paths);
+	(*env)->paths = get_paths((*env)->env);
 }
 
 void	cmd_filler(t_cmd **cmd, t_list **input, int size)
@@ -38,8 +64,8 @@ void	cmd_filler(t_cmd **cmd, t_list **input, int size)
 	i = 0;
 	while ((*input) && (*input)->id != 1)
 	{
-		if ((!(*input)->id || ((*input)->id % 4 && (*input)->id % 7 && \
-		(*input)->id % 77)) && (*cmd)->args)
+		if ((!(*input)->id || (*input)->id == 100 || ((*input)->id % 4 && \
+		(*input)->id % 7 && (*input)->id % 77)) && (*cmd)->args)
 			(*cmd)->args[i++] = ft_strdup((*input)->content);
 		else
 			file_handler((*input), &((*cmd)->file_des[0]), \

@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:03:42 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/24 18:17:31 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/25 17:33:15 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	editor(char **s1, char *s2)
 char	*getval(char *s1, t_list *env)
 {
 	char	**dic;
+	int		start;
 /*
 	if (!ft_strncmp(s1, "?", 2))
 		return (ft_itoa(last_exit_code));*/
@@ -33,18 +34,22 @@ char	*getval(char *s1, t_list *env)
 		if (!ft_strncmp(s1, dic[0], ft_strlen(s1) + 1))
 		{
 			ft_split_cleaner(dic);
-			return (ft_substr(env->content, ft_strlen(s1) + 1, \
+			start = ft_strlen(s1) + 1;
+			ft_free(&s1);
+			return (ft_substr(env->content, start, \
 			ft_strlen(env->content)));
 		}
 		ft_split_cleaner(dic);
 		env = env->next;
 	}
+	ft_free(&s1);
 	return (0);
 }
 
 char	*expander(t_list *token, t_list *env, int i, int j)
 {
 	char	*s;
+	char	*tmp;
 
 	s = NULL;
 	if (token->id && token->id % 3 == 0)
@@ -56,14 +61,17 @@ char	*expander(t_list *token, t_list *env, int i, int j)
 			ft_isalnum_(token->content[i + 1]) || token->content[i + 1] \
 			== '?')))
 				i++;
-			editor(&s, ft_strjoin(s, ft_substr(token->content, j, i - j)));
+			tmp = ft_substr(token->content, j, i - j);
+			editor(&s, ft_strjoin(s, tmp));
+			ft_free(&tmp);
 			if (token->content[i] == '$')
 			{
 				j = ++i;
 				while (ft_isalnum_(token->content[i]))
 					i++;
-				editor(&s, ft_strjoin(s, \
-				getval(ft_substr(token->content, j, i - j), env)));
+				tmp = getval(ft_substr(token->content, j, i - j), env);
+				editor(&s, ft_strjoin(s, tmp));
+				ft_free(&tmp);
 			}
 		}
 		return (s);
@@ -71,14 +79,15 @@ char	*expander(t_list *token, t_list *env, int i, int j)
 	return (ft_strdup(token->content));
 }
 
-t_list	*getter(t_list *token, t_list *env)
+t_list	*getter(t_list **in, t_list *env)
 {
 	t_list	*input;
-	t_list	*start;
+	t_list	*token;
 	char	*s;
 	int		id;
+	char	*tmp;
 
-	start = token;
+	token = *in;
 	input = NULL;
 	while (token)
 	{
@@ -89,12 +98,14 @@ t_list	*getter(t_list *token, t_list *env)
 		s = expander(token, env, 0, 0);
 		while (token->id && token->id % 10 == 0)
 		{
-			editor(&s, ft_strjoin(s, expander(token->next, env, 0, 0)));
+			tmp = expander(token->next, env, 0, 0);
+			editor(&s, ft_strjoin(s, tmp));
+			ft_free(&tmp);
 			token = token->next;
 		}
 		ft_lstadd_back(&input, ft_lstnew(s, id));
 		token = token->next;
 	}
-	ft_lstclear(&start, &free);
+	ft_lstclear(in, &free);
 	return (syntax_checker(&input));
 }

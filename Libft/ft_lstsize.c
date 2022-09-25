@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 21:02:44 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/24 17:43:10 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/25 16:48:25 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ int	*cmd_size(t_list *lst)
 		size[i] = 0;
 		while (lst && lst->id != 1)
 		{
-			if (!lst->id || (lst->id % 4 && lst->id % 7 && lst->id % 77))
+			if (!lst->id || lst->id == 100 || (lst->id % 4 && lst->id % 7 && \
+			lst->id % 77))
 				size[i]++;
 			lst = lst->next;
 		}

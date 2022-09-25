@@ -6,7 +6,7 @@
 #    By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/20 12:58:47 by mel-kora          #+#    #+#              #
-#    Updated: 2022/09/24 18:06:09 by mel-kora         ###   ########.fr        #
+#    Updated: 2022/09/25 14:47:38 by mel-kora         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ SRCS	=	main.c\
 			syntax_checker.c\
 			extractor.c\
 			file_handler.c\
+			path_finder.c\
 
 OBJS	=	$(addprefix Libft/, ${SRCS:.c=.o})
 NAME	=	minishell
@@ -23,7 +24,7 @@ CC		=	@gcc
 RM		=	@rm -rf
 LIB		=	-L /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/editline
 RDINC	=	-I /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/editline/readline.h
-CFLAGS	=	-Wall -Werror -Wextra -fsanitize=address -g
+CFLAGS	=	-Wall -Werror -Wextra #-fsanitize=address -g
 
 all:		${NAME} 
 

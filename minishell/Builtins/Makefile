@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mounikor <mounikor@student.42.fr>          +#+  +:+       +#+         #
+#    By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/20 16:48:53 by mel-kora          #+#    #+#              #
-#    Updated: 2022/09/20 15:02:58 by mounikor         ###   ########.fr        #
+#    Updated: 2022/09/26 10:50:14 by mel-kora         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS	=	history.c\
-			export_unset.c\
+			unset.c\
 
 OBJS	=	${SRCS:.c=.o}
 

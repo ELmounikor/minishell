@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 14:21:31 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/25 17:00:35 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/26 14:41:44 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ typedef struct s_env
 
 typedef struct s_cmd
 {
-	char			**args;//cmd and its arguments
-	char			*path;//cmd executabel path
-	char			*limiter;//use when file_fd[0] = -444 in here_doc(limiter)
-	int				file_des[2];//in and out file descriptors default 0 -> la l9iti chi haja mn ghir 0 overidi l corresponing pipe end with the corresponding fd
+	int				file_des[2];
+	char			**args;
+	char			*limiter;
+	char			*path;
 }	t_cmd;
 
 /*functions*/

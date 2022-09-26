@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:53:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/26 10:37:00 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/26 16:02:40 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,36 +60,32 @@ int	main(int ac, char **av, char **envi)
 		input = tokenizer(s, 0, 0, env_i);
 		if (input)
 		{
-			// input testing
-			// t_list	*test;
-			// test = input;
-			// while (test)
-			// {
-				// printf("id = %d, content = %s\n", test->id, test->content);
-				// test = test->next;
-			// }
 			cmd = cmd_extractor(input);
 			// affichage des commandes
 			int i = 0;
-			while (cmd[i])
+			while (cmd && cmd[i])
 			{
-				printf("---------------------------------\ndata of the command number %d \nargs list:\n", i + 1);
+				printf("---------------------------------\ndata of the command number %d \
+				\n//cmd and its argument's list:\n", i + 1);
 				int j = 0;
 				while (cmd[i]->args[j])
 					printf("%s\n", cmd[i]->args[j++]);
-				printf("in_fd = %d\nout_fd = %d\nlimiter = %s\n---------------------------------\n", \
-				cmd[i]->file_des[0], cmd[i]->file_des[1], cmd[i]->limiter);
+				printf("//in and out file descriptors:\nin_fd = %d\
+				//lakant chi haja mn ghir 0 rdih howa lread end dyal lpipe\nout_fd = %d\
+				//lakant chi haja mn ghir 0 rdih howa lwrite end dyal lpipe\nlimiter = %s\
+				//use when file_fd[0] = -444 in here_doc(limiter)\npath = %s\
+				//aslan dima null lol khlito lik bach t3mrih <3\n---------------------------------\n", \
+				cmd[i]->file_des[0], cmd[i]->file_des[1], cmd[i]->limiter, cmd[i]->path);
 				i++;
 			}
 			// excute cmds here
-			if (cmd)
-				free_cmds(cmd);
+			free_cmds(cmd);
 			ft_lstclear(&input, &free);
-			printf("\n==================================================\n");
-			system("leaks minishell");
-			printf("\n==================================================\n");
 		}
 		ft_free(&s);
+		printf("\n==================================================\n");
+		system("leaks minishell");
+		printf("\n==================================================\n");
 	}
 	ft_lstclear(&env_i, &free);
 	return (0);

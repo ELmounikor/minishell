@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/25 16:52:03 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/26 15:56:44 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,9 @@ void	cmd_filler(t_cmd **cmd, t_list **input, int size)
 	i = 0;
 	while ((*input) && (*input)->id != 1)
 	{
-		if ((!(*input)->id || (*input)->id == 100 || ((*input)->id % 4 && \
-		(*input)->id % 7 && (*input)->id % 77)) && (*cmd)->args)
+		if ((*input)->id != 7 && (*input)->id != 77 && (*input)->id != 4 && \
+		(*input)->id != 44 && (*input)->id != 70 && (*input)->id != 770 && \
+		(*input)->id != 40 && (*input)->id != 440 && (*cmd)->args)
 			(*cmd)->args[i++] = ft_strdup((*input)->content);
 		else
 			file_handler((*input), &((*cmd)->file_des[0]), \
@@ -99,16 +100,18 @@ t_cmd	**cmd_extractor(t_list *input)
 	return (cmd);
 }
 
-void	free_cmds(t_cmd **cmds)
+void	free_cmds(t_cmd **cmd)
 {
 	int	i;
 
 	i = -1;
-	while (cmds[++i])
+	if (!cmd)
+		return ;
+	while (cmd[++i])
 	{
-		ft_free(&cmds[i]->path);
-		ft_split_cleaner(cmds[i]->args);
-		free(cmds[i]);
+		ft_free(&cmd[i]->path);
+		ft_split_cleaner(cmd[i]->args);
+		free(cmd[i]);
 	}
-	free(cmds);
+	free(cmd);
 }

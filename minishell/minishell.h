@@ -1,0 +1,55 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/20 14:21:31 by mel-kora          #+#    #+#             */
+/*   Updated: 2022/09/25 17:00:35 by mel-kora         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef MINISHELL_H
+# define MINISHELL_H
+
+/*libraries*/
+# include "Libft/libft.h"
+# include "Builtins/builtins.h"
+# include <readline/readline.h>
+# include <readline/history.h>
+
+/*structers*/
+typedef struct s_env
+{
+	t_list	*env_i;
+	char	**env;
+	char	**paths;
+	int		last_exit_code;
+	int		cmd_count;
+}	t_env;
+
+typedef struct s_cmd
+{
+	char			**args;//cmd and its arguments
+	char			*path;//cmd executabel path
+	char			*limiter;//use when file_fd[0] = -444 in here_doc(limiter)
+	int				file_des[2];//in and out file descriptors default 0 -> la l9iti chi haja mn ghir 0 overidi l corresponing pipe end with the corresponding fd
+}	t_cmd;
+
+/*functions*/
+int		quote_check(char *s);
+char	*new_prompt(void);
+char	**get_paths(char **env);
+void	history_reloader(int ac);
+void	free_cmds(t_cmd **cmds);
+void	ft_exit(char **cmd);
+void	get_history(char *s, long long int n);
+void	file_handler(t_list *token, int *fd_in, int *fd_out, char **limiter);
+t_list	*tokenizer(char *s, int i, int j, t_list *env_i);
+t_list	*syntax_checker(t_list **tokens);
+t_list	*getter(t_list **tokens, t_list *env);
+t_list	*env_starter(char **envi, int i);
+t_cmd	**cmd_extractor(t_list *input);
+//t_env	*env_extractor(t_list *envi, t_list *input);
+#endif

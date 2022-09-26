@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 14:38:33 by sennaama          #+#    #+#             */
-/*   Updated: 2022/09/26 15:50:14 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/09/26 19:27:15 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int main(int argc, char **argv, char **envp)
     (void)argv;
     t_env *env;
     env = get_env(envp);
-    export(argv, env);
+    export(argc, argv, env);
+    printf("\n\n\n");
     print_env(env);
     //export(argv, e);
     return (1);

@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 18:24:00 by sennaama          #+#    #+#             */
-/*   Updated: 2022/09/26 18:49:09 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/09/26 19:46:37 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ void	ft_swap(t_env *tmp1, t_env *tmp2)
 	tmp2->value = val;
 }
 
-t_env	*ft_sort_list(t_env *l)
+void	ft_sort_list(t_env **l)
 {
 	t_env	*tmp1;
 	t_env	*tmp2;
 	int		r;
 
-	tmp1 = l;
+	tmp1 = *l;
 	while (tmp1->next)
 	{
 		tmp2 = tmp1;
@@ -46,84 +46,68 @@ t_env	*ft_sort_list(t_env *l)
 		}
 		tmp1 = tmp1->next;
 	}
-	return (l);
-}
-
-void	add_element(char *s1, char *s2, t_env **envp)
-{
-	t_env	*tmp;
-	char	*f;
-
-	tmp = *envp;
-	while (tmp)
-	{
-		if (ft_strncmp(s1, tmp->variable, ft_strlen(s1)) == 0)
-		{
-			f = ft_strjoin(s2, tmp->value);
-			free(tmp->value);
-			tmp->value = f;
-			return ;
-		}
-		tmp = tmp->next;
-	}
-	ft_lstadd_back_env(envp, ft_lstnew_env(s1, s2));
-}
-
-void	add_env(char **f, t_env **envp)
-{
-	t_env	*tmp;
-	int		size;
-	char	*sub;
-
-	tmp = *envp;
-	size = ft_strlen(f[0]);
-	if (f[0][size - 1] == '+')
-	{
-		sub = ft_substr(f[0], 0, size - 1);
-		add_element(sub, f[1], envp);
-	}
-	else
-		ft_lstadd_back_env(envp, ft_lstnew_env(f[0], f[1]));
 }
 
 void	print_export(t_env *tmp)
 {
-	if (tmp->value != NULL)
-		printf("declare -x %s=\"%s\"\n", tmp->variable, tmp->value);
-	else
-		printf("declare -x %s\n", tmp->variable);
+	while (tmp)
+	{
+		if (tmp->value != NULL)
+			printf("declare -x %s=\"%s\"\n", tmp->variable, tmp->value);
+		else
+			printf("declare -x %s\n", tmp->variable);
+		tmp = tmp->next;
+	}
 }
-/*
-void	ft_check_variable(char	**f)
+
+int	ft_check_variable(char **f)
 {
 	int		size;
 	char	*sub;
+	int		i;
 
 	size = ft_strlen(f[0]);
 	if (f[0][size - 1] == '+')
 		sub = ft_substr(f[0], 0, size - 1);
 	else
 		sub = ft_substr(f[0], 0, size);
-	
+	if ((sub[0] < 'a' || sub[0] > 'z') && (sub[0] < 'A' || sub[0] > 'Z')
+		&& (sub[0] != '_'))
+		return (1);
+	i = 1;
+	while (sub[i])
+	{
+		if ((sub[i] < 'a' || sub[0] > 'z') && (sub[i] < 'A' || sub[i] > 'Z')
+			&& (sub[i] < '0' || sub[i] > '9') && (sub[i] != '_'))
+			return (1);
+		i++;
+	}
+	return (0);
 }
-*/
-void	export(char **cmd, t_env *envp)
+
+void	export(int argc, char **cmd, t_env *envp)
 {
 	t_env	*tmp;
 	char	**f;
+	int		i;
 
 	if (cmd[2] == NULL)
 	{
-		tmp = ft_sort_list(envp);
-		while (tmp)
-		{
-			print_export(tmp);
-			tmp = tmp->next;
-		}
+		tmp = ft_copy_env(envp);
+		ft_sort_list(&tmp);
+		print_export(tmp);
 	}
 	else
 	{
-		f = ft_split_env(cmd[2], '=');
-		add_env(f, &envp);
+		i = 2;
+		while (i < argc)
+		{
+			f = ft_split_env(cmd[i], '=');
+			if (ft_check_variable(f) == 1)
+				printf("export: \'%s\' : not a valid identifier\n", cmd[i]);
+			else
+				add_env(f, &envp);
+			i++;
+		}
 	}
 }

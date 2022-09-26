@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 16:13:57 by sennaama          #+#    #+#             */
-/*   Updated: 2022/09/26 18:14:54 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/09/26 19:22:44 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ void	print_env(t_env	*env)
 	{
 		if (tmp->value != NULL)
 			printf("%s=%s\n", tmp->variable, tmp->value);
+		else
+			printf("%s\n", tmp->variable);
 		tmp = tmp->next;
 	}
 }

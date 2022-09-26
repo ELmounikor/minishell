@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/26 14:50:50 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/26 15:58:24 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_list	*token_maker(char *s, int start, int finish, int id)
 	if (id != 1 && s[finish + 1] && !ft_isspace(s[finish + 1]) && \
 	s[finish + 1] != '|' && s[finish + 1] != '>' && s[finish + 1] != '<')
 		id *= 10;
-	if ((s[finish] != 39 && s[finish] != 34))
+	if (id != 5 && id != 6 && id != 50 && id != 60)
 		finish++;
 	if (finish == start)
 		return (ft_lstnew(NULL, id));

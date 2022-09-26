@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 11:33:17 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/23 11:45:42 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/26 19:06:31 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,6 @@
 # include "../minishell.h"
 
 void	history(char **cmd);
-void	export_(char **cmd, t_list **env_i);
-void	unset(char **cmd, t_list **env_i);
+//void	export_(char **cmd, t_env **env_i);
+void	unset(char **cmd, t_env **env_i);
 #endif

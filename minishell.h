@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 14:21:31 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/26 14:41:44 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/26 21:00:53 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@
 # include <readline/history.h>
 
 /*structers*/
-typedef struct s_env
+typedef struct s_params
 {
-	t_list	*env_i;
-	char	**env;
-	char	**paths;
-	int		last_exit_code;
 	int		cmd_count;
-}	t_env;
+	int		last_exit_code;
+	char	**paths;
+	char	**en;
+	t_env	*env;
+}	t_params;
 
 typedef struct s_cmd
 {
@@ -38,18 +38,17 @@ typedef struct s_cmd
 }	t_cmd;
 
 /*functions*/
-int		quote_check(char *s);
-char	*new_prompt(void);
-char	**get_paths(char **env);
-void	history_reloader(int ac);
-void	free_cmds(t_cmd **cmds);
-void	ft_exit(char **cmd);
-void	get_history(char *s, long long int n);
-void	file_handler(t_list *token, int *fd_in, int *fd_out, char **limiter);
-t_list	*tokenizer(char *s, int i, int j, t_list *env_i);
-t_list	*syntax_checker(t_list **tokens);
-t_list	*getter(t_list **tokens, t_list *env);
-t_list	*env_starter(char **envi, int i);
-t_cmd	**cmd_extractor(t_list *input);
-//t_env	*env_extractor(t_list *envi, t_list *input);
+int			quote_check(char *s);
+char		*new_prompt(void);
+char		**get_paths(char **en);
+void		history_reloader(int ac);
+void		free_cmds(t_cmd **cmds);
+void		ft_exit(char **cmd);
+void		get_history(char *s, long long int n);
+void		file_handler(t_list *token, int *fdin, int *fdout, char **limiter);
+void		param_extractor(t_params **params, t_env *env, t_list *input);
+t_list		*tokenizer(char *s, int i, int j, t_env *env);
+t_list		*syntax_checker(t_list **tokens);
+t_list		*getter(t_list **tokens, t_env *env);
+t_cmd		**cmd_extractor(t_list *input);
 #endif

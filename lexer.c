@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/26 15:58:24 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/26 18:58:39 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ t_list	*get_token(char *s, int *start, int *end, int id)
 	return (0);
 }
 
-t_list	*tokenizer(char *s, int i, int j, t_list *env_i)
+t_list	*tokenizer(char *s, int i, int j, t_env *env)
 {
 	t_list	*tokens;
 	int		q[2];
@@ -114,7 +114,7 @@ t_list	*tokenizer(char *s, int i, int j, t_list *env_i)
 		}
 		ft_lstadd_back(&tokens, get_token(s, &j, &i, 0));
 	}
-	return (getter(&tokens, env_i));
+	return (getter(&tokens, env));
 }
 /*code for explaining
 // printf("'%c'---'%c'\n", s[start], s[finish]);

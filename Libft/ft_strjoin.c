@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 12:44:23 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/24 17:08:53 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/26 19:17:42 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (output);
 }
 
-char	*ft_strjoin_slash(char const *s1, char const *s2)
+char	*ft_strjoin_char(char const *s1, char const *s2, char c)
 {
 	char	*output;
 	int		i;
@@ -62,7 +62,7 @@ char	*ft_strjoin_slash(char const *s1, char const *s2)
 		output[i] = s1[i];
 		i++;
 	}
-	output[i++] = '/';
+	output[i++] = c;
 	while (s2[j])
 		output[i++] = s2[j++];
 	output[i] = '\0';

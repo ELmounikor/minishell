@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/25 16:59:42 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/26 14:50:50 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,17 @@ t_list	*token_maker(char *s, int start, int finish, int id)
 	char	*str;
 	int		i;
 
-	if (id != 1 && s[finish] && s[finish] != ' ' && \
-	s[finish] != '|' && s[finish] != '>' && s[finish] != '<')
+	if (id != 1 && s[finish + 1] && !ft_isspace(s[finish + 1]) && \
+	s[finish + 1] != '|' && s[finish + 1] != '>' && s[finish + 1] != '<')
 		id *= 10;
+	if ((s[finish] != 39 && s[finish] != 34))
+		finish++;
 	if (finish == start)
 		return (ft_lstnew(NULL, id));
 	str = (char *) malloc (finish - start + 1);
 	if (!str)
 		return (0);
 	i = 0;
-	if (start > 0 && (s[finish] == 39 || s[finish] == 34))
-		finish--;
 	while (start < finish)
 		str[i++] = s[start++];
 	str[i] = 0;
@@ -65,8 +65,8 @@ t_list	*get_token(char *s, int *start, int *end, int id)
 {
 	if (*start == *end)
 	{
-		while (s[*end] && s[*end] != ' ' && s[*end] != 39 && s[*end] != 34 \
-		&& id != 1)
+		while (s[*end] && !ft_isspace(s[*end]) && s[*end] != 39 && \
+		s[*end] != 34 && id != 1)
 		{
 			if (ft_strchr("<$|&>", s[*end]))
 			{
@@ -78,14 +78,14 @@ t_list	*get_token(char *s, int *start, int *end, int id)
 		}
 		if (!id && s[*end] && (s[*end] == 39 || s[*end] == 34 || \
 		s[*end] == '$'))
-			return (token_maker(s, *start, *end, 10));
+			return (token_maker(s, *start, *end - 1, 10));
 		else
-			return (token_maker(s, *start, *end, id));
+			return (token_maker(s, *start, *end - 1, id));
 	}
 	else if (s[*start] == 39)
-		return (token_maker(s, *start + 1, (*end), 5));
+		return (token_maker(s, *start + 1, (*end)++, 5));
 	else if (s[*start] == 34)
-		return (token_maker(s, *start + 1, (*end), 6));
+		return (token_maker(s, *start + 1, (*end)++, 6));
 	return (0);
 }
 
@@ -99,7 +99,7 @@ t_list	*tokenizer(char *s, int i, int j, t_list *env_i)
 	{
 		q[0] = 0;
 		q[1] = 0;
-		while (s[i] && s[i] == ' ')
+		while (s[i] && ft_isspace(s[i]))
 			i++;
 		j = i;
 		while (s[i] && (s[i] == 34 || s[i] == 39 || q[0] % 2 || q[1] % 2))
@@ -116,3 +116,15 @@ t_list	*tokenizer(char *s, int i, int j, t_list *env_i)
 	}
 	return (getter(&tokens, env_i));
 }
+/*code for explaining
+// printf("'%c'---'%c'\n", s[start], s[finish]);
+
+// t_list	*test;
+// test = tokens;
+// while (test)
+// {
+// 	printf("id = %d, content = %s\n", test->id, test->content);
+// 	test = test->next;
+// }
+// exit(0);
+*/

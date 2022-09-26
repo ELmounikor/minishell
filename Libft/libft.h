@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:35:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/24 19:29:59 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/26 14:32:08 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int				cmd_count(t_list *lst);
 int				ft_lstsize(t_list *lst);
 int				ft_strncmp(const char *s1, const char *s2, int n);
 int				ft_isnum(char *s);
+int				ft_isspace(int c);
 int				ft_isalnum_(int c);
 int				ft_isalnumstr(char *s);
 int				ft_strlen(const char *s);

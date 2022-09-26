@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:03:42 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/25 17:33:15 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/26 14:15:31 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void	editor(char **s1, char *s2)
 {
 	char	*tmp;
 
-	tmp = s2;
+	tmp = ft_strjoin(*s1, s2);
+	ft_free(&s2);
 	ft_free(s1);
 	*s1 = tmp;
 }
@@ -49,7 +50,6 @@ char	*getval(char *s1, t_list *env)
 char	*expander(t_list *token, t_list *env, int i, int j)
 {
 	char	*s;
-	char	*tmp;
 
 	s = NULL;
 	if (token->id && token->id % 3 == 0)
@@ -61,17 +61,13 @@ char	*expander(t_list *token, t_list *env, int i, int j)
 			ft_isalnum_(token->content[i + 1]) || token->content[i + 1] \
 			== '?')))
 				i++;
-			tmp = ft_substr(token->content, j, i - j);
-			editor(&s, ft_strjoin(s, tmp));
-			ft_free(&tmp);
+			editor(&s, ft_substr(token->content, j, i - j));
 			if (token->content[i] == '$')
 			{
 				j = ++i;
 				while (ft_isalnum_(token->content[i]))
 					i++;
-				tmp = getval(ft_substr(token->content, j, i - j), env);
-				editor(&s, ft_strjoin(s, tmp));
-				ft_free(&tmp);
+				editor(&s, getval(ft_substr(token->content, j, i - j), env));
 			}
 		}
 		return (s);
@@ -85,7 +81,6 @@ t_list	*getter(t_list **in, t_list *env)
 	t_list	*token;
 	char	*s;
 	int		id;
-	char	*tmp;
 
 	token = *in;
 	input = NULL;
@@ -98,9 +93,7 @@ t_list	*getter(t_list **in, t_list *env)
 		s = expander(token, env, 0, 0);
 		while (token->id && token->id % 10 == 0)
 		{
-			tmp = expander(token->next, env, 0, 0);
-			editor(&s, ft_strjoin(s, tmp));
-			ft_free(&tmp);
+			editor(&s, expander(token->next, env, 0, 0));
 			token = token->next;
 		}
 		ft_lstadd_back(&input, ft_lstnew(s, id));

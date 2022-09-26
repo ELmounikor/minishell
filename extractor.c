@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/26 19:20:51 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/26 21:57:56 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	param_extractor(t_params	**params, t_env *env, t_list *input)
 	if (env)
 		(*params)->env = env;
 	ft_split_cleaner((*params)->en);
-	(*params)->en = (char **) malloc ((ft_lstsize((*params)->env) + 1) * \
+	(*params)->en = (char **) malloc ((ft_envsize((*params)->env) + 1) * \
 	sizeof(char *));
 	if (!(*params)->en)
 		return ;
@@ -38,7 +38,7 @@ void	param_extractor(t_params	**params, t_env *env, t_list *input)
 	}
 	(*params)->en[i] = NULL;
 	ft_split_cleaner((*params)->paths);
-	(*params)->paths = get_paths((*params)->env);
+	(*params)->paths = get_paths((*params)->en);
 }
 
 void	cmd_filler(t_cmd **cmd, t_list **input, int size)

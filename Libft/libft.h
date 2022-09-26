@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:35:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/26 19:18:00 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/26 22:18:17 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <unistd.h>
 # include <sys/wait.h>
 # include <fcntl.h>
+# include "../minishell.h"
 
 /*structers*/
 typedef struct s_list
@@ -53,7 +54,7 @@ char			ft_convert(char c, char s);
 int				*cmd_size(t_list *lst);
 int				cmd_count(t_list *lst);
 int				ft_lstsize(t_list *lst);
-int				ft_strncmp(const char *s1, const char *s2, int n);
+int				ft_strncmp(const char *s1, const char *s2, size_t n);
 int				ft_isnum(char *s);
 int				ft_isspace(int c);
 int				ft_isalnum_(int c);

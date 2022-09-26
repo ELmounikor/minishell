@@ -1,33 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/11 14:27:31 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/26 22:12:13 by mel-kora         ###   ########.fr       */
+/*   Created: 2022/09/17 16:00:04 by sennaama          #+#    #+#             */
+/*   Updated: 2022/09/26 22:05:46 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "pipex.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+int	main1(int argc, char **argv, char **envp)
 {
-	size_t			i;
-	unsigned char	*s3;
-	unsigned char	*s4;
+	int		child_1;
+	pid_t	child_2;
+	int		fd[2];
 
-	s3 = (unsigned char *)s1;
-	s4 = (unsigned char *)s2;
-	i = 0;
-	if (n == 0)
-		return (0);
-	while (s3[i] == s4[i] && s3[i] && s4[i] && i < n - 1)
-		i++;
-	if ((s3[i] - s4[i]) > 0)
+	if (argc != 5)
+		printf("error");
+	if (pipe(fd) == -1)
 		return (1);
-	else if ((s3[i] - s4[i]) < 0)
-		return (-1);
-	return (0);
+	child_1 = fork();
+	if (child_1 == 0)
+		cmd_child1(argv, envp, fd);
+	child_2 = fork();
+	if (child_2 == 0)
+		cmd_child2(argv, envp, fd);
+	close(fd[0]);
+	close(fd[1]);
+	waitpid(child_1,NULL,0);
+	waitpid(child_2,NULL,0);
 }

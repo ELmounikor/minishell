@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 14:21:31 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/26 21:00:53 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/26 22:20:13 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,6 @@ t_list		*tokenizer(char *s, int i, int j, t_env *env);
 t_list		*syntax_checker(t_list **tokens);
 t_list		*getter(t_list **tokens, t_env *env);
 t_cmd		**cmd_extractor(t_list *input);
+void			ft_envclear(t_env **env, void (*del)(void*));
+int				ft_envsize(t_env *env);
 #endif

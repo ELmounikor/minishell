@@ -6,13 +6,26 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 21:02:44 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/26 15:21:52 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/26 21:56:29 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
 int	ft_lstsize(t_list *lst)
+{
+	int	lenght;
+
+	lenght = 0;
+	while (lst)
+	{
+		lst = lst->next;
+		lenght++;
+	}
+	return (lenght);
+}
+
+int	ft_envsize(t_env *lst)
 {
 	int	lenght;
 

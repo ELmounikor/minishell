@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 16:00:04 by sennaama          #+#    #+#             */
-/*   Updated: 2022/09/26 22:05:46 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/26 22:54:49 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,5 @@ int	main1(int argc, char **argv, char **envp)
 	close(fd[1]);
 	waitpid(child_1,NULL,0);
 	waitpid(child_2,NULL,0);
+	return (0);
 }

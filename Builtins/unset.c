@@ -6,13 +6,13 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 19:49:40 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/26 19:05:58 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/26 22:52:47 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "builtins.h"
 
-void	try_unset(char *var, t_env **env_i, t_list *tmp)
+void	try_unset(char *var, t_env **env_i, t_env *tmp)
 {
 	t_env	*env;
 
@@ -27,7 +27,7 @@ void	try_unset(char *var, t_env **env_i, t_list *tmp)
 				*env_i = (*env_i)->next;
 			tmp = env;
 			env = env->next;
-			ft_lstdelone(tmp, &free);
+			ft_envdelone(tmp, &free);
 			break ;
 		}
 		tmp = env;

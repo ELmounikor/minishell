@@ -6,24 +6,17 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 14:15:10 by sennaama          #+#    #+#             */
-/*   Updated: 2022/09/26 22:08:19 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/26 22:54:31 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
-# include<unistd.h>
-# include<stdio.h>
-# include<dirent.h>
+# include <unistd.h>
+# include <stdio.h>
+# include <dirent.h>
 # include "../minishell.h"
-//# include "ft_pipex/pipex.h"
-
-typedef struct s_env
-{
-	char			*variable;
-	char			*value;
-	struct s_env	*next;
-}	t_env;
+# include "ft_pipex/pipex.h"
 
 void	history(char **cmd);
 void	unset(char **cmd, t_env **env_i);

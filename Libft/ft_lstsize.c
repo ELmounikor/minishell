@@ -6,11 +6,11 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 21:02:44 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/26 21:56:29 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/26 22:44:57 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "libft.h"
 
 int	ft_lstsize(t_list *lst)
 {

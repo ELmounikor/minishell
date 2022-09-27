@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/25 16:38:36 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/27 00:42:13 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ int	handle_infile(char *file_name, int fd)
 	in = open(file_name, O_RDONLY);
 	if (in < 0)
 		perror(file_name);
-	if (in == -1)
-		in = open("/tmp/.tmp_reader.t", O_RDONLY | O_TRUNC | O_CREAT, 0666);
+	// if (in == -1)
+	// 	in = open("/tmp/.tmp_reader.t", O_RDONLY | O_TRUNC | O_CREAT, 0666);
 	return (in);
 }
 

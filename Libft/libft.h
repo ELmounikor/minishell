@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:35:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/26 22:18:17 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/26 22:51:40 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include <unistd.h>
 # include <sys/wait.h>
 # include <fcntl.h>
-# include "../minishell.h"
 
 /*structers*/
 typedef struct s_list
@@ -29,12 +28,21 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 
+typedef struct s_env
+{
+	char			*variable;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
+
 /*functions*/
 t_list			*ft_lstlast(t_list *lst);
 t_list			*ft_lstnew(char *content, int id);
+void			ft_envclear(t_env **env, void (*del)(void*));
 void			ft_lstclear(t_list **lst, void (*del)(void*));
 void			ft_lstadd_front(t_list **lst, t_list *new);
 void			ft_lstadd_back(t_list **lst, t_list *new);
+void			ft_envdelone(t_env *lst, void (*del)(void*));
 void			ft_lstdelone(t_list *lst, void (*del)(void*));
 void			ft_lstiter(t_list *lst, void (*f)(void *));
 void			ft_free(char **s);
@@ -54,6 +62,7 @@ char			ft_convert(char c, char s);
 int				*cmd_size(t_list *lst);
 int				cmd_count(t_list *lst);
 int				ft_lstsize(t_list *lst);
+int				ft_envsize(t_env *env);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
 int				ft_isnum(char *s);
 int				ft_isspace(int c);

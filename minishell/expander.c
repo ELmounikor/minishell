@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:03:42 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/26 14:15:31 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/27 01:02:38 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,37 +22,33 @@ void	editor(char **s1, char *s2)
 	*s1 = tmp;
 }
 
-char	*getval(char *s1, t_list *env)
+char	*getval(char *s1, t_env *env)
 {
-	char	**dic;
-	int		start;
 /*
 	if (!ft_strncmp(s1, "?", 2))
 		return (ft_itoa(last_exit_code));*/
+	
+	printf("before%s=%s\n", s1, env->value);
 	while (env && s1)
 	{
-		dic = ft_split(env->content, '=');
-		if (!ft_strncmp(s1, dic[0], ft_strlen(s1) + 1))
+		if (!ft_strncmp(s1, env->variable, ft_strlen(s1)))
 		{
-			ft_split_cleaner(dic);
-			start = ft_strlen(s1) + 1;
+			printf("after%s=%s\n", s1, env->value);
 			ft_free(&s1);
-			return (ft_substr(env->content, start, \
-			ft_strlen(env->content)));
+			return (ft_strdup(env->value));
 		}
-		ft_split_cleaner(dic);
 		env = env->next;
 	}
 	ft_free(&s1);
 	return (0);
 }
 
-char	*expander(t_list *token, t_list *env, int i, int j)
+char	*expander(t_list *token, t_env *env, int i, int j)
 {
 	char	*s;
 
 	s = NULL;
-	if (token->id && token->id % 3 == 0)
+	if (token->id && token->id % 3 == 0 && j != 44 && j != 440)
 	{
 		while (token->content && token->content[i])
 		{
@@ -75,7 +71,7 @@ char	*expander(t_list *token, t_list *env, int i, int j)
 	return (ft_strdup(token->content));
 }
 
-t_list	*getter(t_list **in, t_list *env)
+t_list	*getter(t_list **in, t_env *env)
 {
 	t_list	*input;
 	t_list	*token;
@@ -90,10 +86,10 @@ t_list	*getter(t_list **in, t_list *env)
 		if ((token->id == 4 || token->id == 44 || token->id == 7 || \
 		token->id == 77) && !token->content && token->next)
 			token = token->next;
-		s = expander(token, env, 0, 0);
+		s = expander(token, env, 0, id);
 		while (token->id && token->id % 10 == 0)
 		{
-			editor(&s, expander(token->next, env, 0, 0));
+			editor(&s, expander(token->next, env, 0, id));
 			token = token->next;
 		}
 		ft_lstadd_back(&input, ft_lstnew(s, id));

@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:53:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/26 16:02:40 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/27 01:07:17 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,26 +43,41 @@ char	*new_prompt(void)
 	return (s);
 }
 
-int	main(int ac, char **av, char **envi)
+void	free_all(t_params *params, t_cmd **cmd, t_list **input)
 {
-	t_list	*input;
-	t_list	*env_i;
-	t_cmd	**cmd;
-	// t_env	*env;
-	char	*s;
+	free_cmds(cmd);
+	ft_lstclear(input, &free);
+	if (params)
+	{
+		ft_split_cleaner(params->paths);
+		ft_split_cleaner(params->en);
+		free(params);
+	}
+}
+
+int	main(int ac, char **av, char **en)
+{
+	t_list		*input;
+	t_env		*env;
+	t_cmd		**cmd;
+	//t_params	*params;
+	char		*s;
 
 	av = NULL;
+	ac = 0;
+	env = get_env(en);
 	//history_reloader(ac); // messup up & down keys tanchofoha apres
-	env_i = env_starter(envi, ac);
 	while (1)
 	{
 		s = new_prompt();
-		input = tokenizer(s, 0, 0, env_i);
+		//params = (t_params *) malloc (sizeof(t_params));
+		input = tokenizer(s, 0, 0, env);
 		if (input)
 		{
+			//param_extractor(&params, env, input);// env_extractor(&params, NULL, NULL); //env to be updated in between child processes using
 			cmd = cmd_extractor(input);
-			// affichage des commandes
 			int i = 0;
+			printf("\n=============cmd data============\n");
 			while (cmd && cmd[i])
 			{
 				printf("---------------------------------\ndata of the command number %d \
@@ -74,19 +89,31 @@ int	main(int ac, char **av, char **envi)
 				//lakant chi haja mn ghir 0 rdih howa lread end dyal lpipe\nout_fd = %d\
 				//lakant chi haja mn ghir 0 rdih howa lwrite end dyal lpipe\nlimiter = %s\
 				//use when file_fd[0] = -444 in here_doc(limiter)\npath = %s\
-				//aslan dima null lol khlito lik bach t3mrih <3\n---------------------------------\n", \
+				//aslan dima null lol khlito lik bach t3mrih kima taf9na <3\n---------------------------------\n", \
 				cmd[i]->file_des[0], cmd[i]->file_des[1], cmd[i]->limiter, cmd[i]->path);
 				i++;
 			}
 			// excute cmds here
-			free_cmds(cmd);
-			ft_lstclear(&input, &free);
+			free_all(NULL, cmd, &input);
 		}
 		ft_free(&s);
-		printf("\n==================================================\n");
-		system("leaks minishell");
-		printf("\n==================================================\n");
+		// printf("\n==================================================\n");
+		// system("leaks minishell");
+		// printf("\n==================================================\n");
 	}
-	ft_lstclear(&env_i, &free);
+	ft_envclear(&env, &free);
 	return (0);
 }
+
+					// printf("=============params data============\nnumber of cmd = %d\nlast exit code = %d\n--------------env list-------------\n", params->cmd_count, params->last_exit_code);
+					// t_env *tmp;
+					// tmp = env;
+					// while (tmp)
+					// {
+					// 	printf("%s=%s\n", tmp->variable, tmp->value);
+					// 	tmp = tmp->next;
+					// }
+					// i = 0;
+					// printf("--------------env list-------------\n");
+					// while (params->en && params->en[i])
+					// 	printf("%s\n", params->en[i++]);

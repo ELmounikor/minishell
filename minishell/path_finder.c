@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 12:52:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/25 14:47:48 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/26 19:18:27 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	**get_paths(char **env)
 		return (NULL);
 	return (ft_split(path + 5, ':'));
 }
-/*
+
 char	*get_path(char *cmd, char **paths)
 {
 	char	*abs_path;
@@ -36,10 +36,10 @@ char	*get_path(char *cmd, char **paths)
 	i = -1;
 	while (paths[++i])
 	{
-		abs_path = ft_strjoin_slash(paths[i], cmd);
+		abs_path = ft_strjoin_char(paths[i], cmd, '/');
 		if (!access(abs_path, X_OK))
 			return (abs_path);
 		ft_free(&abs_path);
 	}
 	return (NULL);
-}*/
+}

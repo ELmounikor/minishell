@@ -5,17 +5,32 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/23 11:33:17 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/23 11:45:42 by mel-kora         ###   ########.fr       */
+/*   Created: 2022/09/24 14:15:10 by sennaama          #+#    #+#             */
+/*   Updated: 2022/09/26 22:54:31 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
-
+# include <unistd.h>
+# include <stdio.h>
+# include <dirent.h>
 # include "../minishell.h"
+# include "ft_pipex/pipex.h"
 
 void	history(char **cmd);
-void	export_(char **cmd, t_list **env_i);
-void	unset(char **cmd, t_list **env_i);
+void	unset(char **cmd, t_env **env_i);
+void	echo(char **argv);
+void	cd(char **argv);
+t_env	*get_env(char **en);
+void	export(int argc, char **cmd, t_env *envp);
+void	print_env(t_env	*env);
+void	ft_lstadd_back_env(t_env **alst, t_env *new);
+t_env	*ft_lstnew_env(char *variable, char *value);
+t_env	*ft_lstlast_env(t_env *lst);
+int		*count_words(char	*str, char c);
+char	**ft_split_env(char *str, char c);
+void	add_element(char *s1, char *s2, t_env **envp);
+void	add_env(char **f, t_env **envp);
+t_env	*ft_copy_env(t_env *env);
 #endif

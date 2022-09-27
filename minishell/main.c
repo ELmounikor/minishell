@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:53:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/27 01:07:17 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/27 01:11:50 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,16 +104,15 @@ int	main(int ac, char **av, char **en)
 	ft_envclear(&env, &free);
 	return (0);
 }
-
-					// printf("=============params data============\nnumber of cmd = %d\nlast exit code = %d\n--------------env list-------------\n", params->cmd_count, params->last_exit_code);
-					// t_env *tmp;
-					// tmp = env;
-					// while (tmp)
-					// {
-					// 	printf("%s=%s\n", tmp->variable, tmp->value);
-					// 	tmp = tmp->next;
-					// }
-					// i = 0;
-					// printf("--------------env list-------------\n");
-					// while (params->en && params->en[i])
-					// 	printf("%s\n", params->en[i++]);
+// printf("=============params data============\nnumber of cmd = %d\nlast exit code = %d\n--------------env list-------------\n", params->cmd_count, params->last_exit_code);
+// t_env *tmp;
+// tmp = env;
+// while (tmp)
+// {
+// 	printf("%s=%s\n", tmp->variable, tmp->value);
+// 	tmp = tmp->next;
+// }
+// i = 0;
+// printf("--------------env list-------------\n");
+// while (params->en && params->en[i])
+// 	printf("%s\n", params->en[i++]);

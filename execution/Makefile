@@ -6,7 +6,7 @@
 #    By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/18 14:18:36 by sennaama          #+#    #+#              #
-#    Updated: 2022/09/26 19:35:40 by sennaama         ###   ########.fr        #
+#    Updated: 2022/09/27 01:18:45 by sennaama         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRCS	= ft_pipex/libft/ft_strlen.c ft_pipex/libft/ft_strnstr.c \
 		ft_pipex/get_cmd_path.c ft_pipex/childs.c ft_pipex/ft_utils_list.c\
 		builtins/cd.c builtins/echo.c builtins/ft_strncmp.c builtins/env.c\
 		builtins/export.c builtins/ft_split_env.c builtins/add_env.c\
-		builtins/main.c
+		builtins/unset.c builtins/pwd.c builtins/main.c #ft_pipex/pipex.c
 OBJS	= ${SRCS:.c=.o}
 
 EXEC	= minishell

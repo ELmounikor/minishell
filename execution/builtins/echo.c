@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 14:37:19 by sennaama          #+#    #+#             */
-/*   Updated: 2022/09/26 14:55:32 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/09/27 01:20:38 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ void	echo(char **argv)
 	int	i;
 	int	n;
 
+	if (argv[2] == NULL)
+	{
+		printf("\n");
+		return ;
+	}
 	if (ft_strncmp(argv[2], "-n", 2) == 0)
 		n = 1;
 	else

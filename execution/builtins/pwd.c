@@ -1,35 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/17 16:00:04 by sennaama          #+#    #+#             */
-/*   Updated: 2022/09/27 01:18:13 by sennaama         ###   ########.fr       */
+/*   Created: 2022/09/26 23:12:11 by sennaama          #+#    #+#             */
+/*   Updated: 2022/09/26 23:34:19 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "builtins.h"
 
-int	main1(int argc, char **argv, char **envp)
+void	pwd(void)
 {
-	int	child_1;
-	pid_t	child_2;
-	int		fd[2];
-	
-	if (argc != 5)
-		printf("error");
-	if (pipe(fd) == -1)
-		return (1);
-	child_1 = fork();
-	if (child_1 == 0)
-		cmd_child1(argv, envp, fd);
-	child_2 = fork();
-	if (child_2 == 0)
-		cmd_child2(argv, envp, fd);
-	close(fd[0]);
-	close(fd[1]);
-	waitpid(child_1,NULL,0);
-	waitpid(child_2,NULL,0);
+	printf("%s\n", getcwd(NULL, 0));
 }

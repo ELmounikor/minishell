@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 21:25:10 by sennaama          #+#    #+#             */
-/*   Updated: 2022/09/26 22:38:13 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/09/27 17:26:48 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,15 @@ void	unset(char **argv, t_env *env)
 {
 	int	i;
 
-	i = 2;
+	i = 1;
 	while (argv[i])
 	{
 		if (ft_check_variable(argv[i]) == 1)
-			printf("export: \'%s\' : not a valid identifier\n", argv[i]);
+		{
+			ft_putstr_fd("unset: \'", 2);
+			ft_putstr_fd(argv[i], 2);
+			ft_putstr_fd("\' : not a valid identifier\n", 2);
+		}
 		else
 			ft_remove_element_list(&env, argv[i]);
 		i++;

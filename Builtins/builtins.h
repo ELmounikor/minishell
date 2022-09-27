@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 14:15:10 by sennaama          #+#    #+#             */
-/*   Updated: 2022/09/27 14:26:25 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/09/27 18:19:17 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 void	history(char **cmd);
 void	echo(char **argv);
-void	cd(char **argv);
+void	cd(char **argv, t_env *env);
 t_env	*get_env(char **en);
 void	export(char **cmd, t_env *envp);
 void	print_env(t_env	*env);
@@ -30,8 +30,9 @@ t_env	*ft_lstlast_env(t_env *lst);
 int		*count_words(char	*str, char c);
 char	**ft_split_env(char *str, char c);
 void	add_element(char *s1, char *s2, t_env **envp);
-void	add_env(char **f, t_env **envp);
+void	add_env(char **f, t_env **envp, char *str);
 t_env	*ft_copy_env(t_env *env);
-int     ft_check_variable(char *sub);
+int		ft_check_variable(char *sub);
 void	unset(char **argv, t_env *env);
+void	pwd(void);
 #endif

@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 14:37:19 by sennaama          #+#    #+#             */
-/*   Updated: 2022/09/27 16:17:06 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/09/27 18:43:31 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	verifie_n(char	*argv)
 {
 	int	i;
 
-	if (ft_strncmp(argv, "-n", ft_strlen(argv)) == 0)
+	if (ft_strncmp(argv, "-n", ft_strlen(argv) + 1) == 0)
 		return (1);
 	if (ft_strncmp(argv, "-n", 2) == 0)
 	{

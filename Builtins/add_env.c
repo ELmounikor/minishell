@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 19:33:57 by sennaama          #+#    #+#             */
-/*   Updated: 2022/09/26 19:47:07 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/09/27 18:40:26 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ void	add_element(char *s1, char *s2, t_env **envp)
 	tmp = *envp;
 	while (tmp)
 	{
-		if (ft_strncmp(s1, tmp->variable, ft_strlen(s1)) == 0)
+		if (ft_strncmp(s1, tmp->variable, ft_strlen(s1) + 1) == 0)
 		{
-			f = ft_strjoin(s2, tmp->value);
+			f = ft_strjoin(tmp->value, s2);
 			free(tmp->value);
 			tmp->value = f;
 			return ;
@@ -47,11 +47,26 @@ void	add_element(char *s1, char *s2, t_env **envp)
 	ft_lstadd_back_env(envp, ft_lstnew_env(s1, s2));
 }
 
-void	add_env(char **f, t_env **envp)
+int	ft_exist(char *str, char c)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+void	add_env(char **f, t_env **envp, char *str)
 {
 	t_env	*tmp;
 	int		size;
 	char	*sub;
+	int		c;
 
 	tmp = *envp;
 	size = ft_strlen(f[0]);
@@ -62,7 +77,8 @@ void	add_env(char **f, t_env **envp)
 	}
 	else
 	{
-		if (ft_strlen(f[1]) == 0)
+		c = ft_exist(str, '=');
+		if (ft_strlen(f[1]) == 0 && c == 0)
 			ft_lstadd_back_env(envp, ft_lstnew_env(f[0], NULL));
 		else
 			ft_lstadd_back_env(envp, ft_lstnew_env(f[0], f[1]));

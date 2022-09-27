@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 23:12:11 by sennaama          #+#    #+#             */
-/*   Updated: 2022/09/26 23:34:19 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/09/27 17:31:37 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,12 @@
 
 void	pwd(void)
 {
-	printf("%s\n", getcwd(NULL, 0));
+	char	*path;
+
+	path = getcwd(NULL, 0);
+	if (path)
+	{
+		printf("%s\n", path);
+		free(path);
+	}
 }

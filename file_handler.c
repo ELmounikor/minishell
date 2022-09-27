@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/27 00:42:13 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/27 16:47:25 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,20 +61,18 @@ int	handle_infile(char *file_name, int fd)
 	return (in);
 }
 
-void	file_handler(t_list *token, int *fd_in, int *fd_out, char **limiter)
+void	file_handler(t_list *token, int *fd_in, int *fd_out)
 {
+	if (*fd_out > 0 && token->id % 7 == 0)
+		close(*fd_out);
+	else if (*fd_in > 0 && token->id % 4 == 0)
+		close(*fd_in);
 	if (token->id % 77 == 0 && fd_out >= 0)
 		*fd_out = handle_outfile(token->content, 'A', *fd_out);
 	else if (token->id % 7 == 0 && fd_out >= 0)
 		*fd_out = handle_outfile(token->content, 'T', *fd_out);
 	else if (token->id % 44 == 0)
-	{
-		if (*fd_in > 0)
-			close(*fd_in);
-		*fd_in = -444;
-		ft_free(limiter);
-		*limiter = ft_strjoin(token->content, "\n");
-	}
+		*fd_in = here_doc(ft_strjoin(token->content, "\n"));
 	else if (token->id % 4 == 0)
 		*fd_in = handle_infile(token->content, *fd_in);
 }

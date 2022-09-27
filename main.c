@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:53:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/27 01:11:50 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/27 16:48:28 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,9 @@ int	main(int ac, char **av, char **en)
 					printf("%s\n", cmd[i]->args[j++]);
 				printf("//in and out file descriptors:\nin_fd = %d\
 				//lakant chi haja mn ghir 0 rdih howa lread end dyal lpipe\nout_fd = %d\
-				//lakant chi haja mn ghir 0 rdih howa lwrite end dyal lpipe\nlimiter = %s\
-				//use when file_fd[0] = -444 in here_doc(limiter)\npath = %s\
+				//lakant chi haja mn ghir 0 rdih howa lwrite end dyal lpipe\npath = %s\
 				//aslan dima null lol khlito lik bach t3mrih kima taf9na <3\n---------------------------------\n", \
-				cmd[i]->file_des[0], cmd[i]->file_des[1], cmd[i]->limiter, cmd[i]->path);
+				cmd[i]->file_des[0], cmd[i]->file_des[1], cmd[i]->path);
 				i++;
 			}
 			// excute cmds here

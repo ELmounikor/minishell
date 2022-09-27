@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/27 00:06:58 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/27 16:53:45 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,18 +50,19 @@ void	cmd_filler(t_cmd **cmd, t_list **input, int size)
 	(*cmd)->args = (char **) malloc (size * sizeof(char *));
 	(*cmd)->file_des[0] = 0;
 	(*cmd)->file_des[1] = 0;
-	(*cmd)->limiter = NULL;
 	(*cmd)->path = NULL;
 	i = 0;
-	while ((*input) && (*input)->id != 1)
+	while ((*input) && (*input)->id != 1 && (*cmd)->args)
 	{
 		if ((*input)->id != 7 && (*input)->id != 77 && (*input)->id != 4 && \
 		(*input)->id != 44 && (*input)->id != 70 && (*input)->id != 770 && \
-		(*input)->id != 40 && (*input)->id != 440 && (*cmd)->args)
+		(*input)->id != 40 && (*input)->id != 440 && (*input)->content)
 			(*cmd)->args[i++] = ft_strdup((*input)->content);
-		else
+		else if (!((*input)->id != 7 && (*input)->id != 77 && (*input)->id != 4 \
+		&& (*input)->id != 44 && (*input)->id != 70 && (*input)->id != 770 && \
+		(*input)->id != 40 && (*input)->id != 440))
 			file_handler((*input), &((*cmd)->file_des[0]), \
-			&((*cmd)->file_des[1]), &((*cmd)->limiter));
+			&((*cmd)->file_des[1]));
 		(*input) = (*input)->next;
 	}
 	if ((*cmd)->args)

@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:03:42 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/27 01:23:43 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/27 15:57:49 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,5 @@ t_list	*getter(t_list **in, t_env *env)
 		token = token->next;
 	}
 	ft_lstclear(in, &free);
-	return (syntax_checker(&input));
+	return (input);
 }

@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/26 18:58:39 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/27 16:01:32 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_list	*token_maker(char *s, int start, int finish, int id)
 	while (start < finish)
 		str[i++] = s[start++];
 	str[i] = 0;
-	if (id == 5 || id == 6 || id == 50 || id == 60)
+	if ((id == 5 || id == 6 || id == 50 || id == 60))
 		token = ft_lstnew(ft_strdup(str), id);
 	else
 		token = ft_lstnew(ft_strtrim(str, " <>"), id);
@@ -114,17 +114,17 @@ t_list	*tokenizer(char *s, int i, int j, t_env *env)
 		}
 		ft_lstadd_back(&tokens, get_token(s, &j, &i, 0));
 	}
-	return (getter(&tokens, env));
+	return (syntax_checker(&tokens, env));
 }
 /*code for explaining
 // printf("'%c'---'%c'\n", s[start], s[finish]);
 
-// t_list	*test;
-// test = tokens;
-// while (test)
-// {
-// 	printf("id = %d, content = %s\n", test->id, test->content);
-// 	test = test->next;
-// }
-// exit(0);
+t_list	*test;
+test = tokens;
+while (test)
+{
+	printf("id = %d, content = %s\n", test->id, test->content);
+	test = test->next;
+}
+exit(0);
 */

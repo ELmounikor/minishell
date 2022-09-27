@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 14:21:31 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/26 22:42:51 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/27 15:57:19 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void		get_history(char *s, long long int n);
 void		file_handler(t_list *token, int *fdin, int *fdout, char **limiter);
 void		param_extractor(t_params **params, t_env *env, t_list *input);
 t_list		*tokenizer(char *s, int i, int j, t_env *env);
-t_list		*syntax_checker(t_list **tokens);
+t_list		*syntax_checker(t_list **tokens, t_env *env);
 t_list		*getter(t_list **tokens, t_env *env);
 t_cmd		**cmd_extractor(t_list *input);
 #endif

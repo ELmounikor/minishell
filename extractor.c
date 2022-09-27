@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/27 16:53:45 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/27 17:56:57 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	param_extractor(t_params	**params, t_env *env, t_list *input)
 	(*params)->paths = NULL;
 }
 
-void	cmd_filler(t_cmd **cmd, t_list **input, int size)
+void	cmd_filler(t_cmd **cmd, t_list **input, int size, int cmd_id)
 {
 	int	i;
 
@@ -62,7 +62,7 @@ void	cmd_filler(t_cmd **cmd, t_list **input, int size)
 		&& (*input)->id != 44 && (*input)->id != 70 && (*input)->id != 770 && \
 		(*input)->id != 40 && (*input)->id != 440))
 			file_handler((*input), &((*cmd)->file_des[0]), \
-			&((*cmd)->file_des[1]));
+			&((*cmd)->file_des[1]), cmd_id);
 		(*input) = (*input)->next;
 	}
 	if ((*cmd)->args)
@@ -82,7 +82,7 @@ t_cmd	**cmd_extractor(t_list *input)
 	i = 0;
 	while (input)
 	{
-		cmd_filler(&cmd[i], &input, sizes[i] + 1);
+		cmd_filler(&cmd[i], &input, sizes[i] + 1, i);
 		i++;
 		if (input)
 			input = input->next;

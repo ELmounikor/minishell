@@ -6,12 +6,14 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 14:21:31 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/27 16:50:39 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/27 18:44:04 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+/*the global var*/
 
 /*libraries*/
 # include "Libft/libft.h"
@@ -43,8 +45,9 @@ char		**get_paths(char **en);
 void		history_reloader(int ac);
 void		free_cmds(t_cmd **cmds);
 void		ft_exit(char **cmd);
+// void		editor(char **s1, char *s2);
 void		get_history(char *s, long long int n);
-void		file_handler(t_list *token, int *fdin, int *fdout);
+void		file_handler(t_list *token, int *fd_in, int *fd_out, int cmd_id);
 void		param_extractor(t_params **params, t_env *env, t_list *input);
 t_list		*tokenizer(char *s, int i, int j, t_env *env);
 t_list		*syntax_checker(t_list **tokens, t_env *env);

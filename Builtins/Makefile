@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+         #
+#    By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/20 16:48:53 by mel-kora          #+#    #+#              #
-#    Updated: 2022/09/26 22:55:20 by mel-kora         ###   ########.fr        #
+#    Updated: 2022/09/27 14:25:08 by sennaama         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,8 @@ SRCS	=	history.c\
 			echo.c\
 			env.c\
 			export.c\
+			pwd.c\
+			ft_builtins.c\
 			ft_split_env.c\
 			ft_pipex/childs.c\
 			ft_pipex/ft_utils_list.c\

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 16:13:57 by sennaama          #+#    #+#             */
-/*   Updated: 2022/09/27 01:06:46 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/27 14:32:39 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_env	*ft_lstnew_env(char *variable, char *value)
 	if (!l)
 		return (0);
 	l->variable = variable;
-	l->value = value;
+    l->value = value;
 	l->next = NULL;
 	return (l);
 }

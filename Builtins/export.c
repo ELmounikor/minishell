@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 18:24:00 by sennaama          #+#    #+#             */
-/*   Updated: 2022/09/26 19:46:37 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/09/26 22:43:38 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,12 @@ void	ft_sort_list(t_env **l)
 	}
 }
 
-void	print_export(t_env *tmp)
+void	print_export(t_env *env)
 {
+	t_env	*tmp;
+
+	tmp = ft_copy_env(env);
+	ft_sort_list(&tmp);
 	while (tmp)
 	{
 		if (tmp->value != NULL)
@@ -60,17 +64,10 @@ void	print_export(t_env *tmp)
 	}
 }
 
-int	ft_check_variable(char **f)
+int	ft_check_variable(char *sub)
 {
-	int		size;
-	char	*sub;
 	int		i;
 
-	size = ft_strlen(f[0]);
-	if (f[0][size - 1] == '+')
-		sub = ft_substr(f[0], 0, size - 1);
-	else
-		sub = ft_substr(f[0], 0, size);
 	if ((sub[0] < 'a' || sub[0] > 'z') && (sub[0] < 'A' || sub[0] > 'Z')
 		&& (sub[0] != '_'))
 		return (1);
@@ -85,25 +82,27 @@ int	ft_check_variable(char **f)
 	return (0);
 }
 
-void	export(int argc, char **cmd, t_env *envp)
+void	export(char **cmd, t_env *envp)
 {
-	t_env	*tmp;
+	char	*sub;
 	char	**f;
 	int		i;
+	int		size;
 
 	if (cmd[2] == NULL)
-	{
-		tmp = ft_copy_env(envp);
-		ft_sort_list(&tmp);
-		print_export(tmp);
-	}
+		print_export(envp);
 	else
 	{
 		i = 2;
-		while (i < argc)
+		while (cmd[i])
 		{
 			f = ft_split_env(cmd[i], '=');
-			if (ft_check_variable(f) == 1)
+			size = ft_strlen(f[0]);
+			if (f[0][size - 1] == '+')
+				sub = ft_substr(f[0], 0, size - 1);
+			else
+				sub = ft_substr(f[0], 0, size);
+			if (ft_check_variable(sub) == 1)
 				printf("export: \'%s\' : not a valid identifier\n", cmd[i]);
 			else
 				add_env(f, &envp);

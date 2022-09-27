@@ -3,94 +3,67 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/22 19:49:40 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/26 22:52:47 by mel-kora         ###   ########.fr       */
+/*   Created: 2022/09/26 21:25:10 by sennaama          #+#    #+#             */
+/*   Updated: 2022/09/26 22:38:13 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-void	try_unset(char *var, t_env **env_i, t_env *tmp)
+int	ft_remove_firt_element(t_env **env, char *var)
 {
-	t_env	*env;
+	t_env	*tmp;
 
-	env = *env_i;
-	while (env)
+	tmp = *env;
+	if (ft_strncmp(tmp->variable, var, ft_strlen(var)) == 0)
 	{
-		if (!ft_strncmp(var, env->variable, ft_strlen(var) + 1))
+		*env = (*env)->next;
+		free(tmp);
+		return (1);
+	}
+	return (0);
+}
+
+void	ft_remove_element_list(t_env **env, char *var)
+{
+	t_env	*tmp1;
+	t_env	*tmp2;
+
+	if (ft_remove_firt_element(env, var) == 1)
+		return ;
+	tmp1 = *env;
+	tmp2 = tmp1->next;
+	while (tmp2->next)
+	{
+		if (ft_strncmp(tmp2->variable, var, ft_strlen(var)) == 0)
 		{
-			if (tmp)
-				tmp->next = env->next;
-			else
-				*env_i = (*env_i)->next;
-			tmp = env;
-			env = env->next;
-			ft_envdelone(tmp, &free);
-			break ;
+			tmp1->next = tmp2->next;
+			free(tmp2);
+			return ;
 		}
-		tmp = env;
-		env = env->next;
+		tmp1 = tmp2;
+		tmp2 = tmp2->next;
+	}
+	if (ft_strncmp(tmp2->variable, var, ft_strlen(var)) == 0)
+	{
+		tmp1->next = NULL;
+		free(tmp2);
 	}
 }
 
-void	unset(char **cmd, t_env **env)
+void	unset(char **argv, t_env *env)
 {
-	int	exit_code;
 	int	i;
 
-	i = 0;
-	exit_code = 0;
-	while (cmd[++i])
+	i = 2;
+	while (argv[i])
 	{
-		if (!(ft_isalnumstr(cmd[i]) && !ft_isnum(cmd[i])))
-		{
-			printf("unset: '%s': not valid identifier\n", cmd[i]);
-			exit_code = 1;
-		}
+		if (ft_check_variable(argv[i]) == 1)
+			printf("export: \'%s\' : not a valid identifier\n", argv[i]);
 		else
-			try_unset(cmd[i], env, NULL);
-	}
-	exit(exit_code);
-}
-/*
-void	try_export(char **cmd, t_list **env_i, int *exit_code)
-{
-	char	**dic;
-	int		i;
-
-	i = 0;
-	while (cmd[++i])
-	{
-		dic = ft_split(cmd[i], '=');
-		if (!(ft_isalnumstr(dic[0]) && !ft_isnum(dic[0])))
-		{
-			printf("export: '%s': not valid identifier\n", dic[0]);
-			*exit_code = 1;
-		}
-		else if (dic[1])
-		{
-			try_unset(dic[0], env_i, NULL);
-			ft_lstadd_back(env_i, ft_lstnew(cmd[i], 0));
-		}
-		ft_split_cleaner(dic);
+			ft_remove_element_list(&env, argv[i]);
+		i++;
 	}
 }
-
-void	export_(char **cmd, t_list **env_i)
-{
-	t_list	*env;
-	int		exit_code;
-
-	exit_code = 0;
-	env = *env_i;
-	while (!cmd[1] && env)
-	{
-		printf("declare -x %s\n", env->content);
-		env = env->next;
-	}
-	try_export(cmd, env_i, &exit_code);
-	exit(exit_code);
-}
-*/

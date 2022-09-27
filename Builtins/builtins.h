@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 14:15:10 by sennaama          #+#    #+#             */
-/*   Updated: 2022/09/26 22:54:31 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/27 14:26:25 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,10 @@
 # include "ft_pipex/pipex.h"
 
 void	history(char **cmd);
-void	unset(char **cmd, t_env **env_i);
 void	echo(char **argv);
 void	cd(char **argv);
 t_env	*get_env(char **en);
-void	export(int argc, char **cmd, t_env *envp);
+void	export(char **cmd, t_env *envp);
 void	print_env(t_env	*env);
 void	ft_lstadd_back_env(t_env **alst, t_env *new);
 t_env	*ft_lstnew_env(char *variable, char *value);
@@ -33,4 +32,6 @@ char	**ft_split_env(char *str, char c);
 void	add_element(char *s1, char *s2, t_env **envp);
 void	add_env(char **f, t_env **envp);
 t_env	*ft_copy_env(t_env *env);
+int     ft_check_variable(char *sub);
+void	unset(char **argv, t_env *env);
 #endif

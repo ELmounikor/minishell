@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonuso.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 16:29:12 by sennaama          #+#    #+#             */
-/*   Updated: 2022/09/26 21:41:51 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/27 14:52:12 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,6 @@ void	ft_close(int id, int **fd, int argc)
 		close(fd[id - 2][0]);
 		close(fd[id - 2][1]);
 	}
-}
-
-void	ft_perror(char *str)
-{
-	perror(str);
-	exit(0);
 }
 
 int main(int argc, char **argv, char **envp)

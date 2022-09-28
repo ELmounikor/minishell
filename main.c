@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:53:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/28 14:10:48 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/28 19:12:44 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,14 @@ int	main(int ac, char **av, char **en)
 	while (1)
 	{
 		s = new_prompt();
-		//params = (t_params *) malloc (sizeof(t_params));
 		input = tokenizer(s, 0, 0, env);
+		// t_list *tmp;
+		// tmp = input;
+		// while (tmp)
+		// {
+		// 	printf("token id=%d\t content=%s\n", tmp->id, tmp->content);
+		// 	tmp = tmp->next;
+		// }
 		if (input)
 		{
 			//param_extractor(&params, env, input);// env_extractor(&params, NULL, NULL); //env to be updated in between child processes using
@@ -89,7 +95,8 @@ int	main(int ac, char **av, char **en)
 				//lakant chi haja mn ghir 0 rdih howa lread end dyal lpipe\nout_fd = %d\
 				//lakant chi haja mn ghir 0 rdih howa lwrite end dyal lpipe\npath = %s\
 				//aslan dima null lol khlito lik bach t3mrih kima taf9na <3\n---------------------------------\n", \
-				cmd[i]->file_des[0], cmd[i]->file_des[1], cmd[i]->path);
+				cmd[i]->fd[0], cmd[i]->fd[1], cmd[i]->path);
+				//ft_builtins(cmd[i], env);
 				i++;
 			}
 			// excute cmds here

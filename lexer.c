@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/27 16:01:32 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/28 17:22:29 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	lexer(char c, char next_c, int *id)
 		*id = 1;
 	else if (c == '$' && next_c == '?')
 		*id = 33;
-	else if (c == '$' && ft_isalnum_(next_c))
+	else if (c == '$' && (ft_isalnum_(next_c) || next_c == 34 || next_c == 39))
 		*id = 3;
 	else if (c == '<' && next_c == '<')
 		*id = 44;

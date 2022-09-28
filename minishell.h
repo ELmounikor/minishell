@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 14:21:31 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/28 17:03:58 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/28 18:40:13 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct s_params
 
 typedef struct s_cmd
 {
-	int				file_des[2];
+	int				fd[2];
 	char			**args;
 	char			*path;
 }	t_cmd;
@@ -53,4 +53,5 @@ t_list		*tokenizer(char *s, int i, int j, t_env *env);
 t_list		*syntax_checker(t_list **tokens, t_env *env);
 t_list		*getter(t_list **tokens, t_env *env);
 t_cmd		**cmd_extractor(t_list *input);
+void		ft_builtins(t_cmd *cmd, t_env *env);
 #endif

@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:17:01 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/27 16:11:31 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/28 18:04:41 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ int	check(t_list *previous, t_list *current, t_list *next)
 	if (current && (current->id == 44 || current->id == 4 || \
 	current->id == 440 || current->id == 40 || current->id == 770 || \
 	current->id == 70 || current->id == 77 || current->id == 7) && \
-	!(current->content || (next && (next->id != 44 || next->id != 4 || \
-	next->id != 440 || next->id != 40 || next->id != 770 || next->id != 70 || \
-	next->id != 77 || next->id != 7 || next->id != 1))))
+	!(current->content || (next && (next->id != 44 && next->id != 4 && \
+	next->id != 440 && next->id != 40 && next->id != 770 && next->id != 70 && \
+	next->id != 77 && next->id != 7 && next->id != 1))))
 		return (throw_error(current));
 	else if (current && current->id == 1 && !(previous && next && \
 	previous->id != 1 && next->id != 1))

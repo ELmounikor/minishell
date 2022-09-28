@@ -6,7 +6,7 @@
 #    By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/20 16:48:53 by mel-kora          #+#    #+#              #
-#    Updated: 2022/09/26 14:31:52 by mel-kora         ###   ########.fr        #
+#    Updated: 2022/09/28 18:22:06 by mel-kora         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRCS	=	ft_putstr_fd.c\
 			ft_substr.c\
 			ft_isalnum_.c\
 			ft_isspace.c\
+			ft_strcmp.c\
 
 OBJS	=	${SRCS:.c=.o}
 

@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/28 16:57:18 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/28 18:19:14 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ int	here_doc(char *limiter, int cmd_id, char **file_name)
 	if (cmd_id == 0)
 		file_id = 0;
 	*file_name = get_file_name(cmd_id, file_id);
-	//printf("limiter=%s\tfile_name=%s\tthe char ascii code=%d\n", limiter, *file_name, file_id + cmd_id);
+	// printf("limiter=%s\tfile_name=%s\tthe char ascii code=%d\n", limiter, *file_name, file_id + cmd_id);
 	fd = open(*file_name, O_WRONLY | O_TRUNC | O_CREAT, 0666);
 	s = readline("> ");
-	while (s && ft_strncmp(s, limiter, ft_strlen(limiter) + 1))
+	while (s && ft_strcmp(s, limiter))
 	{
 		ft_putstr_fd(s, fd);
 		ft_free(&s);

@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:03:42 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/27 18:28:59 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/28 19:12:39 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ char	*expander(t_list *token, t_env *env, int i, int j)
 	char	*s;
 
 	s = NULL;
-	if (token->id && token->id % 3 == 0 && j != 44 && j != 440)
+	if (token->id && token->id % 3 == 0 && j != 44 && j != 440 && \
+	j != 88 && j != 880)
 	{
 		while (token->content && token->content[i])
 		{
@@ -68,6 +69,13 @@ char	*expander(t_list *token, t_env *env, int i, int j)
 	return (ft_strdup(token->content));
 }
 
+void	check_heredoc_expandability(int *id, int tokid)
+{
+	if ((*id == 44 || *id == 440) && tokid != *id &&!(\
+	tokid != 5 && tokid != 6 && tokid != 50 && tokid != 60))
+		*id *= 2;
+}
+
 t_list	*getter(t_list **in, t_env *env)
 {
 	t_list	*input;
@@ -83,6 +91,7 @@ t_list	*getter(t_list **in, t_env *env)
 		if ((token->id == 4 || token->id == 44 || token->id == 7 || \
 		token->id == 77) && !token->content && token->next)
 			token = token->next;
+		check_heredoc_expandability(&id, token->id);
 		s = expander(token, env, 0, id);
 		while (token->id && token->id % 10 == 0)
 		{
@@ -95,3 +104,11 @@ t_list	*getter(t_list **in, t_env *env)
 	ft_lstclear(in, &free);
 	return (input);
 }
+/*
+t_list *tmp;
+tmp = *in;
+while (tmp)
+{
+	printf("token id=%d\t content=%s\n", tmp->id, tmp->content);
+	tmp = tmp->next;
+}*/

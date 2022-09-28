@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/28 16:15:28 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/28 16:57:18 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*get_file_name(int cmd_id, int file_id)
 	char	*file_name;
 	int		fd;
 
-	dic = ft_split(ft_strdup(ttyname(0)), '/');
+	dic = ft_split(ttyname(0), '/');
 	file_name = ft_strjoin("/tmp/", dic[2]);
 	fd = 0;
 	while (fd <= 0)

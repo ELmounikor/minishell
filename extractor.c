@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/27 17:56:57 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/28 17:03:11 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	cmd_filler(t_cmd **cmd, t_list **input, int size, int cmd_id)
 	(*cmd)->args = (char **) malloc (size * sizeof(char *));
 	(*cmd)->file_des[0] = 0;
 	(*cmd)->file_des[1] = 0;
-	(*cmd)->path = NULL;
 	i = 0;
 	while ((*input) && (*input)->id != 1 && (*cmd)->args)
 	{

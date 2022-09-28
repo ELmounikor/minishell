@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 14:21:31 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/27 18:44:04 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/28 13:24:46 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char		**get_paths(char **en);
 void		history_reloader(int ac);
 void		free_cmds(t_cmd **cmds);
 void		ft_exit(char **cmd);
-// void		editor(char **s1, char *s2);
+void		editor(char **s1, char *s2);
 void		get_history(char *s, long long int n);
 void		file_handler(t_list *token, int *fd_in, int *fd_out, int cmd_id);
 void		param_extractor(t_params **params, t_env *env, t_list *input);

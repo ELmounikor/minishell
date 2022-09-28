@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/27 19:10:20 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/28 15:35:50 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,38 @@ int	handle_outfile(char *file_name, char code, int fd)
 	return (out);
 }
 
-int	here_doc(char	*limiter, int cmd_id, char **file_name)
+char	*get_file_name(int cmd_id, int file_id)
 {
-	int			fd;
-	char		*s;
-	static int	i;
+	char	**dic;
+	char	*file_name;
+	int		fd;
 
-	i = -1;
-	s = ttyname(0);
+	dic = ft_split(ft_strdup(ttyname(0)), '/');
+	file_name = ft_strjoin("/tmp/", dic[2]);
 	fd = 0;
 	while (fd <= 0)
 	{
-		ft_free(file_name);
-		*file_name = ft_strjoin_char("/tmp/.", s, i + cmd_id);
-		fd = open(*file_name, O_WRONLY | O_TRUNC | O_CREAT, 0666);
+		editor(&file_name, ft_strjoin_char("tmp", ".t", file_id + cmd_id));
+		fd = open(file_name, O_WRONLY | O_TRUNC | O_CREAT, 0666);
+		if (fd < 0)
+			file_id++;
 	}
-	ft_free(&s);
+	ft_split_cleaner(dic);
+	close(fd);
+	return (file_name);
+}
+
+int	here_doc(char *limiter, int cmd_id, char **file_name)
+{
+	int			fd;
+	char		*s;
+	static int	file_id;
+
+	if (cmd_id == 0)
+		file_id = 0;
+	*file_name = get_file_name(cmd_id, file_id);
+	// printf("limiter=%s\tfile_name=%s\tfile_id + cmd_id=%d\n", limiter, *file_name, file_id + cmd_id);
+	fd = open(*file_name, O_WRONLY | O_TRUNC | O_CREAT, 0666);
 	s = readline("> ");
 	while (s && ft_strncmp(s, limiter, ft_strlen(limiter) + 1))
 	{
@@ -52,7 +68,6 @@ int	here_doc(char	*limiter, int cmd_id, char **file_name)
 		ft_free(&s);
 		s = readline("> ");
 	}
-	ft_free(&limiter);
 	close(fd);
 	return (open(*file_name, O_RDWR));
 }
@@ -82,7 +97,7 @@ void	file_handler(t_list *token, int *fd_in, int *fd_out, int cmd_id)
 		*fd_out = handle_outfile(token->content, 'T', *fd_out);
 	else if (token->id % 44 == 0)
 	{
-		*fd_in = here_doc(ft_strjoin(token->content, "\n"), cmd_id, &s);
+		*fd_in = here_doc(token->content, cmd_id, &s);
 		ft_free(&s);
 	}
 	else if (token->id % 4 == 0)

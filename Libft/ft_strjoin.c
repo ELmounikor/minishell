@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 12:44:23 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/26 23:42:21 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/28 14:39:34 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	ft_split_cleaner(char **output)
 	if (!output)
 		return ;
 	while (output[i])
-		free(output[i++]);
+		ft_free(&output[i++]);
 	free(output);
 }
 

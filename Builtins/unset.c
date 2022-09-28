@@ -6,11 +6,29 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 21:25:10 by sennaama          #+#    #+#             */
-/*   Updated: 2022/09/27 17:26:48 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/09/28 18:28:51 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
+
+int	ft_check_variable(char *sub)
+{
+	int		i;
+
+	if ((sub[0] < 'a' || sub[0] > 'z') && (sub[0] < 'A' || sub[0] > 'Z')
+		&& (sub[0] != '_'))
+		return (1);
+	i = 1;
+	while (sub[i])
+	{
+		if ((sub[i] < 'a' || sub[0] > 'z') && (sub[i] < 'A' || sub[i] > 'Z')
+			&& (sub[i] < '0' || sub[i] > '9') && (sub[i] != '_'))
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
 int	ft_remove_firt_element(t_env **env, char *var)
 {

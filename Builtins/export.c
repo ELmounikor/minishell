@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 18:24:00 by sennaama          #+#    #+#             */
-/*   Updated: 2022/09/27 18:44:00 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/09/28 18:28:45 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,30 +64,32 @@ void	print_export(t_env *env)
 	}
 }
 
-int	ft_check_variable(char *sub)
+void	export_element(char *cmd, t_env *envp)
 {
-	int		i;
+	char	*sub;
+	char	**f;
+	int		size;
 
-	if ((sub[0] < 'a' || sub[0] > 'z') && (sub[0] < 'A' || sub[0] > 'Z')
-		&& (sub[0] != '_'))
-		return (1);
-	i = 1;
-	while (sub[i])
+	f = ft_split_env(cmd, '=');
+	size = ft_strlen(f[0]);
+	if (f[0][size - 1] == '+')
+		sub = ft_substr(f[0], 0, size - 1);
+	else
+		sub = ft_substr(f[0], 0, size);
+	if (!sub || ft_check_variable(sub) == 1)
 	{
-		if ((sub[i] < 'a' || sub[0] > 'z') && (sub[i] < 'A' || sub[i] > 'Z')
-			&& (sub[i] < '0' || sub[i] > '9') && (sub[i] != '_'))
-			return (1);
-		i++;
+		ft_putstr_fd("export: \'", 2);
+		ft_putstr_fd(cmd, 2);
+		ft_putstr_fd("\' : not a valid identifier\n", 2);
+		//exit(127);
 	}
-	return (0);
+	else
+		add_env(f, &envp, cmd);
 }
 
 void	export(char **cmd, t_env *envp)
 {
-	char	*sub;
-	char	**f;
 	int		i;
-	int		size;
 
 	if (cmd[1] == NULL)
 		print_export(envp);
@@ -96,21 +98,7 @@ void	export(char **cmd, t_env *envp)
 		i = 1;
 		while (cmd[i])
 		{
-			f = ft_split_env(cmd[i], '=');
-			size = ft_strlen(f[0]);
-			if (f[0][size - 1] == '+')
-				sub = ft_substr(f[0], 0, size - 1);
-			else
-				sub = ft_substr(f[0], 0, size);
-			if (!sub || ft_check_variable(sub) == 1)
-			{
-				ft_putstr_fd("export: \'", 2);
-				ft_putstr_fd(cmd[i], 2);
-				ft_putstr_fd("\' : not a valid identifier\n", 2);
-				//exit(127);
-			}
-			else
-				add_env(f, &envp, cmd[i]);
+			export_element(cmd[i], envp);
 			i++;
 		}
 	}

@@ -36,7 +36,7 @@ t_list	*ft_lstnew(char *content, int id)
 	if (!l)
 		return (0);
 	l->content = content;
-	l->id =  id;
+	l->id = id;
 	l->next = NULL;
 	return (l);
 }

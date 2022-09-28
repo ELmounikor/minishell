@@ -6,7 +6,7 @@
 #    By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/20 16:48:53 by mel-kora          #+#    #+#              #
-#    Updated: 2022/09/27 17:11:11 by sennaama         ###   ########.fr        #
+#    Updated: 2022/09/28 16:51:09 by sennaama         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,9 @@ SRCS	=	history.c\
 			list_env.c\
 			ft_builtins.c\
 			ft_split_env.c\
+			ft_atoi_exit.c\
+			exit.c\
+			ft_builtins.c\
 			ft_pipex/childs.c\
 			ft_pipex/ft_utils_list.c\
 			ft_pipex/get_cmd_path.c\

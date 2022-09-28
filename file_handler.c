@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/28 15:04:36 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/28 16:15:28 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,12 @@ char	*get_file_name(int cmd_id, int file_id)
 	while (fd <= 0)
 	{
 		editor(&file_name, ft_strjoin_char("tmp", ".t", file_id + cmd_id));
-		printf("%s\n", file_name);
 		fd = open(file_name, O_WRONLY | O_TRUNC | O_CREAT, 0666);
 		if (fd < 0)
 			file_id++;
 	}
 	ft_split_cleaner(dic);
 	close(fd);
-	printf("final->%s\n", file_name);
 	return (file_name);
 }
 
@@ -58,15 +56,14 @@ int	here_doc(char *limiter, int cmd_id, char **file_name)
 	char		*s;
 	static int	file_id;
 
-	file_id = 0;
+	if (cmd_id == 0)
+		file_id = 0;
 	*file_name = get_file_name(cmd_id, file_id);
-	printf("limiter=%s\tfile_id + cmd_id=%d\n", limiter, file_id + cmd_id);
+	//printf("limiter=%s\tfile_name=%s\tthe char ascii code=%d\n", limiter, *file_name, file_id + cmd_id);
 	fd = open(*file_name, O_WRONLY | O_TRUNC | O_CREAT, 0666);
-	printf("fd=%d\n", fd);
 	s = readline("> ");
 	while (s && ft_strncmp(s, limiter, ft_strlen(limiter) + 1))
 	{
-		printf("%s\n", s);
 		ft_putstr_fd(s, fd);
 		ft_free(&s);
 		s = readline("> ");

@@ -6,27 +6,34 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/28 18:19:14 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/29 14:28:59 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	handle_outfile(char *file_name, char code, int fd)
+int	handle_file(char *file_name, char code, int fd)
 {
-	int	out;
+	int	file;
 
 	if (fd > 0)
 		close(fd);
-	if (code == 'A')
-		out = open(file_name, O_RDWR | O_APPEND);
+	if (code == 'I')
+	{
+		fd = open(file_name, O_RDONLY);
+		if (fd < 0)
+			perror(file_name);
+		return (fd);
+	}
+	else if (code == 'A')
+		file = open(file_name, O_RDWR | O_APPEND);
 	else
-		out = open(file_name, O_RDWR | O_TRUNC);
-	if (out == -1)
-		out = open(file_name, O_RDWR | O_CREAT, 0666);
-	if (out == -1)
+		file = open(file_name, O_RDWR | O_TRUNC);
+	if (file == -1)
+		file = open(file_name, O_RDWR | O_CREAT, 0666);
+	if (file == -1)
 		perror(file_name);
-	return (out);
+	return (file);
 }
 
 char	*get_file_name(int cmd_id, int file_id)
@@ -50,7 +57,35 @@ char	*get_file_name(int cmd_id, int file_id)
 	return (file_name);
 }
 
-int	here_doc(char *limiter, int cmd_id, char **file_name)
+char	*line_expander(char **line, t_env *env, int i, int j)
+{
+	char	*s;
+
+	s = NULL;
+	if (j != 88 && j != 880)
+	{
+		while (*line && (*line)[i])
+		{
+			j = i;
+			while ((*line)[i] && !((*line)[i] == '$' && (\
+			ft_isalnum_((*line)[i + 1]) || (*line)[i + 1] == '?')))
+				i++;
+			editor(&s, ft_substr(*line, j, i - j));
+			if ((*line)[i] == '$')
+			{
+				j = ++i;
+				while (ft_isalnum_((*line)[i]))
+					i++;
+				editor(&s, getval(ft_substr((*line), j, i - j), env));
+			}
+		}
+		ft_free(line);
+		return (s);
+	}
+	return (*line);
+}
+
+int	here_doc(t_list *token, int cmd_id, char **file_name, t_env *env)
 {
 	int			fd;
 	char		*s;
@@ -59,11 +94,11 @@ int	here_doc(char *limiter, int cmd_id, char **file_name)
 	if (cmd_id == 0)
 		file_id = 0;
 	*file_name = get_file_name(cmd_id, file_id);
-	// printf("limiter=%s\tfile_name=%s\tthe char ascii code=%d\n", limiter, *file_name, file_id + cmd_id);
 	fd = open(*file_name, O_WRONLY | O_TRUNC | O_CREAT, 0666);
 	s = readline("> ");
-	while (s && ft_strcmp(s, limiter))
+	while (s && ft_strcmp(s, token->content))
 	{
+		s = line_expander(&s, env, 0, token->id);
 		ft_putstr_fd(s, fd);
 		ft_free(&s);
 		s = readline("> ");
@@ -72,34 +107,20 @@ int	here_doc(char *limiter, int cmd_id, char **file_name)
 	return (open(*file_name, O_RDWR));
 }
 
-int	handle_infile(char *file_name)
-{
-	int	in;
-
-	in = open(file_name, O_RDONLY);
-	if (in < 0)
-		perror(file_name);
-	// if (in == -1)
-	// 	in = open("/tmp/.tmp_reader.t", O_RDONLY | O_TRUNC | O_CREAT, 0666);
-	return (in);
-}
-
-void	file_handler(t_list *token, int *fd_in, int *fd_out, int cmd_id)
+void	file_handler(t_list *token, int *fd_in, int *fd_out, int cmd_id, t_env *env)
 {
 	char	*s;
 
 	s = NULL;
-	if (*fd_in > 0 && token->id % 4 == 0)
-		close(*fd_in);
 	if (token->id % 77 == 0 && fd_out >= 0)
-		*fd_out = handle_outfile(token->content, 'A', *fd_out);
+		*fd_out = handle_file(token->content, 'A', *fd_out);
 	else if (token->id % 7 == 0 && fd_out >= 0)
-		*fd_out = handle_outfile(token->content, 'T', *fd_out);
+		*fd_out = handle_file(token->content, 'T', *fd_out);
 	else if (token->id % 44 == 0)
 	{
-		*fd_in = here_doc(token->content, cmd_id, &s);
+		*fd_in = here_doc(token, cmd_id, &s, env);
 		ft_free(&s);
 	}
 	else if (token->id % 4 == 0)
-		*fd_in = handle_infile(token->content);
+		*fd_in = handle_file(token->content, 'I', *fd_in);
 }

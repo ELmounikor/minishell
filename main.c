@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:53:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/28 19:12:44 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/29 15:30:34 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ char	*new_prompt(void)
 
 void	free_all(t_params *params, t_cmd **cmd, t_list **input)
 {
-	free_cmds(cmd);
 	ft_lstclear(input, &free);
+	free_cmds(cmd);
 	if (params)
 	{
 		ft_split_cleaner(params->paths);
@@ -71,17 +71,10 @@ int	main(int ac, char **av, char **en)
 	{
 		s = new_prompt();
 		input = tokenizer(s, 0, 0, env);
-		// t_list *tmp;
-		// tmp = input;
-		// while (tmp)
-		// {
-		// 	printf("token id=%d\t content=%s\n", tmp->id, tmp->content);
-		// 	tmp = tmp->next;
-		// }
 		if (input)
 		{
 			//param_extractor(&params, env, input);// env_extractor(&params, NULL, NULL); //env to be updated in between child processes using
-			cmd = cmd_extractor(input);
+			cmd = cmd_extractor(input, env);
 			int i = 0;
 			printf("\n=============cmd data============\n");
 			while (cmd && cmd[i])
@@ -93,14 +86,16 @@ int	main(int ac, char **av, char **en)
 					printf("%s\n", cmd[i]->args[j++]);
 				printf("//in and out file descriptors:\nin_fd = %d\
 				//lakant chi haja mn ghir 0 rdih howa lread end dyal lpipe\nout_fd = %d\
-				//lakant chi haja mn ghir 0 rdih howa lwrite end dyal lpipe\npath = %s\
-				//aslan dima null lol khlito lik bach t3mrih kima taf9na <3\n---------------------------------\n", \
-				cmd[i]->fd[0], cmd[i]->fd[1], cmd[i]->path);
+				//lakant chi haja mn ghir 0 rdih howa lwrite end dyal lpipe\n<3\n---------------------------------\n", \
+				cmd[i]->fd[0], cmd[i]->fd[1]);
 				//ft_builtins(cmd[i], env);
 				i++;
 			}
 			// excute cmds here
-			free_all(NULL, cmd, &input);
+			
+			free_cmds(cmd);
+			ft_lstclear(&input, &free);
+			// free_all(0, cmd, &input);
 		}
 		ft_free(&s);
 		// printf("\n==================================================\n");

@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 14:21:31 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/28 18:40:13 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/29 14:12:11 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,18 @@ typedef struct s_cmd
 /*functions*/
 int			quote_check(char *s);
 char		*new_prompt(void);
+char		*getval(char *s1, t_env *env);
 char		**get_paths(char **en);
 void		history_reloader(int ac);
 void		free_cmds(t_cmd **cmds);
 void		ft_exit(char **cmd);
 void		editor(char **s1, char *s2);
 void		get_history(char *s, long long int n);
-void		file_handler(t_list *token, int *fd_in, int *fd_out, int cmd_id);
+void		file_handler(t_list *token, int *fd_in, int *fd_out, int cmd_id, t_env *env);
 void		param_extractor(t_params **params, t_env *env, t_list *input);
 t_list		*tokenizer(char *s, int i, int j, t_env *env);
 t_list		*syntax_checker(t_list **tokens, t_env *env);
 t_list		*getter(t_list **tokens, t_env *env);
-t_cmd		**cmd_extractor(t_list *input);
+t_cmd		**cmd_extractor(t_list *input, t_env *env);
 void		ft_builtins(t_cmd *cmd, t_env *env);
 #endif

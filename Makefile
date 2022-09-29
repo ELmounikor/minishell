@@ -6,7 +6,7 @@
 #    By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/20 12:58:47 by mel-kora          #+#    #+#              #
-#    Updated: 2022/09/28 19:09:27 by mel-kora         ###   ########.fr        #
+#    Updated: 2022/09/29 15:07:17 by mel-kora         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ CC		=	@gcc
 RM		=	@rm -rf
 LIB		=	-L /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/editline
 RDINC	=	-I /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/editline/readline.h
-CFLAGS	=	-Wall -Werror -Wextra # -g -fsanitize=address
+CFLAGS	=	-Wall -Werror -Wextra -g -fsanitize=address
 
 all:		${NAME} 
 

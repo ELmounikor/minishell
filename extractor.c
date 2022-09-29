@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/28 18:40:30 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/29 15:17:39 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	param_extractor(t_params	**params, t_env *env, t_list *input)
 	(*params)->paths = NULL;
 }
 
-void	cmd_filler(t_cmd **cmd, t_list **input, int size, int cmd_id)
+void	cmd_filler(t_cmd **cmd, t_list **input, int size, int cmd_id, t_env *env)
 {
 	int	i;
 
@@ -62,14 +62,14 @@ void	cmd_filler(t_cmd **cmd, t_list **input, int size, int cmd_id)
 		|| (*input)->id == 44 || (*input)->id == 70 || (*input)->id == 770 || \
 		(*input)->id == 40 || (*input)->id == 440 || (*input)->id == 88 || \
 		(*input)->id == 880)
-			file_handler((*input), &((*cmd)->fd[0]), &((*cmd)->fd[1]), cmd_id);
+			file_handler((*input), &((*cmd)->fd[0]), &((*cmd)->fd[1]), cmd_id, env);
 		(*input) = (*input)->next;
 	}
 	if ((*cmd)->args)
 		(*cmd)->args[i] = NULL;
 }
 
-t_cmd	**cmd_extractor(t_list *input)
+t_cmd	**cmd_extractor(t_list *input, t_env *env)
 {
 	t_cmd	**cmd;
 	int		*sizes;
@@ -82,7 +82,7 @@ t_cmd	**cmd_extractor(t_list *input)
 	i = 0;
 	while (input)
 	{
-		cmd_filler(&cmd[i], &input, sizes[i] + 1, i);
+		cmd_filler(&cmd[i], &input, sizes[i] + 1, i, env);
 		i++;
 		if (input)
 			input = input->next;
@@ -96,12 +96,12 @@ void	free_cmds(t_cmd **cmd)
 {
 	int	i;
 
-	i = -1;
 	if (!cmd)
 		return ;
+	i = -1;
 	while (cmd[++i])
 	{
-		ft_free(&cmd[i]->path);
+		// ft_free(&(cmd[i]->path));
 		ft_split_cleaner(cmd[i]->args);
 		free(cmd[i]);
 	}

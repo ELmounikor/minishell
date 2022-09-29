@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:03:42 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/28 19:12:39 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/29 15:43:48 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*getval(char *s1, t_env *env)
 		return (ft_itoa(last_exit_code));*/
 	while (env && s1)
 	{
-		if (!ft_strncmp(s1, env->variable, ft_strlen(s1) + 1))
+		if (!ft_strcmp(s1, env->variable))
 		{
 			ft_free(&s1);
 			return (ft_strdup(env->value));
@@ -69,10 +69,15 @@ char	*expander(t_list *token, t_env *env, int i, int j)
 	return (ft_strdup(token->content));
 }
 
-void	check_heredoc_expandability(int *id, int tokid)
+void	check_redirection(int *id, t_list **token)
 {
-	if ((*id == 44 || *id == 440) && tokid != *id &&!(\
-	tokid != 5 && tokid != 6 && tokid != 50 && tokid != 60))
+	if (((*token)->id == 4 || (*token)->id == 44 || (*token)->id == 7 || \
+	(*token)->id == 77 || (*token)->id == 40 || (*token)->id == 440 || \
+	(*token)->id == 70 || (*token)->id == 770) && !(*token)->content && \
+	(*token)->next)
+		(*token) = (*token)->next;
+	if ((*id == 44 || *id == 440) && ((*token)->id == 5 || (*token)->id == 6 || \
+	(*token)->id == 50 || (*token)->id == 60 || (*token)->id == 100))
 		*id *= 2;
 }
 
@@ -88,10 +93,7 @@ t_list	*getter(t_list **in, t_env *env)
 	while (token)
 	{
 		id = token->id;
-		if ((token->id == 4 || token->id == 44 || token->id == 7 || \
-		token->id == 77) && !token->content && token->next)
-			token = token->next;
-		check_heredoc_expandability(&id, token->id);
+		check_redirection(&id, &token);
 		s = expander(token, env, 0, id);
 		while (token->id && token->id % 10 == 0)
 		{
@@ -104,11 +106,3 @@ t_list	*getter(t_list **in, t_env *env)
 	ft_lstclear(in, &free);
 	return (input);
 }
-/*
-t_list *tmp;
-tmp = *in;
-while (tmp)
-{
-	printf("token id=%d\t content=%s\n", tmp->id, tmp->content);
-	tmp = tmp->next;
-}*/

@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/29 15:17:39 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/29 16:22:16 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,10 @@ void	free_cmds(t_cmd **cmd)
 	{
 		// ft_free(&(cmd[i]->path));
 		ft_split_cleaner(cmd[i]->args);
+		if (cmd[i]->fd[0] > 0)
+			close(cmd[i]->fd[0]);
+		if (cmd[i]->fd[1] > 0)
+			close(cmd[i]->fd[1]);
 		free(cmd[i]);
 	}
 	free(cmd);

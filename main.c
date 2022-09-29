@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:53:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/29 15:30:34 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/09/29 16:19:49 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int	main(int ac, char **av, char **en)
 				int j = 0;
 				while (cmd[i]->args[j])
 					printf("%s\n", cmd[i]->args[j++]);
+				printf("%s\n", cmd[i]->args[j]);
 				printf("//in and out file descriptors:\nin_fd = %d\
 				//lakant chi haja mn ghir 0 rdih howa lread end dyal lpipe\nout_fd = %d\
 				//lakant chi haja mn ghir 0 rdih howa lwrite end dyal lpipe\n<3\n---------------------------------\n", \

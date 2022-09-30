@@ -6,17 +6,13 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 13:41:04 by sennaama          #+#    #+#             */
-/*   Updated: 2022/09/24 17:49:38 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/09/29 20:04:19 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	ft_perror(char *str)
-{
-	perror(str);
-	exit(0);
-}
+
 
 void    cmd_child1(char **argv, char **envp, int *fd)
 {

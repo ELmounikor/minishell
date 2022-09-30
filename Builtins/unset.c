@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 21:25:10 by sennaama          #+#    #+#             */
-/*   Updated: 2022/09/28 18:28:51 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/09/30 14:46:41 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_remove_firt_element(t_env **env, char *var)
 	t_env	*tmp;
 
 	tmp = *env;
-	if (ft_strncmp(tmp->variable, var, ft_strlen(var)) == 0)
+	if (ft_strncmp(tmp->variable, var, ft_strlen(tmp->variable) + 1) == 0)
 	{
 		*env = (*env)->next;
 		free(tmp);
@@ -55,7 +55,7 @@ void	ft_remove_element_list(t_env **env, char *var)
 	tmp2 = tmp1->next;
 	while (tmp2->next)
 	{
-		if (ft_strncmp(tmp2->variable, var, ft_strlen(var)) == 0)
+		if (ft_strncmp(tmp2->variable, var, ft_strlen(tmp2->variable) + 1) == 0)
 		{
 			tmp1->next = tmp2->next;
 			free(tmp2);
@@ -64,7 +64,7 @@ void	ft_remove_element_list(t_env **env, char *var)
 		tmp1 = tmp2;
 		tmp2 = tmp2->next;
 	}
-	if (ft_strncmp(tmp2->variable, var, ft_strlen(var)) == 0)
+	if (ft_strncmp(tmp2->variable, var, ft_strlen(tmp2->variable) + 1) == 0)
 	{
 		tmp1->next = NULL;
 		free(tmp2);

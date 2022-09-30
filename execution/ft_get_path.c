@@ -1,34 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_cmd_path.c                                     :+:      :+:    :+:   */
+/*   ft_get_path.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/18 17:22:46 by sennaama          #+#    #+#             */
-/*   Updated: 2022/09/29 20:07:01 by sennaama         ###   ########.fr       */
+/*   Created: 2022/09/29 19:38:16 by sennaama          #+#    #+#             */
+/*   Updated: 2022/09/29 19:56:52 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "ft_pipe.h"
 
-char	*get_path(char	**envp)
-{
-	char	*str;
-	int		i;
-
-	i = 0;
-	while (envp[i])
-	{
-		str = ft_strnstr(envp[i], "PATH", ft_strlen(envp[i]));
-		if (str != NULL)
-			break ;
-		i++;
-	}
-	return (str);
-}
-
-char	**get_all_path()
+char	**get_value_devise(t_env *env, char *p)
 {
 	int		i;
 	char	*str;
@@ -38,7 +22,7 @@ char	**get_all_path()
 
 	str = NULL;
 	mypaths = NULL;
-	str = getenv("PATH");
+	str = get_value(env, p);
 	if (str != NULL)
 	{
 		path = ft_substr(str, 5, ft_strlen(str));
@@ -56,7 +40,7 @@ char	**get_all_path()
 	}
 	return (mypaths);
 }
-/*
+
 void	ft_free_char(char **p)
 {
 	int	i;
@@ -66,15 +50,15 @@ void	ft_free_char(char **p)
 		free(p[i++]);
 	free(p);
 }
-*/
-char	*get_cmd_path(char	*arg)
+
+char	*ft_get_path(char *arg, t_env *env)
 {
 	int		i;
 	char	*path;
 	char	**mypaths;
 
 	i = 0;
-	mypaths = get_all_path();
+	mypaths = get_value_devise(env, "PATH");
 	while (mypaths[i])
 	{
 		path = ft_strjoin(mypaths[i], arg);

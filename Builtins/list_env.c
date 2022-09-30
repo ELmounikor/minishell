@@ -6,11 +6,17 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 17:10:20 by sennaama          #+#    #+#             */
-/*   Updated: 2022/09/27 17:10:51 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/09/29 20:04:44 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
+
+void	ft_perror(char *str)
+{
+	perror(str);
+	exit(0);
+}
 
 t_env	*ft_lstnew_env(char *variable, char *value)
 {
@@ -20,7 +26,7 @@ t_env	*ft_lstnew_env(char *variable, char *value)
 	if (!l)
 		return (0);
 	l->variable = variable;
-    l->value = value;
+	l->value = value;
 	l->next = NULL;
 	return (l);
 }

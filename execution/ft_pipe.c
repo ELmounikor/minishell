@@ -6,12 +6,11 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 17:40:36 by sennaama          #+#    #+#             */
-/*   Updated: 2022/09/30 15:36:05 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/09/30 18:14:03 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_pipe.h"
-#include <stdlib.h>
 
 void	ft_wait_child(int *id, int nbr)
 {

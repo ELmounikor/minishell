@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 14:21:31 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/29 14:12:11 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/02 20:14:50 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 
 /*libraries*/
 # include "Libft/libft.h"
-# include "Builtins/builtins.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -37,6 +36,7 @@ typedef struct s_cmd
 	char			**args;
 	char			*path;
 }	t_cmd;
+# include "Builtins/builtins.h"
 
 /*functions*/
 int			quote_check(char *s);
@@ -54,5 +54,5 @@ t_list		*tokenizer(char *s, int i, int j, t_env *env);
 t_list		*syntax_checker(t_list **tokens, t_env *env);
 t_list		*getter(t_list **tokens, t_env *env);
 t_cmd		**cmd_extractor(t_list *input, t_env *env);
-void		ft_builtins(t_cmd *cmd, t_env *env);
+void		rl_replace_line(const char *text, int clear_undo);
 #endif

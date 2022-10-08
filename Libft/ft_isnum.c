@@ -15,6 +15,8 @@ int	ft_isnum(char *s)
 	int	i;
 
 	i = 0;
+if (!s)
+return (0);
 	if (s[i] == '+' || s[i] == '-')
 		i++;
 if (!s[i])

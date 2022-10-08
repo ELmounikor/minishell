@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 14:15:10 by sennaama          #+#    #+#             */
-/*   Updated: 2022/09/29 21:41:29 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/08 19:41:02 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdio.h>
 # include <dirent.h>
 # include "../minishell.h"
+# include "../execution/ft_pipe.h"
 
 void	history(char **cmd);
 void	echo(char **argv);
@@ -35,10 +36,10 @@ int		ft_check_variable(char *sub);
 void	unset(char **argv, t_env *env);
 void	pwd(void);
 int		ft_atoi_exit(const char *str, int *err);
-void	ft_exitt(char	**args);
+void	ft_exitt(char	**args, int nbr_cmd);
 void	export_element(char *cmd, t_env *envp);
 void	ft_remove_element_list(t_env **env, char *var);
 char	*get_value(t_env *env, char *str);
 void	ft_perror(char *str);
-int		ft_builtins(char *args, t_cmd *cmd, t_env *env);
+int     ft_builtins(char *args, t_cmd *cmd, t_env *env, int nbr_cmd);
 #endif

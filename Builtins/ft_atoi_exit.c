@@ -6,25 +6,27 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:47:34 by sennaama          #+#    #+#             */
-/*   Updated: 2022/09/28 16:50:34 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/08 18:43:04 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
+
 int	get_number(const char	*str, int signe, int *err)
 {
-	unsigned long	nbr;
+	unsigned long long int	nbr;
 
 	nbr = 0;
 	*err = 0;
 	while (*str >= '0' && *str <= '9' )
 	{
 		nbr = nbr * 10 + (*str - '0');
-		if (signe == 1 && nbr >= 9223372036854775807)
+		if (signe == 1 && nbr > 9223372036854775807)
 		{
 			*err = 1;
 			return (-1);
 		}
-		else if (signe == -1 && nbr > 9223372036854775807)
+		else if (signe == -1 && (nbr - 1) > 9223372036854775807)
 		{
 			*err = 1;
 			return (0);

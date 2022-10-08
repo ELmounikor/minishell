@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 16:13:57 by sennaama          #+#    #+#             */
-/*   Updated: 2022/09/27 17:22:06 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/08 15:48:33 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,13 @@ t_env	*get_env(char **en)
 	int		i;
 	char	**f;
 
+	if (!en)
+		exit(1);
 	l = NULL;
 	i = 0;
 	while (en[i])
 	{
-		f = ft_split(en[i], '=');
+		f = ft_split_env(en[i], '=');
 		ft_lstadd_back_env(&l, ft_lstnew_env(f[0], f[1]));
 		i++;
 	}	

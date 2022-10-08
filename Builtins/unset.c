@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 21:25:10 by sennaama          #+#    #+#             */
-/*   Updated: 2022/09/30 14:46:41 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/08 12:59:00 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	unset(char **argv, t_env *env)
 			ft_putstr_fd("unset: \'", 2);
 			ft_putstr_fd(argv[i], 2);
 			ft_putstr_fd("\' : not a valid identifier\n", 2);
+			g_exit_value = 1;
 		}
 		else
 			ft_remove_element_list(&env, argv[i]);

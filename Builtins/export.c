@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 18:24:00 by sennaama          #+#    #+#             */
-/*   Updated: 2022/09/28 18:28:45 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/08 12:53:03 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ void	print_export(t_env *env)
 {
 	t_env	*tmp;
 
+	if (!env)
+		return ;
 	tmp = ft_copy_env(env);
 	ft_sort_list(&tmp);
 	while (tmp)
@@ -81,7 +83,8 @@ void	export_element(char *cmd, t_env *envp)
 		ft_putstr_fd("export: \'", 2);
 		ft_putstr_fd(cmd, 2);
 		ft_putstr_fd("\' : not a valid identifier\n", 2);
-		//exit(127);
+		g_exit_value = 1;
+		return ;
 	}
 	else
 		add_env(f, &envp, cmd);

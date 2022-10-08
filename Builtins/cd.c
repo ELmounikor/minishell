@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 16:02:20 by sennaama          #+#    #+#             */
-/*   Updated: 2022/09/28 19:02:31 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/08 15:16:44 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,29 +51,40 @@ void	change_path_env(t_env *env, char *path)
 	}
 }
 
-void	cd(char **argv, t_env *env)
+void	get_home(t_env *env)
 {
 	char	*path;
 	int		r;
 
-	if (argv[1] == NULL || ft_strncmp(argv[1], "~", ft_strlen(argv[1])) == 0)
+	path = get_value(env, "HOME");
+	if (!path)
 	{
-		path = get_value(env, "HOME");
-		if (!path)
-			ft_putstr_fd("cd: HOME not set\n", 2);
-		else
-		{
-			r = chdir(path);
-			if (r == 0)
-				change_path_env(env, path);
-		}
+		ft_putstr_fd("cd: HOME not set\n", 2);
+		g_exit_value = 1;
 	}
+	else
+	{
+		r = chdir(path);
+		if (r == 0)
+			change_path_env(env, path);
+	}
+}
+
+void	cd(char **argv, t_env *env)
+{
+	int		r;
+
+	if (argv[1] == NULL || ft_strncmp(argv[1], "~", ft_strlen(argv[1])) == 0)
+		get_home(env);
 	else
 	{
 		r = chdir(argv[1]);
 		if (r == 0)
 			change_path_env(env, getcwd(NULL, 0));
 		else
+		{
 			perror(argv[1]);
+			g_exit_value = 1;
+		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 19:38:16 by sennaama          #+#    #+#             */
-/*   Updated: 2022/09/29 19:56:52 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/08 15:49:49 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ char	*ft_get_path(char *arg, t_env *env)
 	char	**mypaths;
 
 	i = 0;
+	if (access(arg, 0) == 0)
+		return (arg);
 	mypaths = get_value_devise(env, "PATH");
 	while (mypaths[i])
 	{

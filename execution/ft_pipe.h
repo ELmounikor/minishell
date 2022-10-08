@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 13:37:08 by sennaama          #+#    #+#             */
-/*   Updated: 2022/09/30 18:37:39 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/08 11:06:46 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "../Builtins/builtins.h"
 # include <signal.h>
 
+int		g_exit_value;
 int		**pipe_fd(int nbr_cmd);
 void	ft_close(int argc, int **fd);
 char	**get_env_char(t_env *env);

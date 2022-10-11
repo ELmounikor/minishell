@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/11 17:05:53 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/11 18:48:18 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,18 @@ char	*get_file_name(int cmd_id, int file_id)
 	int		fd;
 
 	dic = ft_split(ttyname(0), '/');
-	file_name = ft_strjoin("/tmp/", dic[2]);
+	file_name = ft_strjoin("/tmp/.", dic[1]);
 	fd = 0;
 	while (fd <= 0)
 	{
-		editor(&file_name, ft_strjoin_char(".tmp", ".t", file_id + cmd_id));
+		editor(&file_name, ft_strjoin_char("tmp", ".t", file_id + cmd_id));
 		fd = open(file_name, O_WRONLY | O_TRUNC | O_CREAT, 0666);
 		if (fd < 0)
+		{
 			file_id++;
+			ft_free(&file_name);
+			file_name = ft_strjoin("/tmp/.", dic[1]);
+		}
 	}
 	ft_split_cleaner(dic);
 	close(fd);
@@ -86,25 +90,47 @@ char	*line_expander(char **line, t_env *env, int i, int j)
 	return (*line);
 }
 
+void	handler_heredoc(int sig)
+{
+	if (sig == SIGINT)
+		exit (1);
+	else if (sig == SIGQUIT)
+	{
+		printf("--");
+		//rl_redisplay();
+	}
+}
+
 int	here_doc(t_list *token, int cmd_id, char **file_name, t_env *env)
 {
 	int			fd;
+	int			pid;
 	char		*s;
 	static int	file_id;
+	int			status;
 
 	if (cmd_id == 0)
 		file_id = 0;
 	*file_name = get_file_name(cmd_id, file_id);
 	fd = open(*file_name, O_RDWR | O_TRUNC | O_CREAT, 0666);
-	s = readline("> ");
-	while (s && ft_strcmp(s, token->content))
+	pid = fork();
+	if (pid == 0)
 	{
-		s = line_expander(&s, env, 0, token->id);
-		ft_putstr_fd(s, fd);
-		ft_putstr_fd("\n", fd);
-		ft_free(&s);
 		s = readline("> ");
+		while (s && ft_strcmp(s, token->content))
+		{
+			signal(SIGINT, handler_heredoc);
+			s = line_expander(&s, env, 0, token->id);
+			ft_putstr_fd(s, fd);
+			ft_putstr_fd("\n", fd);
+			ft_free(&s);
+			s = readline("> ");
+			//signal(SIGQUIT, handler_heredoc);
+		}
+		exit (0);
 	}
+	if (waitpid(pid, &status, 0) != -1)
+			g_exit_value = WEXITSTATUS(status);
 	close(fd);
 	return (open(*file_name, O_RDWR));
 }

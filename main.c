@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:53:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/10 18:30:21 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/11 18:36:07 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,23 +79,23 @@ int	main(int ac, char **av, char **en)
 		{
 			//param_extractor(&params, env, input);// env_extractor(&params, NULL, NULL); //env to be updated in between child processes using
 			cmd = cmd_extractor(input, env);
-			int i = 0;
-			printf("\n=============cmd data============\n");
-			while (cmd && cmd[i])
-			{                
-				printf("---------------------------------\ndata of the command number %d \
-				\n//cmd and its argument's list:\n", i + 1);
-				int j = 0;
-				while (cmd[i]->args[j])
-					printf("%s\n", cmd[i]->args[j++]);
-				printf("%s\n", cmd[i]->args[j]);
-				printf("//in and out file descriptors:\nin_fd = %d\
-				//lakant chi haja mn ghir 0 rdih howa lread end dyal lpipe\nout_fd = %d\
-				//lakant chi haja mn ghir 0 rdih howa lwrite end dyal lpipe\n<3\n---------------------------------\n", \
-				cmd[i]->fd[0], cmd[i]->fd[1]);
-				//ft_builtins(cmd[i], env);
-				i++;
-			}
+			// int i = 0;
+			// printf("\n=============cmd data============\n");
+			// while (cmd && cmd[i])
+			// {                
+			// 	printf("---------------------------------\ndata of the command number %d \
+			// 	\n//cmd and its argument's list:\n", i + 1);
+			// 	int j = 0;
+			// 	while (cmd[i]->args[j])
+			// 		printf("%s\n", cmd[i]->args[j++]);
+			// 	printf("%s\n", cmd[i]->args[j]);
+			// 	printf("//in and out file descriptors:\nin_fd = %d\
+			// 	//lakant chi haja mn ghir 0 rdih howa lread end dyal lpipe\nout_fd = %d\
+			// 	//lakant chi haja mn ghir 0 rdih howa lwrite end dyal lpipe\n<3\n---------------------------------\n", \
+			// 	cmd[i]->fd[0], cmd[i]->fd[1]);
+			// 	//ft_builtins(cmd[i], env);
+			// 	i++;
+			// }
 			//excute cmds here
 			ft_pipe(cmd, cmd_count(input), env);
 			free_cmds(cmd);

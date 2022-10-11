@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+         #
+#    By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/20 12:58:47 by mel-kora          #+#    #+#              #
-#    Updated: 2022/09/29 15:07:17 by mel-kora         ###   ########.fr        #
+#    Updated: 2022/10/10 17:59:38 by sennaama         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,9 +22,9 @@ OBJS	=	$(addprefix Libft/, ${SRCS:.c=.o})
 NAME	=	minishell
 CC		=	@gcc
 RM		=	@rm -rf
-LIB		=	-L /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/editline
-RDINC	=	-I /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/editline/readline.h
-CFLAGS	=	-Wall -Werror -Wextra -g -fsanitize=address
+#LIB		=	-L /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/editline
+#RDINC	=	-I /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/editline/readline.h
+CFLAGS	=	-Wall -Werror -Wextra #-g -fsanitize=address
 
 all:		${NAME} 
 
@@ -34,7 +34,7 @@ Libft/%o : %c
 ${NAME}:	${OBJS}
 			@make -C Libft
 			@make -C Builtins
-			${CC} ${CFLAGS} Libft/libft.a Builtins/builtins.a ${OBJS} -o ${NAME} -lreadline $(LIB) $(RDINC)
+			${CC} ${CFLAGS} Libft/libft.a Builtins/builtins.a ${OBJS} -o ${NAME} -lreadline -L ~/goinfre/.brew/opt/readline/lib -I ~/goinfre/.brew/opt/readline/include
 			@echo "\033[1;92m	--------->>> files created :D"
 			@echo "\033[1;93m	        (        )  (    (        )       (     (     "
 			@echo "\033[1;93m	 (      )\ )  ( /(  )\ ) )\ )  ( /(       )\ )  )\ )  "

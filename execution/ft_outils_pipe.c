@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 15:35:42 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/08 15:49:24 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/10 14:36:26 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,7 @@ int	ft_dup(t_cmd *cmd, int i, int nbr_cmd, int **fd)
 
 	j = 0;
 	if (cmd->fd[0] < 0)
-	{
-		g_exit_value = 1;
-		exit(g_exit_value);
-	}
+		exit(1);
 	else if (cmd->fd[0] > 0)
 	{
 		dup2(cmd->fd[0], STDIN_FILENO);

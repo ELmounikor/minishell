@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 15:35:42 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/10 14:36:26 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/11 17:34:20 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,18 +74,12 @@ char	**get_env_char(t_env *env)
 	return (str);
 }
 
-int	ft_dup(t_cmd *cmd, int i, int nbr_cmd, int **fd)
+void	ft_dup(t_cmd *cmd, int i, int nbr_cmd, int **fd)
 {
-	int	j;
-
-	j = 0;
 	if (cmd->fd[0] < 0)
 		exit(1);
 	else if (cmd->fd[0] > 0)
-	{
 		dup2(cmd->fd[0], STDIN_FILENO);
-		j++;
-	}
 	else if (i > 0)
 		dup2(fd[i - 1][0], STDIN_FILENO);
 	if (cmd->fd[1] < 0)
@@ -94,6 +88,6 @@ int	ft_dup(t_cmd *cmd, int i, int nbr_cmd, int **fd)
 		dup2(cmd->fd[1], STDOUT_FILENO);
 	else if (i < nbr_cmd - 1)
 		dup2(fd[i][1], STDOUT_FILENO);
-	ft_close(nbr_cmd - 1, fd);
-	return (j);
+	if (fd)
+		ft_close(nbr_cmd - 1, fd);
 }

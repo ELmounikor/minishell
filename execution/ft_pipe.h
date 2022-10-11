@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 13:37:08 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/08 11:06:46 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/11 15:38:16 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		g_exit_value;
 int		**pipe_fd(int nbr_cmd);
 void	ft_close(int argc, int **fd);
 char	**get_env_char(t_env *env);
-int		ft_dup(t_cmd *cmd, int i, int nbr_cmd, int **fd);
+void	ft_dup(t_cmd *cmd, int i, int nbr_cmd, int **fd);
 void	ft_pipe(t_cmd **cmd, int nbr_cmd, t_env *env);
 char	*ft_get_path(char *arg, t_env *env);
 void	handler_sig(int signum);

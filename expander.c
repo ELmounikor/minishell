@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:03:42 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/29 15:43:48 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/11 17:02:01 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,11 @@ void	editor(char **s1, char *s2)
 
 char	*getval(char *s1, t_env *env)
 {
-/*
-	if (!ft_strncmp(s1, "?", 2))
-		return (ft_itoa(last_exit_code));*/
+	if (!ft_strcmp(s1, "?"))
+	{
+		ft_free(&s1);
+		return (ft_itoa(g_exit_value));
+	}
 	while (env && s1)
 	{
 		if (!ft_strcmp(s1, env->variable))
@@ -45,8 +47,7 @@ char	*expander(t_list *token, t_env *env, int i, int j)
 	char	*s;
 
 	s = NULL;
-	if (token->id && token->id % 3 == 0 && j != 44 && j != 440 && \
-	j != 88 && j != 880)
+	if (token->id && token->id % 3 == 0 && j % 44 != 0)
 	{
 		while (token->content && token->content[i])
 		{
@@ -59,7 +60,8 @@ char	*expander(t_list *token, t_env *env, int i, int j)
 			if (token->content[i] == '$')
 			{
 				j = ++i;
-				while (ft_isalnum_(token->content[i]))
+				while ((ft_isalnum_(token->content[i]) && token->content[j] != \
+				'?') || (i == j && token->content[j] == '?'))
 					i++;
 				editor(&s, getval(ft_substr(token->content, j, i - j), env));
 			}

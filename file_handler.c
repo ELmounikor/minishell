@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/29 14:28:59 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/11 17:05:53 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*get_file_name(int cmd_id, int file_id)
 	fd = 0;
 	while (fd <= 0)
 	{
-		editor(&file_name, ft_strjoin_char("tmp", ".t", file_id + cmd_id));
+		editor(&file_name, ft_strjoin_char(".tmp", ".t", file_id + cmd_id));
 		fd = open(file_name, O_WRONLY | O_TRUNC | O_CREAT, 0666);
 		if (fd < 0)
 			file_id++;
@@ -74,7 +74,8 @@ char	*line_expander(char **line, t_env *env, int i, int j)
 			if ((*line)[i] == '$')
 			{
 				j = ++i;
-				while (ft_isalnum_((*line)[i]))
+				while ((ft_isalnum_((*line)[i]) && (*line)[j] != '?') || \
+				(i == j && (*line)[j] == '?'))
 					i++;
 				editor(&s, getval(ft_substr((*line), j, i - j), env));
 			}
@@ -94,12 +95,13 @@ int	here_doc(t_list *token, int cmd_id, char **file_name, t_env *env)
 	if (cmd_id == 0)
 		file_id = 0;
 	*file_name = get_file_name(cmd_id, file_id);
-	fd = open(*file_name, O_WRONLY | O_TRUNC | O_CREAT, 0666);
+	fd = open(*file_name, O_RDWR | O_TRUNC | O_CREAT, 0666);
 	s = readline("> ");
 	while (s && ft_strcmp(s, token->content))
 	{
 		s = line_expander(&s, env, 0, token->id);
 		ft_putstr_fd(s, fd);
+		ft_putstr_fd("\n", fd);
 		ft_free(&s);
 		s = readline("> ");
 	}

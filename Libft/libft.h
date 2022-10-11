@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:35:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/28 18:24:32 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/11 15:48:57 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ char			*ft_strjoin(char const *s1, char const *s2);
 char			*ft_strjoin_char(char const *s1, char const *s2, char c);
 char			*ft_strnstr(const char *hay, const char *nee, int len);
 char			*ft_substr(char const *s, unsigned int start, size_t len);
+char			*ft_itoa(int n);
 char			ft_convert(char c, char s);
 int				*cmd_size(t_list *lst);
 int				cmd_count(t_list *lst);

@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 19:49:40 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/26 22:36:54 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/11 17:35:29 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	get_history(char *s, long long int n)
 	print_history(s, (unsigned long long) n, i);
 }
 
-void	handle_input(char **cmd)
+int	handle_input(char **cmd)
 {
 	long long int	n;
 
@@ -87,12 +87,12 @@ void	handle_input(char **cmd)
 	if (n < 0)
 	{
 		printf("sh-sm: %s: -%c: invalid option\n", cmd[0], cmd[1][1]);
-		exit(2);
+		return (2);
 	}
 	else
 	{
 		get_history(cmd[0], n);
-		exit(0);
+		return (0);
 	}
 }
 
@@ -108,9 +108,10 @@ void	history(char **cmd)
 			printf("sh-sm: %s: %s: : numeric argument required\n", \
 			cmd[0], cmd[1]);
 		else if (!cmd[2])
-			handle_input(cmd);
+			g_exit_value = handle_input(cmd);
 		else
 			printf("sh-sm: %s: too many arguments\n", cmd[0]);
 	}
-	exit(1);
+	else
+		g_exit_value = 1;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_handler.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/11 18:48:18 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/11 19:41:38 by mkabissi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,25 +113,27 @@ int	here_doc(t_list *token, int cmd_id, char **file_name, t_env *env)
 		file_id = 0;
 	*file_name = get_file_name(cmd_id, file_id);
 	fd = open(*file_name, O_RDWR | O_TRUNC | O_CREAT, 0666);
+	signal(SIGQUIT, SIG_IGN);
 	pid = fork();
 	if (pid == 0)
 	{
 		s = readline("> ");
+		signal(SIGINT, handler_heredoc);
 		while (s && ft_strcmp(s, token->content))
 		{
-			signal(SIGINT, handler_heredoc);
 			s = line_expander(&s, env, 0, token->id);
 			ft_putstr_fd(s, fd);
 			ft_putstr_fd("\n", fd);
 			ft_free(&s);
 			s = readline("> ");
-			//signal(SIGQUIT, handler_heredoc);
 		}
+		signal(SIGQUIT, handler_heredoc);
 		exit (0);
 	}
 	if (waitpid(pid, &status, 0) != -1)
 			g_exit_value = WEXITSTATUS(status);
 	close(fd);
+	signal(SIGQUIT, handler_sig);
 	return (open(*file_name, O_RDWR));
 }
 

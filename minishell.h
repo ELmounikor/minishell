@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 14:21:31 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/06 14:49:10 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/12 16:02:05 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void		free_cmds(t_cmd **cmds);
 void		ft_exit(char **cmd);
 void		editor(char **s1, char *s2);
 void		get_history(char *s, long long int n);
+int			here_doc(t_list *token, int cmd_id, char **file_name, t_env *env);
 void		file_handler(t_list *token, int *fd_in, int *fd_out, int cmd_id, t_env *env);
 void		param_extractor(t_params **params, t_env *env, t_list *input);
 t_list		*tokenizer(char *s, int i, int j, t_env *env);

@@ -6,7 +6,7 @@
 #    By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/20 12:58:47 by mel-kora          #+#    #+#              #
-#    Updated: 2022/10/12 14:05:30 by mel-kora         ###   ########.fr        #
+#    Updated: 2022/10/12 17:29:33 by mel-kora         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,8 @@ LIB		=   -L ~/goinfre/.brew/opt/readline/lib
 INC	=	-I ~/goinfre/.brew/opt/readline/include
 CFLAGS	=	-Wall -Werror -Wextra #-g -fsanitize=address
 
-all:		MKLibft MKBuiltins ${NAME} 
+all:		MKLibft MKBuiltins ${NAME}
+			@echo "\033[1;93m	>>> ALL DONE By Sara and Mounia! <<<"
 
 Libft/%o : %c
 			$(CC) $(CFLAGS) -c $< -o $@
@@ -46,15 +47,15 @@ ${NAME}:	${OBJS}
 			@echo "\033[1;33m	|_|  |_||___| |_|\_||___||___/ |_||_||___||____||____| "
 
 MKLibft:
-			@make -C Libft
+			@make -s -C Libft
 
 MKBuiltins:
-			@make -C Builtins
+			@make -s -C Builtins
 
 clean:
 			${RM} ${OBJS}
-			@make fclean -C Libft
-			@make fclean -C Builtins
+			@make fclean -s -C Libft
+			@make fclean -s -C Builtins
 			@echo "\033[1;91m	--------->>> files deleted :}"
 
 fclean:		clean

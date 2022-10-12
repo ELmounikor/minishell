@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   file_handler.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkabissi <mkabissi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/11 19:41:38 by mkabissi         ###   ########.fr       */
+/*   Updated: 2022/10/12 10:13:11 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +36,24 @@ int	handle_file(char *file_name, char code, int fd)
 	return (file);
 }
 
-char	*get_file_name(int cmd_id, int file_id)
+char	*get_file_name(int cmd_id, int *file_id)
 {
 	char	**dic;
 	char	*file_name;
 	int		fd;
 
+	if (cmd_id == 0)
+		*file_id = 0;
 	dic = ft_split(ttyname(0), '/');
-	file_name = ft_strjoin("/tmp/.", dic[1]);
+	file_name = ft_strjoin(".", dic[1]);
 	fd = 0;
 	while (fd <= 0)
 	{
-		editor(&file_name, ft_strjoin_char("tmp", ".t", file_id + cmd_id));
+		editor(&file_name, ft_strjoin_char("tmp", ".t", *file_id + cmd_id));
 		fd = open(file_name, O_WRONLY | O_TRUNC | O_CREAT, 0666);
 		if (fd < 0)
 		{
-			file_id++;
+			(*file_id)++;
 			ft_free(&file_name);
 			file_name = ft_strjoin("/tmp/.", dic[1]);
 		}
@@ -93,47 +95,38 @@ char	*line_expander(char **line, t_env *env, int i, int j)
 void	handler_heredoc(int sig)
 {
 	if (sig == SIGINT)
-		exit (1);
-	else if (sig == SIGQUIT)
 	{
-		printf("--");
-		//rl_redisplay();
+		g_exit_value = 1;
+		//write(1, "\n", 1);
 	}
 }
 
 int	here_doc(t_list *token, int cmd_id, char **file_name, t_env *env)
 {
 	int			fd;
-	int			pid;
 	char		*s;
 	static int	file_id;
-	int			status;
 
-	if (cmd_id == 0)
-		file_id = 0;
-	*file_name = get_file_name(cmd_id, file_id);
+	*file_name = get_file_name(cmd_id, &file_id);
 	fd = open(*file_name, O_RDWR | O_TRUNC | O_CREAT, 0666);
-	signal(SIGQUIT, SIG_IGN);
-	pid = fork();
-	if (pid == 0)
+	g_exit_value = 0;
+	while (1)
 	{
-		s = readline("> ");
 		signal(SIGINT, handler_heredoc);
-		while (s && ft_strcmp(s, token->content))
+		s = readline("> ");
+		if (s && ft_strcmp(s, token->content) && !g_exit_value)
 		{
 			s = line_expander(&s, env, 0, token->id);
 			ft_putstr_fd(s, fd);
 			ft_putstr_fd("\n", fd);
 			ft_free(&s);
-			s = readline("> ");
 		}
-		signal(SIGQUIT, handler_heredoc);
-		exit (0);
+		else
+			break ;
 	}
-	if (waitpid(pid, &status, 0) != -1)
-			g_exit_value = WEXITSTATUS(status);
+	ft_free(&s);
 	close(fd);
-	signal(SIGQUIT, handler_sig);
+	signal(SIGINT, handler_sig);
 	return (open(*file_name, O_RDWR));
 }
 

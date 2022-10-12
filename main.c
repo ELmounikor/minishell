@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:53:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/11 18:36:07 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/12 08:56:39 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	main(int ac, char **av, char **en)
 	//history_reloader(ac); // messup up & down keys tanchofoha apres
 	while (1)
 	{
-		printf("---%d\n", g_exit_value);
+		//printf("---%d\n", g_exit_value);
 		signal(SIGINT, handler_sig);
 		signal(SIGQUIT, handler_sig);
 		s = new_prompt();

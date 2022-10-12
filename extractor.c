@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/29 16:22:16 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/12 18:21:15 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,19 @@ void	cmd_filler(t_cmd **cmd, t_list **input, int size, int cmd_id, t_env *env)
 		|| (*input)->id == 44 || (*input)->id == 70 || (*input)->id == 770 || \
 		(*input)->id == 40 || (*input)->id == 440 || (*input)->id == 88 || \
 		(*input)->id == 880)
+		{
 			file_handler((*input), &((*cmd)->fd[0]), &((*cmd)->fd[1]), cmd_id, env);
+			if ((*input)->id % 44 == 0 && g_exit_value)
+			{
+				(*cmd)->args[i] = NULL;
+				free(*cmd);
+				*cmd = NULL;
+				break ;
+			}
+		}
 		(*input) = (*input)->next;
 	}
-	if ((*cmd)->args)
+	if (*cmd && (*cmd)->args)
 		(*cmd)->args[i] = NULL;
 }
 
@@ -83,6 +92,11 @@ t_cmd	**cmd_extractor(t_list *input, t_env *env)
 	while (input)
 	{
 		cmd_filler(&cmd[i], &input, sizes[i] + 1, i, env);
+		if (!cmd[i])
+		{
+			free_cmds(cmd);
+			return (NULL);
+		}
 		i++;
 		if (input)
 			input = input->next;
@@ -101,7 +115,6 @@ void	free_cmds(t_cmd **cmd)
 	i = -1;
 	while (cmd[++i])
 	{
-		// ft_free(&(cmd[i]->path));
 		ft_split_cleaner(cmd[i]->args);
 		if (cmd[i]->fd[0] > 0)
 			close(cmd[i]->fd[0]);
@@ -110,4 +123,5 @@ void	free_cmds(t_cmd **cmd)
 		free(cmd[i]);
 	}
 	free(cmd);
+	cmd = NULL;
 }

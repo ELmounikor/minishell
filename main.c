@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:53:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/12 08:56:39 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/12 18:19:49 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,10 @@ int	main(int ac, char **av, char **en)
 		signal(SIGQUIT, handler_sig);
 		s = new_prompt();
 		input = tokenizer(s, 0, 0, env);
-		if (input)
+		cmd = cmd_extractor(input, env);
+		if (cmd)
 		{
 			//param_extractor(&params, env, input);// env_extractor(&params, NULL, NULL); //env to be updated in between child processes using
-			cmd = cmd_extractor(input, env);
 			// int i = 0;
 			// printf("\n=============cmd data============\n");
 			// while (cmd && cmd[i])

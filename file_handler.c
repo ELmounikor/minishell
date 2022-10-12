@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/12 10:13:11 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/12 13:10:26 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,18 @@ int	handle_file(char *file_name, char code, int fd)
 	return (file);
 }
 
-char	*get_file_name(int cmd_id, int *file_id)
+char	*get_file_name(int cmd_id, int *file_id, int *stdin_fd)
 {
 	char	**dic;
 	char	*file_name;
 	int		fd;
 
+	*stdin_fd = dup(STDIN_FILENO);
+	g_exit_value = 0;
 	if (cmd_id == 0)
 		*file_id = 0;
 	dic = ft_split(ttyname(0), '/');
-	file_name = ft_strjoin(".", dic[1]);
+	file_name = ft_strjoin("/tmp/.", dic[1]);
 	fd = 0;
 	while (fd <= 0)
 	{
@@ -97,7 +99,8 @@ void	handler_heredoc(int sig)
 	if (sig == SIGINT)
 	{
 		g_exit_value = 1;
-		//write(1, "\n", 1);
+		write(1, "\n", 1);
+		close(0);
 	}
 }
 
@@ -106,27 +109,24 @@ int	here_doc(t_list *token, int cmd_id, char **file_name, t_env *env)
 	int			fd;
 	char		*s;
 	static int	file_id;
+	int			stdin_fd;
 
-	*file_name = get_file_name(cmd_id, &file_id);
+	*file_name = get_file_name(cmd_id, &file_id, &stdin_fd);
 	fd = open(*file_name, O_RDWR | O_TRUNC | O_CREAT, 0666);
-	g_exit_value = 0;
-	while (1)
+	signal(SIGINT, handler_heredoc);
+	s = readline("> ");
+	while (s && ft_strcmp(s, token->content) && !g_exit_value)
 	{
-		signal(SIGINT, handler_heredoc);
+		s = line_expander(&s, env, 0, token->id);
+		ft_putstr_fd(s, fd);
+		ft_putstr_fd("\n", fd);
+		ft_free(&s);
 		s = readline("> ");
-		if (s && ft_strcmp(s, token->content) && !g_exit_value)
-		{
-			s = line_expander(&s, env, 0, token->id);
-			ft_putstr_fd(s, fd);
-			ft_putstr_fd("\n", fd);
-			ft_free(&s);
-		}
-		else
-			break ;
 	}
 	ft_free(&s);
 	close(fd);
-	signal(SIGINT, handler_sig);
+	dup2(stdin_fd, STDIN_FILENO);
+	close(stdin_fd);
 	return (open(*file_name, O_RDWR));
 }
 

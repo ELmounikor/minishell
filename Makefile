@@ -6,7 +6,7 @@
 #    By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/20 12:58:47 by mel-kora          #+#    #+#              #
-#    Updated: 2022/10/11 14:24:28 by mel-kora         ###   ########.fr        #
+#    Updated: 2022/10/12 14:05:30 by mel-kora         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,14 +28,12 @@ LIB		=   -L ~/goinfre/.brew/opt/readline/lib
 INC	=	-I ~/goinfre/.brew/opt/readline/include
 CFLAGS	=	-Wall -Werror -Wextra #-g -fsanitize=address
 
-all:		${NAME} 
+all:		MKLibft MKBuiltins ${NAME} 
 
 Libft/%o : %c
 			$(CC) $(CFLAGS) -c $< -o $@
 
 ${NAME}:	${OBJS}
-			@make -C Libft
-			@make -C Builtins
 			${CC} ${CFLAGS} Libft/libft.a Builtins/builtins.a ${OBJS} -o ${NAME} -lreadline ${LIB} ${INC}
 			@echo "\033[1;92m	--------->>> files created :D"
 			@echo "\033[1;93m	        (        )  (    (        )       (     (     "
@@ -46,7 +44,13 @@ ${NAME}:	${OBJS}
 			@echo "\033[1;33m	|  \/  ||_ _| | \| ||_ _|/ __| | || || __|| |   | |    "
 			@echo "\033[1;33m	| |\/| | | |  | .  | | | \__ \ | __ || _| | |__ | |__  "
 			@echo "\033[1;33m	|_|  |_||___| |_|\_||___||___/ |_||_||___||____||____| "
-			
+
+MKLibft:
+			@make -C Libft
+
+MKBuiltins:
+			@make -C Builtins
+
 clean:
 			${RM} ${OBJS}
 			@make fclean -C Libft
@@ -58,4 +62,4 @@ fclean:		clean
 		
 re:			fclean all
 
-.PHONY:		all clean fclean re
+.PHONY:		all clean fclean re MKLibft MKBuiltins

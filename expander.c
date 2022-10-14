@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:03:42 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/14 13:03:57 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/14 13:59:51 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ char	*getval(char *s1, t_env *env)
 	{
 		ft_free(&s1);
 		return (ft_itoa(g_exit_value));
+	}
+	else if (!ft_strcmp(s1, "0"))
+	{
+		ft_free(&s1);
+		return (ft_strdup("sh-sm"));
 	}
 	while (env && s1)
 	{

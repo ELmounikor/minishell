@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 17:40:36 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/14 14:17:07 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/14 15:38:19 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	ft_wait_child(int *id, int nbr)
 	i = 0;
 	while (i < nbr)
 	{
-		if (waitpid(id[i], &status, 0) != -1)
-			g_exit_value = WEXITSTATUS(status);
+		if (waitpid(id[i], &status, 0) != -1 && g_exit_value != 131)
+				g_exit_value = WEXITSTATUS(status);
 		i++;
 	}
 }
@@ -39,7 +39,7 @@ void	ft_execute_cmd(t_cmd *cmd, t_env *env, int nbr_cmd)
 		}
 	}
 	else
-		exit(0);
+		exit(g_exit_value);
 }
 
 void	ft_pipe(t_cmd **cmd, int nbr_cmd, t_env *env)
@@ -59,6 +59,7 @@ void	ft_pipe(t_cmd **cmd, int nbr_cmd, t_env *env)
 	i = 0;
 	while (cmd[i])
 	{
+		signal(SIGQUIT, handler_child);
 		id[i] = fork();
 		if (id[i] == 0)
 		{	

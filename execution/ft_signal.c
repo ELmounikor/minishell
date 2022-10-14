@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 18:13:50 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/14 14:30:15 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/14 15:27:39 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,18 @@ void	handler_sig(int signum)
 	else if (signum == SIGQUIT)
 	{
 		g_exit_value = 0;
+		//printf("dga\n");
 		rl_on_new_line();
+		//rl_replace_line("", 0);
 		rl_redisplay();
+	}
+}
+
+void	handler_child(int sig)
+{
+	if (sig == SIGQUIT)
+	{
+		printf("^\\Quit: 3\n");
+		g_exit_value = 131;
 	}
 }

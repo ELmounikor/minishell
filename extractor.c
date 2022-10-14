@@ -6,71 +6,69 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/12 18:21:15 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/14 16:00:09 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	param_extractor(t_params	**params, t_env *env, t_list *input)
+void	in_file_handler(t_list *token, int *fd_in, int cmd_id, t_env *env)
 {
-	int		i;
+	char	*s;
 
-	if (input)
+	s = NULL;
+	if (token->id % 44 == 0)
 	{
-		(*params)->cmd_count = cmd_count(input);
-		(*params)->last_exit_code = 0;
+		*fd_in = here_doc(token, cmd_id, &s, env);
+		ft_free(&s);
 	}
-	if (env)
-		(*params)->env = env;
-	ft_split_cleaner((*params)->en);
-	(*params)->en = (char **) malloc ((ft_envsize((*params)->env) + 1) * \
-	sizeof(char *));
-	if (!(*params)->en)
-		return ;
-	i = 0;
-	while ((*params)->env)
-	{
-		(*params)->en[i++] = ft_strjoin_char((*params)->env->variable, \
-		(*params)->env->value, '=');
-		(*params)->env = (*params)->env->next;
-	}
-	(*params)->en[i] = NULL;
-	ft_split_cleaner((*params)->paths);
-	(*params)->paths = NULL;
+	else if (token->id % 4 == 0)
+		*fd_in = handle_file(token->content, 'I', *fd_in);
 }
 
-void	cmd_filler(t_cmd **cmd, t_list **input, int size, int cmd_id, t_env *env)
+void	out_file_handler(t_list *token, int *fd_out)
 {
-	int	i;
+	if (token->id % 77 == 0 && fd_out >= 0)
+		*fd_out = handle_file(token->content, 'A', *fd_out);
+	else if (token->id % 7 == 0 && fd_out >= 0)
+		*fd_out = handle_file(token->content, 'T', *fd_out);
+}
 
-	(*cmd) = (t_cmd *) malloc (sizeof(t_cmd));
+int	file_handler(t_cmd **cmd, t_list *token, int cmd_id, t_env *env)
+{
+	if (token->id % 7 == 0)
+		out_file_handler(token, &(*cmd)->fd[1]);
+	else if (token->id % 4 == 0)
+		in_file_handler(token, &(*cmd)->fd[0], cmd_id, env);
+	if (token->id % 44 == 0 && g_exit_value)
+		return (1);
+	return (0);
+}
+
+void	cmd_filler(t_cmd **cmd, t_list **input, int cmd_id, t_env *env)
+{
+	int			i;
+
+	i = 0;
 	if (!(*cmd))
 		return ;
-	(*cmd)->args = (char **) malloc (size * sizeof(char *));
+	(*cmd)->args = (char **) malloc ((*cmd)->size * sizeof(char *));
 	(*cmd)->fd[0] = 0;
 	(*cmd)->fd[1] = 0;
-	i = 0;
 	while ((*input) && (*input)->id != 1 && (*cmd)->args)
 	{
 		if ((*input)->id != 7 && (*input)->id != 77 && (*input)->id != 4 && \
 		(*input)->id != 44 && (*input)->id != 70 && (*input)->id != 770 && \
 		(*input)->id != 40 && (*input)->id != 440 && (*input)->id != 88 && \
-		(*input)->id != 880 && (*input)->content)
+		(*input)->id != 880)
 			(*cmd)->args[i++] = ft_strdup((*input)->content);
-		else if ((*input)->id == 7 || (*input)->id == 77 || (*input)->id == 4 \
-		|| (*input)->id == 44 || (*input)->id == 70 || (*input)->id == 770 || \
-		(*input)->id == 40 || (*input)->id == 440 || (*input)->id == 88 || \
-		(*input)->id == 880)
+		else if (file_handler(cmd, (*input), cmd_id, env))
 		{
-			file_handler((*input), &((*cmd)->fd[0]), &((*cmd)->fd[1]), cmd_id, env);
-			if ((*input)->id % 44 == 0 && g_exit_value)
-			{
-				(*cmd)->args[i] = NULL;
-				free(*cmd);
-				*cmd = NULL;
-				break ;
-			}
+			(*cmd)->args[i] = NULL;
+			ft_split_cleaner((*cmd)->args);
+			free(*cmd);
+			*cmd = NULL;
+			break ;
 		}
 		(*input) = (*input)->next;
 	}
@@ -85,43 +83,24 @@ t_cmd	**cmd_extractor(t_list *input, t_env *env)
 	int		i;
 
 	cmd = (t_cmd **) malloc ((cmd_count(input) + 1) * sizeof (t_cmd *));
-	if (!cmd)
-		return (0);
 	sizes = cmd_size(input);
-	i = 0;
-	while (input)
+	i = -1;
+	while (cmd && input && ++i)
 	{
-		cmd_filler(&cmd[i], &input, sizes[i] + 1, i, env);
-		if (!cmd[i])
-		{
-			free_cmds(cmd);
-			return (NULL);
-		}
-		i++;
-		if (input)
-			input = input->next;
+		cmd[i] = (t_cmd *) malloc (sizeof(t_cmd));
+		if (cmd[i])
+			cmd[i]->size = sizes[i] + 1;
+		cmd_filler(&cmd[i], &input, i, env);
+		if (!cmd[i] || !input)
+			break ;
+		input = input->next;
+	}
+	if (!cmd || !cmd[i])
+	{
+		free_cmds(cmd);
+		return (0);
 	}
 	cmd[i] = NULL;
 	free(sizes);
 	return (cmd);
-}
-
-void	free_cmds(t_cmd **cmd)
-{
-	int	i;
-
-	if (!cmd)
-		return ;
-	i = -1;
-	while (cmd[++i])
-	{
-		ft_split_cleaner(cmd[i]->args);
-		if (cmd[i]->fd[0] > 0)
-			close(cmd[i]->fd[0]);
-		if (cmd[i]->fd[1] > 0)
-			close(cmd[i]->fd[1]);
-		free(cmd[i]);
-	}
-	free(cmd);
-	cmd = NULL;
 }

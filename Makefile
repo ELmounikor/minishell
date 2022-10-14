@@ -6,7 +6,7 @@
 #    By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/20 12:58:47 by mel-kora          #+#    #+#              #
-#    Updated: 2022/10/14 14:53:45 by mel-kora         ###   ########.fr        #
+#    Updated: 2022/10/14 15:04:08 by mel-kora         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,13 +18,10 @@ SRCS	=	main.c\
 			file_handler.c\
 			path_finder.c\
 
-# OBJS	=	$(addprefix Libft/, ${SRCS:.c=.o})
-OBJS = ${SRCS:.c=.o}
+OBJS	=	$(addprefix Libft/, ${SRCS:.c=.o})
 NAME	=	minishell
 CC		=	@gcc
 RM		=	@rm -rf
-#LIB		=	-L /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/editline
-#RDINC	=	-I /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/editline/readline.h
 LIB		=   -L ~/goinfre/.brew/opt/readline/lib
 INC	=	-I ~/goinfre/.brew/opt/readline/include
 CFLAGS	=	-Wall -Werror -Wextra #-g -fsanitize=address
@@ -32,7 +29,7 @@ CFLAGS	=	-Wall -Werror -Wextra #-g -fsanitize=address
 all:		MKLibft MKBuiltins ${NAME}
 			@echo "\033[0;93m	<< all done by S&M! >>"
 
-%o : %c
+Libft/%o : %c
 			$(CC) $(CFLAGS) -c $< -o $@
 
 ${NAME}:	${OBJS}

@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:03:42 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/14 13:59:51 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/14 16:07:51 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ void	check_redirection(int *id, t_list **token)
 	(*token)->id == 50 || (*token)->id == 60 || (*token)->id == 100 || \
 	(*token)->id == 30))
 		*id *= 2;
+	else if (!(*token)->id && !(*token)->content)
+		(*token) = (*token)->next;
 }
 
 t_list	*getter(t_list **in, t_env *env)

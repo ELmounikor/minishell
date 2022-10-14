@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/14 13:24:03 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/14 15:05:17 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,22 +133,4 @@ int	here_doc(t_list *token, int cmd_id, char **file_name, t_env *env)
 	ft_free(&s);
 	ft_free(&limiter);
 	return (open(*file_name, O_RDWR));
-}
-
-void	file_handler(t_list *token, int *fd_in, int *fd_out, int cmd_id, t_env *env)
-{
-	char	*s;
-
-	s = NULL;
-	if (token->id % 77 == 0 && fd_out >= 0)
-		*fd_out = handle_file(token->content, 'A', *fd_out);
-	else if (token->id % 7 == 0 && fd_out >= 0)
-		*fd_out = handle_file(token->content, 'T', *fd_out);
-	else if (token->id % 44 == 0)
-	{
-		*fd_in = here_doc(token, cmd_id, &s, env);
-		ft_free(&s);
-	}
-	else if (token->id % 4 == 0)
-		*fd_in = handle_file(token->content, 'I', *fd_in);
 }

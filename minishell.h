@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 14:21:31 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/12 16:02:05 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/14 17:15:55 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "Libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
+# include "Builtins/builtins.h"
 
 /*structers*/
 typedef struct s_params
@@ -33,10 +34,10 @@ typedef struct s_params
 typedef struct s_cmd
 {
 	int				fd[2];
+	int				size;
 	char			**args;
 	char			*path;
 }	t_cmd;
-# include "Builtins/builtins.h"
 
 /*functions*/
 int			quote_check(char *s);
@@ -49,8 +50,7 @@ void		ft_exit(char **cmd);
 void		editor(char **s1, char *s2);
 void		get_history(char *s, long long int n);
 int			here_doc(t_list *token, int cmd_id, char **file_name, t_env *env);
-void		file_handler(t_list *token, int *fd_in, int *fd_out, int cmd_id, t_env *env);
-void		param_extractor(t_params **params, t_env *env, t_list *input);
+int			handle_file(char *file_name, char code, int fd);
 t_list		*tokenizer(char *s, int i, int j, t_env *env);
 t_list		*syntax_checker(t_list **tokens, t_env *env);
 t_list		*getter(t_list **tokens, t_env *env);

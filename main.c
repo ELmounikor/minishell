@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:53:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/12 18:19:49 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/14 15:24:59 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,26 @@ void	ft_exit(char **cmd)
 		printf("exit\n");
 		exit(0);
 	}
+}
+
+void	free_cmds(t_cmd **cmd)
+{
+	int	i;
+
+	if (!cmd)
+		return ;
+	i = -1;
+	while (cmd[++i])
+	{
+		ft_split_cleaner(cmd[i]->args);
+		if (cmd[i]->fd[0] > 0)
+			close(cmd[i]->fd[0]);
+		if (cmd[i]->fd[1] > 0)
+			close(cmd[i]->fd[1]);
+		free(cmd[i]);
+	}
+	free(cmd);
+	cmd = NULL;
 }
 
 char	*new_prompt(void)
@@ -43,24 +63,11 @@ char	*new_prompt(void)
 	return (s);
 }
 
-void	free_all(t_params *params, t_cmd **cmd, t_list **input)
-{
-	ft_lstclear(input, &free);
-	free_cmds(cmd);
-	if (params)
-	{
-		ft_split_cleaner(params->paths);
-		ft_split_cleaner(params->en);
-		free(params);
-	}
-}
-
 int	main(int ac, char **av, char **en)
 {
 	t_list		*input;
 	t_env		*env;
 	t_cmd		**cmd;
-	//t_params	*params;
 	char		*s;
 
 	av = NULL;
@@ -78,7 +85,6 @@ int	main(int ac, char **av, char **en)
 		cmd = cmd_extractor(input, env);
 		if (cmd)
 		{
-			//param_extractor(&params, env, input);// env_extractor(&params, NULL, NULL); //env to be updated in between child processes using
 			// int i = 0;
 			// printf("\n=============cmd data============\n");
 			// while (cmd && cmd[i])
@@ -96,11 +102,9 @@ int	main(int ac, char **av, char **en)
 			// 	//ft_builtins(cmd[i], env);
 			// 	i++;
 			// }
-			//excute cmds here
 			ft_pipe(cmd, cmd_count(input), env);
 			free_cmds(cmd);
 			ft_lstclear(&input, &free);
-			// free_all(0, cmd, &input);
 		}
 		
 		ft_free(&s);
@@ -111,15 +115,3 @@ int	main(int ac, char **av, char **en)
 	ft_envclear(&env, &free);
 	return (0);
 }
-// printf("=============params data============\nnumber of cmd = %d\nlast exit code = %d\n--------------env list-------------\n", params->cmd_count, params->last_exit_code);
-// t_env *tmp;
-// tmp = env;
-// while (tmp)
-// {
-// 	printf("%s=%s\n", tmp->variable, tmp->value);
-// 	tmp = tmp->next;
-// }
-// i = 0;
-// printf("--------------env list-------------\n");
-// while (params->en && params->en[i])
-// 	printf("%s\n", params->en[i++]);

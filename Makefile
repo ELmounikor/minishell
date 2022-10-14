@@ -6,7 +6,7 @@
 #    By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/20 12:58:47 by mel-kora          #+#    #+#              #
-#    Updated: 2022/10/12 18:17:45 by mel-kora         ###   ########.fr        #
+#    Updated: 2022/10/14 13:03:11 by mel-kora         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ RM		=	@rm -rf
 #RDINC	=	-I /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/editline/readline.h
 LIB		=   -L ~/goinfre/.brew/opt/readline/lib
 INC	=	-I ~/goinfre/.brew/opt/readline/include
-CFLAGS	=	-Wall -Werror -Wextra -g -fsanitize=address
+CFLAGS	=	-Wall -Werror -Wextra #-g -fsanitize=address
 
 all:		MKLibft MKBuiltins ${NAME}
 			@echo "\033[0;93m	<< all done by S&M! >>"

@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/12 19:47:00 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/14 13:24:03 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,17 +100,16 @@ void	handler_heredoc(int sig)
 	{
 		g_exit_value = 1;
 		write(1, "\n", 1);
-		rl_replace_line("", 0);
 		close(0);
 	}
 }
 
 int	here_doc(t_list *token, int cmd_id, char **file_name, t_env *env)
 {
-	int			fd;
-	char		*s;
 	static int	file_id;
+	int			fd;
 	int			stdin_fd;
+	char		*s;
 	char		*limiter;
 
 	limiter = ft_strjoin(token->content, "\n");

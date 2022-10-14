@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 17:40:36 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/11 17:31:12 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/14 14:17:07 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ void	ft_wait_child(int *id, int nbr)
 	}
 }
 
-void	ft_execute_cmd(t_cmd *cmd, int j, t_env *env, int nbr_cmd)
+void	ft_execute_cmd(t_cmd *cmd, t_env *env, int nbr_cmd)
 {
-	if (ft_builtins(cmd->args[j], cmd, env, nbr_cmd) == 1)
+	if (ft_builtins(cmd->args[0], cmd, env, nbr_cmd) == 1)
 	{
-		cmd->path = ft_get_path(cmd->args[j], env);
+		cmd->path = ft_get_path(cmd->args[0], env);
 		if (execve(cmd->path, cmd->args, get_env_char(env)) == -1)
 		{
 			ft_putstr_fd(cmd->args[0], 2);
@@ -63,7 +63,7 @@ void	ft_pipe(t_cmd **cmd, int nbr_cmd, t_env *env)
 		if (id[i] == 0)
 		{	
 			ft_dup(cmd[i], i, nbr_cmd, fd);
-			ft_execute_cmd(cmd[i], i, env, nbr_cmd);
+			ft_execute_cmd(cmd[i], env, nbr_cmd);
 		}
 		i++;
 	}

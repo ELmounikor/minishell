@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:35:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/11 15:48:57 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/14 19:17:42 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,14 @@
 # include <fcntl.h>
 
 /*structers*/
+typedef struct s_cmd
+{
+	int				fd[2];
+	int				size;
+	char			**args;
+	char			*path;
+}	t_cmd;
+
 typedef struct s_list
 {
 	int				id;
@@ -38,6 +46,7 @@ typedef struct s_env
 /*functions*/
 t_list			*ft_lstlast(t_list *lst);
 t_list			*ft_lstnew(char *content, int id);
+void			lstprint(t_list *input);
 void			ft_envclear(t_env **env, void (*del)(void*));
 void			ft_lstclear(t_list **lst, void (*del)(void*));
 void			ft_lstadd_front(t_list **lst, t_list *new);

@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 20:36:15 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/08/23 19:49:21 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/14 20:38:48 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,17 @@ t_list	*ft_lstnew(char *content, int id)
 	element->id = id;
 	element->next = NULL;
 	return (element);
+}
+
+void	lstprint(t_list *input)
+{
+	t_list	*test;
+
+	test = input;
+	while (test)
+	{
+		printf("id = %d, content = %s\n", test->id, test->content);
+		test = test->next;
+	}
+	printf("(end of list)\n");
 }

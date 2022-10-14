@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:17:01 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/12 17:28:41 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/14 19:21:50 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,8 @@ t_list	*check(t_list *previous, t_list *current, t_list *head, t_env *env)
 	))))
 		return (throw_error(current, head, env));
 	else if (current && current->id == 1 && !(previous && current->next && \
-	previous->id != 1 && current->next->id != 1))
+	previous->id != 1 && !(current->next->id == 1 || (!current->next->id && \
+	current->next->content && !current->next->content[0]))))
 		return (throw_error(current, head, env));
 	return (0);
 }

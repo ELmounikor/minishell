@@ -6,38 +6,18 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 14:21:31 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/14 17:15:55 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/14 17:23:19 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-/*the global var*/
-
 /*libraries*/
-# include "Libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
+# include "Libft/libft.h"
 # include "Builtins/builtins.h"
-
-/*structers*/
-typedef struct s_params
-{
-	int		cmd_count;
-	int		last_exit_code;
-	char	**paths;
-	char	**en;
-	t_env	*env;
-}	t_params;
-
-typedef struct s_cmd
-{
-	int				fd[2];
-	int				size;
-	char			**args;
-	char			*path;
-}	t_cmd;
 
 /*functions*/
 int			quote_check(char *s);

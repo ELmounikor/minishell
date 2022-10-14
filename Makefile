@@ -6,7 +6,7 @@
 #    By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/20 12:58:47 by mel-kora          #+#    #+#              #
-#    Updated: 2022/10/14 15:04:08 by mel-kora         ###   ########.fr        #
+#    Updated: 2022/10/14 20:58:23 by mel-kora         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,8 +23,8 @@ NAME	=	minishell
 CC		=	@gcc
 RM		=	@rm -rf
 LIB		=   -L ~/goinfre/.brew/opt/readline/lib
-INC	=	-I ~/goinfre/.brew/opt/readline/include
-CFLAGS	=	-Wall -Werror -Wextra #-g -fsanitize=address
+INC		=	-I ~/goinfre/.brew/opt/readline/include
+CFLAGS	=	-Wall -Werror -Wextra -g -fsanitize=address
 
 all:		MKLibft MKBuiltins ${NAME}
 			@echo "\033[0;93m	<< all done by S&M! >>"

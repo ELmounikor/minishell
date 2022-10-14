@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/09/28 17:22:29 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/14 18:50:30 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_list	*token_maker(char *s, int start, int finish, int id)
 	if (id != 5 && id != 6 && id != 50 && id != 60)
 		finish++;
 	if (finish == start)
-		return (ft_lstnew(NULL, id));
+		return (ft_lstnew(ft_strdup(""), id));
 	str = (char *) malloc (finish - start + 1);
 	if (!str)
 		return (0);

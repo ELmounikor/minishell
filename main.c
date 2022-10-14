@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:53:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/14 15:24:59 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/14 21:05:13 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,29 @@ char	*new_prompt(void)
 	return (s);
 }
 
+void	cmdprint(t_cmd **cmd)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	printf("\n=============cmd data============\n");
+	while (cmd && cmd[i])
+	{
+		printf("---------------------------------\ndata of the command number %d \
+		\n//cmd and its argument's list (%d words):\n", i + 1, cmd[i]->size);
+		j = 0;
+		while (cmd[i]->args[j])
+			printf("%s\n", cmd[i]->args[j++]);
+		printf("%s\n", cmd[i]->args[j]);
+		printf("//in and out file descriptors:\nin_fd = %d\
+		\nout_fd = %d\
+		\n<3\n---------------------------------\n", \
+		cmd[i]->fd[0], cmd[i]->fd[1]);
+		i++;
+	}
+}
+
 int	main(int ac, char **av, char **en)
 {
 	t_list		*input;
@@ -82,31 +105,15 @@ int	main(int ac, char **av, char **en)
 		signal(SIGQUIT, handler_sig);
 		s = new_prompt();
 		input = tokenizer(s, 0, 0, env);
-		cmd = cmd_extractor(input, env);
-		if (cmd)
+		if (input)
+			cmd = cmd_extractor(input, env);
+		if (cmd && input)
 		{
-			// int i = 0;
-			// printf("\n=============cmd data============\n");
-			// while (cmd && cmd[i])
-			// {                
-			// 	printf("---------------------------------\ndata of the command number %d \
-			// 	\n//cmd and its argument's list:\n", i + 1);
-			// 	int j = 0;
-			// 	while (cmd[i]->args[j])
-			// 		printf("%s\n", cmd[i]->args[j++]);
-			// 	printf("%s\n", cmd[i]->args[j]);
-			// 	printf("//in and out file descriptors:\nin_fd = %d\
-			// 	//lakant chi haja mn ghir 0 rdih howa lread end dyal lpipe\nout_fd = %d\
-			// 	//lakant chi haja mn ghir 0 rdih howa lwrite end dyal lpipe\n<3\n---------------------------------\n", \
-			// 	cmd[i]->fd[0], cmd[i]->fd[1]);
-			// 	//ft_builtins(cmd[i], env);
-			// 	i++;
-			// }
-			ft_pipe(cmd, cmd_count(input), env);
+			cmdprint(cmd);
+			//ft_pipe(cmd, cmd_count(input), env);
 			free_cmds(cmd);
 			ft_lstclear(&input, &free);
 		}
-		
 		ft_free(&s);
 		// printf("\n==================================================\n");
 		// system("leaks minishell");

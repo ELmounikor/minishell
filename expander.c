@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:03:42 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/14 16:07:51 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/14 19:58:29 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ char	*expander(t_list *token, t_env *env, int i, int j)
 	s = NULL;
 	if (token->id && token->id % 3 == 0 && j % 44 != 0)
 	{
+		if (!token->content[0])
+			return (ft_strdup(""));
 		while (token->content && token->content[i])
 		{
 			j = i;
@@ -87,7 +89,7 @@ void	check_redirection(int *id, t_list **token)
 	(*token)->id == 50 || (*token)->id == 60 || (*token)->id == 100 || \
 	(*token)->id == 30))
 		*id *= 2;
-	else if (!(*token)->id && !(*token)->content)
+	else if (!(*token)->id && (*token)->content && !(*token)->content[0])
 		(*token) = (*token)->next;
 }
 
@@ -104,6 +106,8 @@ t_list	*getter(t_list **in, t_env *env)
 	{
 		id = token->id;
 		check_redirection(&id, &token);
+		if (!token)
+			break ;
 		s = expander(token, env, 0, id);
 		while (token->id && token->id % 10 == 0)
 		{

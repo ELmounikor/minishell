@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:03:42 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/14 19:58:29 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/15 11:04:00 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,8 @@ char	*expander(t_list *token, t_env *env, int i, int j)
 	char	*s;
 
 	s = NULL;
-	if (token->id && token->id % 3 == 0 && j % 44 != 0)
+	if (token->id && token->id % 3 == 0 && j % 44 != 0 && token->content[i])
 	{
-		if (!token->content[0])
-			return (ft_strdup(""));
 		while (token->content && token->content[i])
 		{
 			j = i;

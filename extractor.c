@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/14 21:26:45 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/15 11:53:55 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ int	file_handler(t_cmd **cmd, t_list *token, int cmd_id, t_env *env)
 		out_file_handler(token, &((*cmd)->fd[1]));
 	else if (token->id % 4 == 0)
 		in_file_handler(token, &((*cmd)->fd[0]), cmd_id, env);
-	if (token->id % 44 == 0 && g_exit_value == 1)
-		(*cmd)->fd[0] = -888;
 	return (1);
 }
 
@@ -64,7 +62,7 @@ void	cmd_filler(t_cmd **cmd, t_list **input, int cmd_id, t_env *env)
 	{
 		if (file_handler(cmd, (*input), cmd_id, env))
 		{
-			if (cmd[i]->fd[0] == -888)
+			if ((*input)->id % 44 == 0 && g_exit_value == 1)
 				break ;
 		}
 		else if ((*input)->content)
@@ -84,22 +82,22 @@ t_cmd	**cmd_extractor(t_list *input, t_env *env)
 	cmd = (t_cmd **) malloc ((cmd_count(input) + 1) * sizeof (t_cmd *));
 	sizes = cmd_size(input);
 	i = -1;
-	while (cmd && input)
+	while (cmd && input && ++i >= 0)
 	{
-		cmd[++i] = (t_cmd *) malloc (sizeof(t_cmd));
+		cmd[i] = (t_cmd *) malloc (sizeof(t_cmd));
 		if (cmd[i])
 			cmd[i]->size = sizes[i] + 1;
 		cmd_filler(&cmd[i], &input, i, env);
-		if ((cmd[i] && cmd[i]->fd[0] == -888) || !input)
+		if (!input || (input && input->id % 44 == 0 && g_exit_value == 1))
 			break ;
 		input = input->next;
 	}
 	free(sizes);
-	if (i == -1 || !cmd || (cmd && cmd[i] && cmd[i]->fd[0] == -888))
+	cmd[++i] = NULL;
+	if (!cmd || (input && input->id % 44 == 0 && g_exit_value == 1))
 	{
 		free_cmds(cmd);
 		return (0);
 	}
-	cmd[i] = NULL;
 	return (cmd);
 }

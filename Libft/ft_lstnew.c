@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 20:36:15 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/14 20:38:48 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/15 11:24:52 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,27 @@ void	lstprint(t_list *input)
 		test = test->next;
 	}
 	printf("(end of list)\n");
+}
+
+void	cmdprint(t_cmd **cmd)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	printf("\n=============cmd data============\n");
+	while (cmd && cmd[i])
+	{
+		printf("---------------------------------\ndata of the command number %d \
+		\n//cmd and its argument's list (%d elements):\n", i + 1, cmd[i]->size);
+		j = 0;
+		while (cmd[i]->args[j])
+			printf("%s\n", cmd[i]->args[j++]);
+		printf("%s\n", cmd[i]->args[j]);
+		printf("//in and out file descriptors:\nin_fd = %d\
+		\nout_fd = %d\
+		\n<3\n---------------------------------\n", \
+		cmd[i]->fd[0], cmd[i]->fd[1]);
+		i++;
+	}
 }

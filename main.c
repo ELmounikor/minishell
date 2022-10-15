@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:53:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/14 21:05:13 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/15 12:01:54 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,29 +63,6 @@ char	*new_prompt(void)
 	return (s);
 }
 
-void	cmdprint(t_cmd **cmd)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	printf("\n=============cmd data============\n");
-	while (cmd && cmd[i])
-	{
-		printf("---------------------------------\ndata of the command number %d \
-		\n//cmd and its argument's list (%d words):\n", i + 1, cmd[i]->size);
-		j = 0;
-		while (cmd[i]->args[j])
-			printf("%s\n", cmd[i]->args[j++]);
-		printf("%s\n", cmd[i]->args[j]);
-		printf("//in and out file descriptors:\nin_fd = %d\
-		\nout_fd = %d\
-		\n<3\n---------------------------------\n", \
-		cmd[i]->fd[0], cmd[i]->fd[1]);
-		i++;
-	}
-}
-
 int	main(int ac, char **av, char **en)
 {
 	t_list		*input;
@@ -109,8 +86,8 @@ int	main(int ac, char **av, char **en)
 			cmd = cmd_extractor(input, env);
 		if (cmd && input)
 		{
-			cmdprint(cmd);
-			//ft_pipe(cmd, cmd_count(input), env);
+			// cmdprint(cmd);
+			ft_pipe(cmd, cmd_count(input), env);
 			free_cmds(cmd);
 			ft_lstclear(&input, &free);
 		}
@@ -118,6 +95,7 @@ int	main(int ac, char **av, char **en)
 		// printf("\n==================================================\n");
 		// system("leaks minishell");
 		// printf("\n==================================================\n");
+		// exit(0);
 	}
 	ft_envclear(&env, &free);
 	return (0);

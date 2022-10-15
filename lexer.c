@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/14 18:50:30 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/15 12:00:49 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ t_list	*get_token(char *s, int *start, int *end, int id)
 		{
 			if (ft_strchr("<$|&>", s[*end]))
 			{
-				if (*start != *end)
+				if (id)
 					break ;
 				*end += lexer(s[*end], s[*end + 1], &id);
 			}
@@ -114,17 +114,6 @@ t_list	*tokenizer(char *s, int i, int j, t_env *env)
 		}
 		ft_lstadd_back(&tokens, get_token(s, &j, &i, 0));
 	}
+	lstprint(tokens);
 	return (syntax_checker(&tokens, env));
 }
-/*code for explaining
-// printf("'%c'---'%c'\n", s[start], s[finish]);
-
-t_list	*test;
-test = tokens;
-while (test)
-{
-	printf("id = %d, content = %s\n", test->id, test->content);
-	test = test->next;
-}
-exit(0);
-*/

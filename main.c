@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:53:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/15 14:36:31 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/15 16:21:25 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,9 @@ int	main(int ac, char **av, char **en)
 
 	av = NULL;
 	ac = 0;
-	env = get_env(en);
+	//env = get_env(en);
+	en = NULL;
+	env = NULL;
 	g_exit_value = 0;
 	//history_reloader(ac); // messup up & down keys tanchofoha apres
 	while (1)
@@ -86,7 +88,7 @@ int	main(int ac, char **av, char **en)
 			cmd = cmd_extractor(input, env);
 		if (cmd && input)
 		{
-			cmdprint(cmd);
+			// cmdprint(cmd);
 			ft_pipe(cmd, cmd_count(input), env);
 			free_cmds(cmd);
 			ft_lstclear(&input, &free);
@@ -95,7 +97,6 @@ int	main(int ac, char **av, char **en)
 		// printf("\n==================================================\n");
 		// system("leaks minishell");
 		// printf("\n==================================================\n");
-		// exit(0);
 	}
 	ft_envclear(&env, &free);
 	return (0);

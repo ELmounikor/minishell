@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 20:36:15 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/15 11:24:52 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/15 16:21:19 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	cmdprint(t_cmd **cmd)
 	while (cmd && cmd[i])
 	{
 		printf("---------------------------------\ndata of the command number %d \
-		\n//cmd and its argument's list (%d elements):\n", i + 1, cmd[i]->size);
+		\n//cmd and its argument's list (%d elements):\n", i + 1, cmd[i]->size - 1);
 		j = 0;
 		while (cmd[i]->args[j])
 			printf("%s\n", cmd[i]->args[j++]);

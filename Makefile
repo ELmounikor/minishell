@@ -6,7 +6,7 @@
 #    By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/20 12:58:47 by mel-kora          #+#    #+#              #
-#    Updated: 2022/10/15 11:43:21 by mel-kora         ###   ########.fr        #
+#    Updated: 2022/10/15 16:17:34 by mel-kora         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ CC		=	@gcc
 RM		=	@rm -rf
 LIB		=   -L ~/goinfre/.brew/opt/readline/lib
 INC		=	-I ~/goinfre/.brew/opt/readline/include
-CFLAGS	=	-Wall -Werror -Wextra -g -fsanitize=address
+CFLAGS	=	-Wall -Werror -Wextra #-g -fsanitize=address
 
 all:		MKLibft MKBuiltins ${NAME}
 			@echo "\033[0;93m	<< all done by S&M! >>"

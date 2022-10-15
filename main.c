@@ -72,9 +72,7 @@ int	main(int ac, char **av, char **en)
 
 	av = NULL;
 	ac = 0;
-	//env = get_env(en);
-	en = NULL;
-	env = NULL;
+	env = get_env(en);
 	g_exit_value = 0;
 	//history_reloader(ac); // messup up & down keys tanchofoha apres
 	while (1)

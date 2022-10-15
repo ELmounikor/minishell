@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/15 12:00:49 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/15 12:30:04 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,11 @@ t_list	*token_maker(char *s, int start, int finish, int id)
 
 int	lexer(char c, char next_c, int *id)
 {
+	int	i;
+
+	i = 0;
+	if (!id)
+		id = &i;
 	if (c == '|')
 		*id = 1;
 	else if (c == '$' && next_c == '?')
@@ -58,7 +63,9 @@ int	lexer(char c, char next_c, int *id)
 		*id = 7;
 	if (*id > 10)
 		return (1);
-	return (0);
+	else if (*id > 0)
+		return (0);
+	return (-1);
 }
 
 t_list	*get_token(char *s, int *start, int *end, int id)
@@ -68,7 +75,7 @@ t_list	*get_token(char *s, int *start, int *end, int id)
 		while (s[*end] && !ft_isspace(s[*end]) && s[*end] != 39 && \
 		s[*end] != 34 && id != 1)
 		{
-			if (ft_strchr("<$|&>", s[*end]))
+			if (lexer(s[*end], s[*end + 1], 0) != -1)
 			{
 				if (id)
 					break ;
@@ -114,6 +121,5 @@ t_list	*tokenizer(char *s, int i, int j, t_env *env)
 		}
 		ft_lstadd_back(&tokens, get_token(s, &j, &i, 0));
 	}
-	lstprint(tokens);
 	return (syntax_checker(&tokens, env));
 }

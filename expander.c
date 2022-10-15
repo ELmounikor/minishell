@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:03:42 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/15 13:07:04 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/15 14:54:19 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,33 +47,33 @@ char	*getval(char *s1, t_env *env)
 	return (0);
 }
 
-char	*expander(t_list *token, t_env *env, int i, int j)
+char	*expander(t_list *tok, t_env *env, int i, int j)
 {
 	char	*s;
 
 	s = NULL;
-	if (token->id && token->id % 3 == 0 && j % 44 != 0 && token->content[i])
+	if (tok->id && !(tok->id % 3) && j % 44 && (j == 30 || tok->content[i]))
 	{
-		while (token->content && token->content[i])
+		while (tok->content && tok->content[i])
 		{
 			j = i;
-			while (token->content[i] && !(token->content[i] == '$' && (\
-			ft_isalnum_(token->content[i + 1]) || token->content[i + 1] \
-			== '?')))
+			while (tok->content[i] && !(tok->content[i] == '$' && (\
+			ft_isalnum_(tok->content[i + 1]) || tok->content[i + 1] \
+			== '?' || !tok->content[i + 1])))
 				i++;
-			editor(&s, ft_substr(token->content, j, i - j));
-			if (token->content[i] == '$')
+			editor(&s, ft_substr(tok->content, j, i - j));
+			if (tok->content[i] == '$')
 			{
 				j = ++i;
-				while ((ft_isalnum_(token->content[i]) && token->content[j] != \
-				'?') || (i == j && token->content[j] == '?'))
+				while ((ft_isalnum_(tok->content[i]) && tok->content[j] != \
+				'?') || (i == j && tok->content[j] == '?'))
 					i++;
-				editor(&s, getval(ft_substr(token->content, j, i - j), env));
+				editor(&s, getval(ft_substr(tok->content, j, i - j), env));
 			}
 		}
 		return (s);
 	}
-	return (ft_strdup(token->content));
+	return (ft_strdup(tok->content));
 }
 
 void	check_redirection(int *id, t_list **token)

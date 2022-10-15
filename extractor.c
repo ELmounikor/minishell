@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/15 13:23:23 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/15 14:15:30 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	in_file_handler(t_list *token, int *fd_in, int cmd_id, t_env *env)
 	char	*s;
 
 	s = NULL;
-	if (*fd_in < 0)
+	if (*fd_in > 0)
 		close(*fd_in);
 	if (token->id % 44 == 0)
 	{
@@ -30,7 +30,7 @@ void	in_file_handler(t_list *token, int *fd_in, int cmd_id, t_env *env)
 
 void	out_file_handler(t_list *token, int *fd_out)
 {
-	if (*fd_out < 0)
+	if (*fd_out > 0)
 		close(*fd_out);
 	if (token->id % 77 == 0 && fd_out >= 0)
 		*fd_out = handle_file(token->content, 'A', *fd_out);

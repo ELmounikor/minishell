@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/15 11:53:55 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/15 13:23:23 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	in_file_handler(t_list *token, int *fd_in, int cmd_id, t_env *env)
 	char	*s;
 
 	s = NULL;
+	if (*fd_in < 0)
+		close(*fd_in);
 	if (token->id % 44 == 0)
 	{
 		*fd_in = here_doc(token, cmd_id, &s, env);
@@ -28,6 +30,8 @@ void	in_file_handler(t_list *token, int *fd_in, int cmd_id, t_env *env)
 
 void	out_file_handler(t_list *token, int *fd_out)
 {
+	if (*fd_out < 0)
+		close(*fd_out);
 	if (token->id % 77 == 0 && fd_out >= 0)
 		*fd_out = handle_file(token->content, 'A', *fd_out);
 	else if (token->id % 7 == 0 && fd_out >= 0)
@@ -41,6 +45,8 @@ int	file_handler(t_cmd **cmd, t_list *token, int cmd_id, t_env *env)
 	token->id != 40 && token->id != 440 && token->id != 88 && \
 	token->id != 880)
 		return (0);
+	if ((*cmd)->fd[1] < 0 || (*cmd)->fd[0] < 0)
+		return (1);
 	if (token->id % 7 == 0)
 		out_file_handler(token, &((*cmd)->fd[1]));
 	else if (token->id % 4 == 0)

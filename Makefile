@@ -6,7 +6,7 @@
 #    By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/20 12:58:47 by mel-kora          #+#    #+#              #
-#    Updated: 2022/10/15 16:17:34 by mel-kora         ###   ########.fr        #
+#    Updated: 2022/10/16 10:38:35 by mel-kora         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,8 @@ SRCS	=	main.c\
 			extractor.c\
 			file_handler.c\
 			path_finder.c\
+			history.c\
+			ft_signal.c\
 
 OBJS	=	$(addprefix Libft/, ${SRCS:.c=.o})
 NAME	=	minishell

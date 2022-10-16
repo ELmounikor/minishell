@@ -40,12 +40,10 @@ NAME	=	builtins.a
 CC		=	@gcc
 RM		=	@rm -rf
 CFLAGS	=	-Wall -Werror -Wextra
-LIB		=   -L ~/goinfre/.brew/opt/readline/lib
-INC		=	-I ~/goinfre/.brew/opt/readline/include
 
 .c.o:
 			${CC} ${CFLAGS} -c $< -o $@ 
-			@ar -crs ${NAME} $@ -lreadline ${LIB} ${INC}
+			@ar -crs ${NAME} $@
 			
 all:		${NAME}
 

@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 17:40:36 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/15 17:36:04 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/16 20:30:14 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,29 @@ void	ft_execute_cmd(t_cmd *cmd, t_env *env, int nbr_cmd)
 		exit(g_exit_value);
 }
 
+void	change_pwd(t_env *env)
+{
+	char	*path;
+
+	path = get_value(env, "PWD");
+	if (path)
+	{
+		if (env->pwd && ft_strncmp(path, env->pwd, ft_strlen(path) + 1) != 0)
+		{
+			if (env->pwd)
+				free(env->pwd);
+			env->pwd = ft_strdup(path);
+		}
+	}
+}
+
 void	ft_pipe(t_cmd **cmd, int nbr_cmd, t_env *env)
 {
 	int	**fd;
 	int	i;
 	int	*id;
 
+	change_pwd(env);
 	if (nbr_cmd == 1 && cmd[0]->fd[0]== 0 && cmd[0]->fd[1] == 0
 		&& ft_builtins(cmd[0]->args[0], cmd[0], env, nbr_cmd) == 0)
 		return ;

@@ -3,42 +3,41 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+         #
+#    By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/20 16:48:53 by mel-kora          #+#    #+#              #
-#    Updated: 2022/10/11 15:48:20 by mel-kora         ###   ########.fr        #
+#    Updated: 2022/09/30 18:29:15 by sennaama         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS	=	ft_putstr_fd.c\
-			ft_split.c\
-			ft_strdup.c\
-			ft_strjoin.c\
-			ft_strlen.c\
-			ft_strtrim.c\
-			ft_strncmp.c\
-			ft_strnstr.c\
-			ft_strchr.c\
-			ft_atoi.c\
-			get_next_line.c\
-			ft_isnum.c\
-			ft_lstnew.c\
-			ft_lstiter.c\
-			ft_lstclear.c\
-			ft_lstadd_back.c\
-			ft_lstadd_front.c\
-			ft_lstdelone.c\
-			ft_lstlast.c\
-			ft_lstsize.c\
-			ft_substr.c\
-			ft_isalnum_.c\
-			ft_isspace.c\
-			ft_strcmp.c\
-			ft_itoa.c\
+SRCS	=	history.c\
+			unset.c\
+			add_env.c\
+			cd.c\
+			echo.c\
+			env.c\
+			export.c\
+			pwd.c\
+			list_env.c\
+			ft_builtins.c\
+			ft_split_env.c\
+			ft_atoi_exit.c\
+			exit.c\
+			ft_builtins.c\
+			../execution/ft_pipe.c\
+			../execution/ft_get_path.c\
+			../execution/ft_outils_pipe.c\
+			../execution/ft_signal.c
+			#ft_pipex/childs.c\
+			#ft_pipex/ft_utils_list.c\
+			#ft_pipex/get_cmd_path.c\
+			#ft_pipex/pipex.c\
+			#ft_pipex/pipex_bonus.c\
+			#ft_pipex/pipex_bonuso.c\
 
 OBJS	=	${SRCS:.c=.o}
 
-NAME	=	libft.a
+NAME	=	builtins.a
 
 CC		=	@gcc
 

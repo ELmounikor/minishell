@@ -6,7 +6,7 @@
 #    By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/20 12:58:47 by mel-kora          #+#    #+#              #
-#    Updated: 2022/10/16 13:43:58 by mel-kora         ###   ########.fr        #
+#    Updated: 2022/10/16 14:31:22 by mel-kora         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,6 @@ SRCS	=	main.c\
 			syntax_checker.c\
 			extractor.c\
 			file_handler.c\
-			path_finder.c\
 
 OBJS	=	$(addprefix Libft/, ${SRCS:.c=.o})
 NAME	=	minishell
@@ -45,10 +44,10 @@ ${NAME}:	${OBJS}
 			@echo "\033[1;33m	|_|  |_||___| |_|\_||___||___/ |_||_||___||____||____| "
 
 MKLibft:
-			@make  -C Libft
+			@make -s -C Libft
 
 MKBuiltins:
-			@make -C Builtins
+			@make -s -C Builtins
 
 clean:
 			${RM} ${OBJS}

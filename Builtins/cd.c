@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 16:02:20 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/08 15:16:44 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/16 20:09:29 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	get_home(t_env *env)
 	path = get_value(env, "HOME");
 	if (!path)
 	{
-		ft_putstr_fd("cd: HOME not set\n", 2);
+		ft_putstr_fd("sh-sm: cd: HOME not set\n", 2);
 		g_exit_value = 1;
 	}
 	else
@@ -73,16 +73,36 @@ void	get_home(t_env *env)
 void	cd(char **argv, t_env *env)
 {
 	int		r;
+	char	*path;
 
-	if (argv[1] == NULL || ft_strncmp(argv[1], "~", ft_strlen(argv[1])) == 0)
+	path = NULL;
+	if (argv[1] == NULL)
 		get_home(env);
+	else if (ft_strncmp(argv[1], "~", ft_strlen(argv[1]) + 1) == 0)
+	{
+		r = chdir(getenv("HOME"));
+		if (r == 0)
+			change_path_env(env, getenv("HOME"));
+	}
 	else
 	{
+		if (argv[1][0] == '~')
+		{
+			chdir(getenv("HOME"));
+			path = &argv[1][2];
+			argv[1] = ft_strdup(path);
+		}
 		r = chdir(argv[1]);
 		if (r == 0)
 			change_path_env(env, getcwd(NULL, 0));
 		else
 		{
+			ft_putstr_fd("sh-sm: cd: ", 2);
+			if (path)
+			{
+				ft_putstr_fd(getenv("HOME"), 2);
+				ft_putstr_fd("/", 2);
+			}
 			perror(argv[1]);
 			g_exit_value = 1;
 		}

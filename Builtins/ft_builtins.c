@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 12:33:26 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/15 17:10:06 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/16 19:07:41 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_builtins(char *args, t_cmd *cmd, t_env *env, int nbr_cmd)
 			== 0)
 			unset(cmd->args, env);
 		else if (ft_strncmp(args, "pwd", ft_strlen(args)+ 1) == 0)
-			pwd();
+			pwd(env);
 		else if (ft_strncmp(args, "cd", ft_strlen(args)+ 1) == 0)
 			cd(cmd->args, env);
 		else if (ft_strncmp(args, "exit", ft_strlen(args)+ 1) == 0)

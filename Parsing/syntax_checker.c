@@ -6,11 +6,11 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:17:01 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/14 19:21:50 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/16 14:14:07 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	quote_check(char *s)
 {

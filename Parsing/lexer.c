@@ -6,11 +6,11 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/16 15:08:58 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/16 14:14:04 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 t_list	*token_maker(char *s, int start, int finish, int id)
 {
@@ -77,7 +77,7 @@ t_list	*get_token(char *s, int *start, int *end, int id)
 		{
 			if (lexer(s[*end], s[*end + 1], 0) != -1)
 			{
-				if (*start != *end)
+				if (id)
 					break ;
 				*end += lexer(s[*end], s[*end + 1], &id);
 			}

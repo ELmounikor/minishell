@@ -6,11 +6,11 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:03:42 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/15 14:54:19 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/16 14:13:52 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	editor(char **s1, char *s2)
 {

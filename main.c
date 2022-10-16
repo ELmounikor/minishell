@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:53:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/16 15:09:22 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/15 17:09:16 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ int	main(int ac, char **av, char **en)
 			cmd = cmd_extractor(input, env);
 		if (cmd && input)
 		{
-			// cmdprint(cmd);
+			//cmdprint(cmd);
+			//printf("-----%d\n", cmd_count(input));
 			ft_pipe(cmd, cmd_count(input), env);
 			free_cmds(cmd);
 			ft_lstclear(&input, &free);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 14:15:10 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/16 10:57:38 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/08 19:41:02 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,4 @@ void	ft_remove_element_list(t_env **env, char *var);
 char	*get_value(t_env *env, char *str);
 void	ft_perror(char *str);
 int     ft_builtins(char *args, t_cmd *cmd, t_env *env, int nbr_cmd);
-char	*getcwd(char *s, size_t t);
 #endif

@@ -3,14 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+         #
+#    By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/20 16:48:53 by mel-kora          #+#    #+#              #
-#    Updated: 2022/10/16 10:37:14 by mel-kora         ###   ########.fr        #
+#    Updated: 2022/09/30 18:29:15 by sennaama         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS	=	unset.c\
+SRCS	=	history.c\
+			unset.c\
 			add_env.c\
 			cd.c\
 			echo.c\
@@ -26,7 +27,7 @@ SRCS	=	unset.c\
 			../execution/ft_pipe.c\
 			../execution/ft_get_path.c\
 			../execution/ft_outils_pipe.c\
-			#../execution/ft_signal.c
+			../execution/ft_signal.c
 			#ft_pipex/childs.c\
 			#ft_pipex/ft_utils_list.c\
 			#ft_pipex/get_cmd_path.c\
@@ -35,13 +36,17 @@ SRCS	=	unset.c\
 			#ft_pipex/pipex_bonuso.c\
 
 OBJS	=	${SRCS:.c=.o}
+
 NAME	=	builtins.a
+
 CC		=	@gcc
+
 RM		=	@rm -rf
+
 CFLAGS	=	-Wall -Werror -Wextra
 
 .c.o:
-			${CC} ${CFLAGS} -c $< -o $@ 
+			${CC} ${CFLAGS} -c $< -o $@
 			@ar -crs ${NAME} $@
 			
 all:		${NAME}

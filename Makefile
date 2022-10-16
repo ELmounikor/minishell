@@ -6,7 +6,7 @@
 #    By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/20 12:58:47 by mel-kora          #+#    #+#              #
-#    Updated: 2022/10/15 16:17:34 by mel-kora         ###   ########.fr        #
+#    Updated: 2022/10/16 13:43:58 by mel-kora         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,10 +45,10 @@ ${NAME}:	${OBJS}
 			@echo "\033[1;33m	|_|  |_||___| |_|\_||___||___/ |_||_||___||____||____| "
 
 MKLibft:
-			@make -s -C Libft
+			@make  -C Libft
 
 MKBuiltins:
-			@make -s -C Builtins
+			@make -C Builtins
 
 clean:
 			${RM} ${OBJS}

@@ -6,11 +6,11 @@
 #    By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/20 16:48:53 by mel-kora          #+#    #+#              #
-#    Updated: 2022/10/11 15:48:20 by mel-kora         ###   ########.fr        #
+#    Updated: 2022/10/16 13:45:03 by mel-kora         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS	=	ft_putstr_fd.c\
+SRCS	=	ft_putstrfd.c\
 			ft_split.c\
 			ft_strdup.c\
 			ft_strjoin.c\

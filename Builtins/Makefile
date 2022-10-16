@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+         #
+#    By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/20 16:48:53 by mel-kora          #+#    #+#              #
-#    Updated: 2022/09/30 18:29:15 by sennaama         ###   ########.fr        #
+#    Updated: 2022/10/16 13:29:08 by mel-kora         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ CFLAGS	=	-Wall -Werror -Wextra
 .c.o:
 			${CC} ${CFLAGS} -c $< -o $@
 			@ar -crs ${NAME} $@
-			
+
 all:		${NAME}
 
 ${NAME}:	${OBJS}

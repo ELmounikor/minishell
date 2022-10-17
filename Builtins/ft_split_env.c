@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_env.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 18:28:43 by sennaama          #+#    #+#             */
-/*   Updated: 2022/09/26 18:29:29 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/17 13:52:10 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	**ft_split_env(char *str, char c)
 	int		i;
 	int		k;
 
-	t = (char **)malloc(2 * sizeof(char));
+	t = (char **)malloc(2 * sizeof(char *));
 	if (!t)
 		ft_perror("malloc");
 	size = count_words(str, c);

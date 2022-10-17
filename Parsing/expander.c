@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:03:42 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/16 14:13:52 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/17 10:48:22 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	editor(char **s1, char *s2)
 	*s1 = tmp;
 }
 
-char	*getval(char *s1, t_env *env)
+char	*getval(char *s1, t_env *env, t_list **token)
 {
 	if (!ft_strcmp(s1, "?"))
 	{
@@ -39,6 +39,8 @@ char	*getval(char *s1, t_env *env)
 		if (!ft_strcmp(s1, env->variable))
 		{
 			ft_free(&s1);
+			if (*token && ((*token)->id == 3 || (*token)->id == 30))
+				return (get_nd_split(token, env->value));
 			return (ft_strdup(env->value));
 		}
 		env = env->next;
@@ -47,33 +49,33 @@ char	*getval(char *s1, t_env *env)
 	return (0);
 }
 
-char	*expander(t_list *tok, t_env *env, int i, int j)
+char	*expander(t_list **t, t_env *env, int i, int j)
 {
 	char	*s;
 
 	s = NULL;
-	if (tok->id && !(tok->id % 3) && j % 44 && (j == 30 || tok->content[i]))
+	if ((*t)->id && !((*t)->id % 3) && j % 44 && (j == 30 || (*t)->content[i]))
 	{
-		while (tok->content && tok->content[i])
+		while ((*t)->content && (*t)->content[i])
 		{
 			j = i;
-			while (tok->content[i] && !(tok->content[i] == '$' && (\
-			ft_isalnum_(tok->content[i + 1]) || tok->content[i + 1] \
-			== '?' || !tok->content[i + 1])))
+			while ((*t)->content[i] && !((*t)->content[i] == '$' && (\
+			ft_isalnum_((*t)->content[i + 1]) || (*t)->content[i + 1] \
+			== '?' || !(*t)->content[i + 1])))
 				i++;
-			editor(&s, ft_substr(tok->content, j, i - j));
-			if (tok->content[i] == '$')
+			editor(&s, ft_substr((*t)->content, j, i - j));
+			if ((*t)->content[i] == '$')
 			{
 				j = ++i;
-				while ((ft_isalnum_(tok->content[i]) && tok->content[j] != \
-				'?') || (i == j && tok->content[j] == '?'))
+				while ((ft_isalnum_((*t)->content[i]) && (*t)->content[j] != \
+				'?') || (i == j && (*t)->content[j] == '?'))
 					i++;
-				editor(&s, getval(ft_substr(tok->content, j, i - j), env));
+				editor(&s, getval(ft_substr((*t)->content, j, i - j), env, t));
 			}
 		}
 		return (s);
 	}
-	return (ft_strdup(tok->content));
+	return (ft_strdup((*t)->content));
 }
 
 void	check_redirection(int *id, t_list **token)
@@ -106,10 +108,10 @@ t_list	*getter(t_list **in, t_env *env)
 		check_redirection(&id, &token);
 		if (!token)
 			break ;
-		s = expander(token, env, 0, id);
+		s = expander(&token, env, 0, id);
 		while (token->id && token->id % 10 == 0)
 		{
-			editor(&s, expander(token->next, env, 0, id));
+			editor(&s, expander(&token->next, env, 0, id));
 			token = token->next;
 		}
 		ft_lstadd_back(&input, ft_lstnew(s, id));

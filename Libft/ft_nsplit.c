@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
+/*   ft_nsplit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 21:23:10 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/16 20:11:55 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/16 20:07:21 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	flag(char *s, char c)
+void	flager(char *s, char *c)
 {
 	int	flag[3];
 
@@ -25,14 +25,13 @@ void	flag(char *s, char c)
 			flag[2]++;
 		else if (s[flag[0]] == 39 && flag[2] % 2 == 0)
 			flag[1]++;
-		if (s[flag[0]] == ' ' && !(flag[2] % 2 == 0 && flag[1] % 2 == 0))
-			s[flag[0]] = -1;
-		if (s[flag[0]] == c && !(flag[2] % 2 == 0 && flag[1] % 2 == 0))
-			s[flag[0]] = -2;
+		while (ft_strchr(c, s[flag[0]]) && \
+		!(flag[2] % 2 == 0 && flag[1] % 2 == 0))
+			s[flag[0]] *= -1;
 	}
 }
 
-static int	arraysize(char const *s, char c)
+static int	arraysize(char const *s, char *c)
 {
 	int	i;
 	int	j;
@@ -42,10 +41,10 @@ static int	arraysize(char const *s, char c)
 	size = 0;
 	while (s && s[i])
 	{
-		while (s[i] && (s[i] == c || s[i] == -3))
+		while (s[i] && ft_strchr(c, s[i]))
 			i++;
 		j = i;
-		while (s[i] && s[i] != c)
+		while (s[i] && !ft_strchr(c, s[i]))
 			i++;
 		if (j != i)
 			size++;
@@ -53,7 +52,7 @@ static int	arraysize(char const *s, char c)
 	return (size);
 }
 
-static int	*wordsizes(char const *s, char c)
+static int	*wordsizes(char const *s, char *c)
 {
 	int	i;
 	int	j;
@@ -68,10 +67,10 @@ static int	*wordsizes(char const *s, char c)
 	j = 0;
 	while (s[i] && j < size)
 	{
-		while (s[i] && (s[i] == c))
+		while (s[i] && ft_strchr(c, s[i]))
 			i++;
 		sizes[j] = 0;
-		while (s[i] && s[i] != c)
+		while (s[i] && !ft_strchr(c, s[i]))
 		{
 			sizes[j]++;
 			i++;
@@ -82,14 +81,14 @@ static int	*wordsizes(char const *s, char c)
 	return (sizes);
 }
 
-static char	**allocation(char const *s, char c)
+static char	**allocation(char const *s, char *c)
 {
 	char	**output;
 	int		size;
 	int		*sizes;
 	int		i;
 
-	flag((char *) s, c);
+	flager((char *) s, c);
 	size = arraysize(s, c);
 	output = (char **) malloc((size + 1) * sizeof(char *));
 	if (!output || !s)
@@ -111,7 +110,7 @@ static char	**allocation(char const *s, char c)
 	return (output);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_nsplit(char const *s, char *c)
 {
 	char	**output;
 	int		*sizes;
@@ -128,10 +127,10 @@ char	**ft_split(char const *s, char c)
 	while (++i < arraysize(s, c))
 	{
 		j = 0;
-		while (s[k] == c && s[k])
+		while (ft_strchr(c, s[k]) && s[k])
 			k++;
-		while (j < sizes[i] && s[k] && s[k] != c)
-				output[i][j++] = ft_convert(s[k++], c);
+		while (j < sizes[i] && s[k] && !ft_strchr(c, s[k]))
+				output[i][j++] = ft_unflag(s[k++], c);
 		output[i][j] = '\0';
 		output[i] = str_edit(output[i]);
 	}

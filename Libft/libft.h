@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:35:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/16 18:50:25 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/16 19:03:40 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ typedef struct s_env
 {
 	char			*variable;
 	char			*value;
-	char			*pwd;
 	struct s_env	*next;
 }	t_env;
 
@@ -60,6 +59,7 @@ void			ft_free(char **s);
 void			ft_split_cleaner(char **output);
 void			ft_putstr_fd(char *s, int fd);
 char			**ft_split(char const *s, char c);
+char			**ft_nsplit(char const *s, char *c);
 char			*str_edit(char *s);
 char			*get_next_line(int fd);
 char			*ft_strdup(const char *s1);
@@ -71,6 +71,7 @@ char			*ft_strnstr(const char *hay, const char *nee, int len);
 char			*ft_substr(char const *s, unsigned int start, size_t len);
 char			*ft_itoa(int n);
 char			ft_convert(char c, char s);
+char			ft_unflag(char s, char *c);
 int				*cmd_size(t_list *lst);
 int				cmd_count(t_list *lst);
 int				ft_lstsize(t_list *lst);

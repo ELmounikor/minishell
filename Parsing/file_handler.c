@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/16 14:14:00 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/16 19:10:33 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char	*line_expander(char **line, t_env *env, int i, int j)
 				while ((ft_isalnum_((*line)[i]) && (*line)[j] != '?') || \
 				(i == j && (*line)[j] == '?'))
 					i++;
-				editor(&s, getval(ft_substr((*line), j, i - j), env));
+				editor(&s, getval(ft_substr((*line), j, i - j), env, NULL));
 			}
 		}
 		ft_free(line);
@@ -108,27 +108,22 @@ int	here_doc(t_list *token, int cmd_id, char **file_name, t_env *env)
 	int			fd;
 	int			stdin_fd;
 	char		*s;
-	char		*limiter;
 
-	limiter = ft_strjoin(token->content, "\n");
 	*file_name = get_file_name(cmd_id, &file_id, &stdin_fd);
 	fd = open(*file_name, O_RDWR | O_TRUNC | O_CREAT, 0666);
 	signal(SIGINT, handler_heredoc);
-	write(1, "> ", 2);
-	s = get_next_line(0);
-	while (s && ft_strcmp(s, limiter) && !g_exit_value)
+	s = readline("> ");
+	while (s && ft_strcmp(s, token->content) && !g_exit_value)
 	{
 		s = line_expander(&s, env, 0, token->id);
 		ft_putstr_fd(s, fd);
 		ft_putstr_fd("\n", fd);
 		ft_free(&s);
-		write(1, "> ", 2);
-		s = get_next_line(0);
+		s = readline("> ");
 	}
 	dup2(stdin_fd, STDIN_FILENO);
 	close(stdin_fd);
 	close(fd);
 	ft_free(&s);
-	ft_free(&limiter);
 	return (open(*file_name, O_RDWR));
 }

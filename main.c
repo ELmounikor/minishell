@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:53:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/17 14:28:20 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/17 16:27:29 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,26 +71,21 @@ int	main(int ac, char **av, char **en)
 	char		*s;
 
 	av = NULL;
-	ac = 0;
 	env = get_env(en);
 	g_exit_value = 0;
 	history_reloader(ac);
 	while (1)
 	{
-		//printf("---%d\n", g_exit_value);
 		signal(SIGINT, handler_sig);
 		signal(SIGQUIT, handler_sig);
 		s = new_prompt();
 		input = tokenizer(s, 0, 0, env);
-		if (input)
-			cmd = cmd_extractor(input, env);
-		if (cmd && input)
-		{
-			// cmdprint(cmd);
+		cmd = cmd_extractor(input, env);
+		// cmdprint(cmd);
+		if (cmd)
 			ft_pipe(cmd, cmd_count(input), env);
-			free_cmds(cmd);
-			ft_lstclear(&input, &free);
-		}
+		free_cmds(cmd);
+		ft_lstclear(&input, &free);
 		ft_free(&s);
 		// printf("\n==================================================\n");
 		// system("leaks minishell");

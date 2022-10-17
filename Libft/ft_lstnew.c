@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 20:36:15 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/17 11:21:29 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/17 16:22:45 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ void	cmdprint(t_cmd **cmd)
 	int	j;
 
 	i = 0;
-	printf("\n=============cmd data============\n");
+	if (cmd)
+		printf("\n=============cmd data============\n");
 	while (cmd && cmd[i])
 	{
 		printf("---------------------------------\ndata of the command number %d \

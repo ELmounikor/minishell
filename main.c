@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:53:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/17 10:48:46 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/17 11:47:31 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	main(int ac, char **av, char **en)
 	ac = 0;
 	env = get_env(en);
 	g_exit_value = 0;
-	//history_reloader(ac); // messup up & down keys tanchofoha apres
+	history_reloader(ac); // messup up & down keys tanchofoha apres
 	while (1)
 	{
 		//printf("---%d\n", g_exit_value);

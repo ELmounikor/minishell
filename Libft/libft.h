@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:35:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/16 19:03:40 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/17 11:38:22 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_env
 {
 	char			*variable;
 	char			*value;
+	char			*pwd;
 	struct s_env	*next;
 }	t_env;
 

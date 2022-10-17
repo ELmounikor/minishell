@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 19:49:40 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/11 17:35:29 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/17 14:36:10 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,13 @@ void	history_reloader(int ac)
 		in = dup(STDIN_FILENO);
 		dup2(ac, STDIN_FILENO);
 		close(ac);
-		s = readline(NULL);
+		s = get_next_line(0);
 		while (s)
 		{
+			s[ft_strlen(s) - 1] = 0;
 			add_history(s);
 			free(s);
-			s = readline(NULL);
+			s = get_next_line(0);
 		}
 		dup2(in, STDIN_FILENO);
 		close(in);

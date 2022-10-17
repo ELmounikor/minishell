@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 19:22:51 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/17 11:02:17 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/17 16:58:25 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,44 @@ char	*get_nd_split(t_list **token, char *value)
 	}
 	ft_split_cleaner(dic);
 	return (0);
+}
+
+int	quote_check(char *s)
+{
+	int	flag[3];
+
+	flag[0] = -1;
+	flag[1] = 0;
+	flag[2] = 0;
+	while (s && s[++flag[0]])
+	{
+		if (s[flag[0]] == 34 && flag[1] % 2 == 0)
+			flag[2]++;
+		else if (s[flag[0]] == 39 && flag[2] % 2 == 0)
+			flag[1]++;
+	}
+	if (flag[2] % 2 == 0 && flag[1] % 2 == 0)
+		return (1);
+	else
+		return (0);
+}
+
+void	free_cmds(t_cmd **cmd)
+{
+	int	i;
+
+	if (!cmd)
+		return ;
+	i = -1;
+	while (cmd[++i])
+	{
+		ft_split_cleaner(cmd[i]->args);
+		if (cmd[i]->fd[0] > 0)
+			close(cmd[i]->fd[0]);
+		if (cmd[i]->fd[1] > 0)
+			close(cmd[i]->fd[1]);
+		free(cmd[i]);
+	}
+	free(cmd);
+	cmd = NULL;
 }

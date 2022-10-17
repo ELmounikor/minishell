@@ -6,31 +6,11 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:17:01 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/16 14:14:07 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/17 18:36:17 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-int	quote_check(char *s)
-{
-	int	flag[3];
-
-	flag[0] = -1;
-	flag[1] = 0;
-	flag[2] = 0;
-	while (s && s[++flag[0]])
-	{
-		if (s[flag[0]] == 34 && flag[1] % 2 == 0)
-			flag[2]++;
-		else if (s[flag[0]] == 39 && flag[2] % 2 == 0)
-			flag[1]++;
-	}
-	if (flag[2] % 2 == 0 && flag[1] % 2 == 0)
-		return (1);
-	else
-		return (0);
-}
 
 t_list	*open_fake_heredoc(t_list *head, t_env *env)
 {
@@ -54,12 +34,28 @@ t_list	*open_fake_heredoc(t_list *head, t_env *env)
 	return (tmp);
 }
 
+int	print_redirection(t_list *tokens, t_list **tmp, t_list *head, t_env *env)
+{
+	if (!tokens->next || !(tokens->next && \
+	!(tokens->next->id % 7 && tokens->next->id % 4)))
+		return (0);
+	printf ("syntax error near unexpected token '");
+	if (tokens->next->id % 77 == 0)
+		printf(">>'\n");
+	else if (tokens->next->id % 7 == 0)
+		printf(">'\n");
+	else if (tokens->next->id % 44 == 0)
+		printf("<<'\n");
+	else if (tokens->next->id % 4 == 0)
+		printf("<'\n");
+	*tmp = open_fake_heredoc(head, env);
+	return (1);
+}
+
 t_list	*throw_error(t_list *tokens, t_list *head, t_env *env)
 {
-	char	*s;
 	t_list	*tmp;
 
-	s = NULL;
 	tokens->id = -1;
 	if (tokens->content)
 	{
@@ -72,7 +68,7 @@ t_list	*throw_error(t_list *tokens, t_list *head, t_env *env)
 		tokens->next->content);
 		tmp = open_fake_heredoc(head, env);
 	}
-	else
+	else if (!print_redirection(tokens, &tmp, head, env))
 	{
 		tmp = open_fake_heredoc(head, env);
 		printf ("syntax error near unexpected token `newline'\n");

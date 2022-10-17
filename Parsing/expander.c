@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:03:42 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/17 10:48:22 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/17 18:45:45 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*expander(t_list **t, t_env *env, int i, int j)
 			j = i;
 			while ((*t)->content[i] && !((*t)->content[i] == '$' && (\
 			ft_isalnum_((*t)->content[i + 1]) || (*t)->content[i + 1] \
-			== '?' || !(*t)->content[i + 1])))
+			== '?')))
 				i++;
 			editor(&s, ft_substr((*t)->content, j, i - j));
 			if ((*t)->content[i] == '$')

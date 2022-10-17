@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 17:40:36 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/16 20:30:14 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/17 14:17:10 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	change_pwd(t_env *env)
 	path = get_value(env, "PWD");
 	if (path)
 	{
-		if (env->pwd && ft_strncmp(path, env->pwd, ft_strlen(path) + 1) != 0)
+		if (ft_strncmp(path, env->pwd, ft_strlen(path) + 1) != 0)
 		{
 			if (env->pwd)
 				free(env->pwd);

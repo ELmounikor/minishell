@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 18:24:00 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/08 12:53:03 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/17 19:03:42 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,8 @@ void	ft_sort_list(t_env **l)
 		tmp2 = tmp1;
 		while (tmp2)
 		{
-			r = ft_strncmp(tmp1->variable, tmp2->variable,
-					ft_strlen(tmp1->variable) + 1);
-			if ((r == 1) || (r == 0 && ft_strncmp(tmp1->value, tmp2->value,
-						ft_strlen(tmp1->value) + 1) == 1))
+			r = ft_strcmp(tmp1->variable, tmp2->variable);
+			if ((r > 0) || (r == 0 && ft_strcmp(tmp1->value, tmp2->value) > 0))
 				ft_swap(tmp1, tmp2);
 			tmp2 = tmp2->next;
 		}
@@ -77,14 +75,18 @@ void	export_element(char *cmd, t_env *envp)
 	if (f[0][size - 1] == '+')
 		sub = ft_substr(f[0], 0, size - 1);
 	else
-		sub = ft_substr(f[0], 0, size);
-	if (!sub || ft_check_variable(sub) == 1)
 	{
-		ft_putstr_fd("export: \'", 2);
+		sub = ft_substr(f[0], 0, size);
+		if (ft_exist_value(envp, f[0]) == 1)
+			ft_remove_element_list(&envp, f[0]);
+	}
+	printf("----%s %s\n", f[0], f[1]);
+	if (!sub || ft_check_variable(f[0]) == 1)
+	{
+		ft_putstr_fd("sh-sm: export: \'", 2);
 		ft_putstr_fd(cmd, 2);
 		ft_putstr_fd("\' : not a valid identifier\n", 2);
 		g_exit_value = 1;
-		return ;
 	}
 	else
 		add_env(f, &envp, cmd);

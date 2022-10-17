@@ -6,11 +6,22 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 19:33:57 by sennaama          #+#    #+#             */
-/*   Updated: 2022/09/27 18:40:26 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/17 18:52:14 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
+
+int	ft_exist_value(t_env *env, char *str)
+{
+	while (env)
+	{
+		if (ft_strcmp(env->variable, str) == 0)
+			return (1);
+		env = env->next;
+	}
+	return (0);
+}
 
 t_env	*ft_copy_env(t_env *env)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 17:40:36 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/17 14:17:10 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/17 16:01:06 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_wait_child(int *id, int nbr)
 	i = 0;
 	while (i < nbr)
 	{
-		if (waitpid(id[i], &status, 0) != -1 && g_exit_value != 131)
+		if (waitpid(id[i], &status, 0) != -1 && g_exit_value != 131 && g_exit_value != 130)
 				g_exit_value = WEXITSTATUS(status);
 		i++;
 	}
@@ -77,9 +77,11 @@ void	ft_pipe(t_cmd **cmd, int nbr_cmd, t_env *env)
 	while (cmd[i])
 	{
 		signal(SIGQUIT, handler_child);
+		signal(SIGINT, handler_child);
 		id[i] = fork();
 		if (id[i] == 0)
 		{	
+			signal(SIGINT, handler_sig);
 			ft_dup(cmd[i], i, nbr_cmd, fd);
 			ft_execute_cmd(cmd[i], env, nbr_cmd);
 		}

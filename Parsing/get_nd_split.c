@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 19:22:51 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/17 18:54:18 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/18 15:03:45 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,16 @@ char	*get_nd_split(t_list **token, char *value)
 
 	set_p(&old_position, &old_next, token, &i);
 	dic = ft_nsplit(value, " \t\n");
-	if (value && ft_strchr(" \t\n", value[i]))
+	if (value && !ft_strchr(" \t\n", value[i]))
 		i++;
 	while (dic && dic[i])
 	{
 		(*token)->next = ft_lstnew(ft_strdup(dic[i++]), 0);
 		*token = (*token)->next;
 	}
-	(*token) = old_next;
+	(*token)->next = old_next;
 	(*token) = old_position;
-	if (value && ft_strchr(" \t\n", value[0]))
+	if (value && !ft_strchr(" \t\n", value[0]))
 	{
 		s = ft_strdup(dic[0]);
 		ft_split_cleaner(dic);

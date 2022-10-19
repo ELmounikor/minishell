@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/17 17:44:49 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/19 12:54:19 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_list	*get_token(char *s, int *start, int *end, int id)
 	if (*start == *end)
 	{
 		while (s[*end] && !ft_isspace(s[*end]) && s[*end] != 39 && \
-		s[*end] != 34 && id != 1)
+		s[*end] != 34 && id != 1 && !(id == 3 && !ft_isalnum_(s[*end])))
 		{
 			if (lexer(s[*end], s[*end + 1], 0) != -1)
 			{

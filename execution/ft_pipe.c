@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 17:40:36 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/19 12:36:00 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/19 18:34:06 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,19 @@ void	ft_wait_child(int *id, int nbr)
 	i = 0;
 	while (i < nbr)
 	{
-		if (waitpid(id[i], &status, 0) != -1 && g_exit_value != 131 && g_exit_value != 130)
+		if (waitpid(id[i], &status, 0) != -1 && g_exit_value != 131
+			&& g_exit_value != 130)
 				g_exit_value = WEXITSTATUS(status);
 		i++;
 	}
 }
 
-void	ft_execute_cmd(t_cmd *cmd, t_env *env, int nbr_cmd)
+void	ft_execute_cmd(t_cmd *cmd, t_data *data, int nbr_cmd)
 {
-	if (ft_builtins(cmd->args[0], cmd, env, nbr_cmd) == 1)
+	if (ft_builtins(cmd->args[0], cmd, data, nbr_cmd) == 1)
 	{
-		cmd->path = ft_get_path(cmd->args[0], env);
-		if (execve(cmd->path, cmd->args, get_env_char(env)) == -1)
+		cmd->path = ft_get_path(cmd->args[0], data->env);
+		if (execve(cmd->path, cmd->args, get_env_char(data->env)) == -1)
 		{
 			ft_putstr_fd(cmd->args[0], 2);
 			ft_putstr_fd(": command not found\n", 2);
@@ -42,31 +43,31 @@ void	ft_execute_cmd(t_cmd *cmd, t_env *env, int nbr_cmd)
 		exit(g_exit_value);
 }
 
-void	change_pwd(t_env *env)
+void	change_pwd(t_data *data)
 {
 	char	*path;
 
-	path = get_value(env, "PWD");
+	path = get_value(&data->env, "PWD");
 	if (path)
 	{
-		if (ft_strncmp(path, env->pwd, ft_strlen(path) + 1) != 0)
+		if (ft_strcmp(path, data->pwd) != 0)
 		{
-			if (env->pwd)
-				free(env->pwd);
-			env->pwd = ft_strdup(path);
+			if (data->pwd)
+				free(data->pwd);
+			data->pwd = ft_strdup(path);
 		}
 	}
 }
 
-void	ft_pipe(t_cmd **cmd, int nbr_cmd, t_env *env)
+void	ft_pipe(t_cmd **cmd, int nbr_cmd, t_data *data)
 {
 	int	**fd;
 	int	i;
 	int	*id;
 
-	change_pwd(env);
+	change_pwd(data);
 	if (nbr_cmd == 1 && cmd[0]->fd[0]== 0 && cmd[0]->fd[1] == 0
-		&& ft_builtins(cmd[0]->args[0], cmd[0], env, nbr_cmd) == 0)
+		&& ft_builtins(cmd[0]->args[0], cmd[0], data, nbr_cmd) == 0)
 		return ;
 	if (nbr_cmd > 1)
 		fd = pipe_fd(nbr_cmd);
@@ -83,7 +84,7 @@ void	ft_pipe(t_cmd **cmd, int nbr_cmd, t_env *env)
 		{	
 			signal(SIGINT, handler_sig);
 			ft_dup(cmd[i], i, nbr_cmd, fd);
-			ft_execute_cmd(cmd[i], env, nbr_cmd);
+			ft_execute_cmd(cmd[i], data, nbr_cmd);
 		}
 		i++;
 	}

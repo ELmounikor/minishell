@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 19:38:16 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/15 17:36:15 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/19 12:40:31 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	**get_value_devise(t_env *env, char *p)
 
 	str = NULL;
 	mypaths = NULL;
-	str = get_value(env, p);
+	str = get_value(&env, p);
 	if (str != NULL)
 	{
 		path = ft_substr(str, 5, ft_strlen(str));
@@ -58,7 +58,7 @@ char	*ft_get_path(char *arg, t_env *env)
 	char	**mypaths;
 
 	i = 0;
-	if (access(arg, 0) == 0)
+	if (access(arg, 0) == 0 && arg[0] == '/')
 		return (arg);
 	mypaths = get_value_devise(env, "PATH");
 	while (mypaths && mypaths[i])

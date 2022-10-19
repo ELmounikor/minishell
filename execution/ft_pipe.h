@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipe.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 13:37:08 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/17 15:51:37 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/19 17:17:01 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		**pipe_fd(int nbr_cmd);
 void	ft_close(int argc, int **fd);
 char	**get_env_char(t_env *env);
 void	ft_dup(t_cmd *cmd, int i, int nbr_cmd, int **fd);
-void	ft_pipe(t_cmd **cmd, int nbr_cmd, t_env *env);
+void	ft_pipe(t_cmd **cmd, int nbr_cmd, t_data *data);
 char	*ft_get_path(char *arg, t_env *env);
 void	handler_sig(int signum);
 void	handler_child(int sig);

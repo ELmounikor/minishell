@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 14:21:31 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/18 15:14:56 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/19 16:27:54 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 int			quote_check(char *s);
 char		*new_prompt(void);
 char		*getval(char *s1, t_env *env, t_list **token);
-char	    *get_nd_split(t_list **token, char *value, t_env *env, int i);
+char		*get_nd_split(t_list **token, char *value, t_env *env, int i);
 char		**get_paths(char **en);
 void		history_reloader(int ac);
 void		free_cmds(t_cmd **cmds);

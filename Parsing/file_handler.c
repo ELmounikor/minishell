@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/16 19:10:33 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/19 16:21:40 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ int	handle_file(char *file_name, char code, int fd)
 		return (fd);
 	}
 	else if (code == 'A')
-		file = open(file_name, O_RDWR | O_APPEND);
+		file = open(file_name, O_WRONLY | O_APPEND);
 	else
-		file = open(file_name, O_RDWR | O_TRUNC);
+		file = open(file_name, O_WRONLY | O_TRUNC);
 	if (file == -1)
-		file = open(file_name, O_RDWR | O_CREAT, 0666);
+		file = open(file_name, O_WRONLY | O_CREAT, 0666);
 	if (file == -1)
 		perror(file_name);
 	return (file);

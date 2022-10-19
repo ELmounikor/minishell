@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:53:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/19 12:12:04 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/19 16:20:13 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_exit(char **cmd)
 	if (!cmd)
 	{
 		printf("exit\n");
-		exit(0);
+		exit(g_exit_value);
 	}
 }
 

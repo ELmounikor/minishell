@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 18:24:00 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/17 19:03:42 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/19 16:13:17 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,24 +64,33 @@ void	print_export(t_env *env)
 	}
 }
 
-void	export_element(char *cmd, t_env *envp)
+void	export_element(char *cmd, t_env **envp)
 {
-	char	*sub;
 	char	**f;
-	int		size;
+	char	*sub;
+	int		p;
 
 	f = ft_split_env(cmd, '=');
-	size = ft_strlen(f[0]);
-	if (f[0][size - 1] == '+')
-		sub = ft_substr(f[0], 0, size - 1);
+	if (ft_exist(cmd, '=') == 0)
+		f[1] = NULL;
+	if (ft_strnstr(cmd, "+=", ft_strlen(cmd)) == 0)
+	{
+		p = ft_exist_value(*envp, f[0], f[1]);
+		if (p == 1)
+			ft_remove_element_list(envp, f[0]);
+		else if (p == 2)
+			return ;
+		p = 0;
+	}
 	else
 	{
-		sub = ft_substr(f[0], 0, size);
-		if (ft_exist_value(envp, f[0]) == 1)
-			ft_remove_element_list(&envp, f[0]);
+		p = ft_strlen(f[0]);
+		sub = ft_substr(f[0], 0, p - 1);
+		free(f[0]);
+		f[0] = sub;
+		p = 1;
 	}
-	printf("----%s %s\n", f[0], f[1]);
-	if (!sub || ft_check_variable(f[0]) == 1)
+	if (!f[0] || ft_check_variable(f[0]) == 1)
 	{
 		ft_putstr_fd("sh-sm: export: \'", 2);
 		ft_putstr_fd(cmd, 2);
@@ -89,21 +98,29 @@ void	export_element(char *cmd, t_env *envp)
 		g_exit_value = 1;
 	}
 	else
-		add_env(f, &envp, cmd);
+		add_env(f, envp, p);
 }
 
-void	export(char **cmd, t_env *envp)
+void	export(char **cmd, t_env **envp)
 {
 	int		i;
 
 	if (cmd[1] == NULL)
-		print_export(envp);
+		print_export(*envp);
 	else
 	{
 		i = 1;
 		while (cmd[i])
 		{
-			export_element(cmd[i], envp);
+			if (cmd[i][0] != '=')
+				export_element(cmd[i], envp);
+			else
+			{
+				ft_putstr_fd("sh-sm: export: \'", 2);
+				ft_putstr_fd(cmd[i], 2);
+				ft_putstr_fd("\' : not a valid identifier\n", 2);
+				g_exit_value = 1;
+			}
 			i++;
 		}
 	}

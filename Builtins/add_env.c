@@ -6,18 +6,24 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 19:33:57 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/17 18:52:14 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/19 16:05:31 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-int	ft_exist_value(t_env *env, char *str)
+int	ft_exist_value(t_env *env, char *variable, char *value)
 {
 	while (env)
 	{
-		if (ft_strcmp(env->variable, str) == 0)
-			return (1);
+		if (ft_strcmp(env->variable, variable) == 0)
+		{
+			if (env->value == NULL
+				|| (env->value && value))
+				return (1);
+			else
+				return (2);
+		}
 		env = env->next;
 	}
 	return (0);
@@ -32,7 +38,8 @@ t_env	*ft_copy_env(t_env *env)
 	copy_env = NULL;
 	while (tmp)
 	{
-		ft_lstadd_back_env(&copy_env, ft_lstnew_env(tmp->variable, tmp->value));
+		ft_lstadd_back_env(&copy_env,
+			ft_lstnew_env(tmp->variable, tmp->value));
 		tmp = tmp->next;
 	}
 	return (copy_env);
@@ -72,26 +79,15 @@ int	ft_exist(char *str, char c)
 	return (0);
 }
 
-void	add_env(char **f, t_env **envp, char *str)
+void	add_env(char **f, t_env **envp, int p)
 {
 	t_env	*tmp;
 	int		size;
-	char	*sub;
-	int		c;
 
 	tmp = *envp;
 	size = ft_strlen(f[0]);
-	if (f[0][size - 1] == '+')
-	{
-		sub = ft_substr(f[0], 0, size - 1);
-		add_element(sub, f[1], envp);
-	}
+	if (p == 1)
+		add_element(f[0], f[1], envp);
 	else
-	{
-		c = ft_exist(str, '=');
-		if (ft_strlen(f[1]) == 0 && c == 0)
-			ft_lstadd_back_env(envp, ft_lstnew_env(f[0], NULL));
-		else
-			ft_lstadd_back_env(envp, ft_lstnew_env(f[0], f[1]));
-	}
+		ft_lstadd_back_env(envp, ft_lstnew_env(f[0], f[1]));
 }

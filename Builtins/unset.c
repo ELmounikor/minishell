@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 21:25:10 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/08 12:59:00 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/19 17:20:48 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,15 @@ int	ft_check_variable(char *sub)
 	return (0);
 }
 
-int	ft_remove_firt_element(t_env **env, char *var)
+int	ft_remove_first_element(t_env **env, char *var)
 {
 	t_env	*tmp;
 
-	tmp = *env;
-	if (ft_strncmp(tmp->variable, var, ft_strlen(tmp->variable) + 1) == 0)
+	if (ft_strncmp((*env)->variable, var, ft_strlen((*env)->variable) + 1) == 0)
 	{
+		tmp = *env;
 		*env = (*env)->next;
-		free(tmp);
+		ft_envdelone(tmp, &free);
 		return (1);
 	}
 	return (0);
@@ -49,7 +49,7 @@ void	ft_remove_element_list(t_env **env, char *var)
 	t_env	*tmp1;
 	t_env	*tmp2;
 
-	if (ft_remove_firt_element(env, var) == 1)
+	if (ft_remove_first_element(env, var) == 1)
 		return ;
 	tmp1 = *env;
 	tmp2 = tmp1->next;
@@ -58,7 +58,7 @@ void	ft_remove_element_list(t_env **env, char *var)
 		if (ft_strncmp(tmp2->variable, var, ft_strlen(tmp2->variable) + 1) == 0)
 		{
 			tmp1->next = tmp2->next;
-			free(tmp2);
+			ft_envdelone(tmp2, &free);
 			return ;
 		}
 		tmp1 = tmp2;
@@ -67,11 +67,11 @@ void	ft_remove_element_list(t_env **env, char *var)
 	if (ft_strncmp(tmp2->variable, var, ft_strlen(tmp2->variable) + 1) == 0)
 	{
 		tmp1->next = NULL;
-		free(tmp2);
+		ft_envdelone(tmp2, &free);
 	}
 }
 
-void	unset(char **argv, t_env *env)
+void	unset(char **argv, t_env **env)
 {
 	int	i;
 
@@ -86,7 +86,7 @@ void	unset(char **argv, t_env *env)
 			g_exit_value = 1;
 		}
 		else
-			ft_remove_element_list(&env, argv[i]);
+			ft_remove_element_list(env, argv[i]);
 		i++;
 	}
 }

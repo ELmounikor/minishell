@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/20 13:23:31 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/20 15:17:14 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,22 +108,25 @@ int	here_doc(t_list *token, int cmd_id, char **file_name, t_env *env)
 	int			fd;
 	int			stdin_fd;
 	char		*s;
+	char		*limiter;
 
 	*file_name = get_file_name(cmd_id, &file_id, &stdin_fd);
+	limiter = ft_strjoin(token->content, "\n");
 	fd = open(*file_name, O_RDWR | O_TRUNC | O_CREAT, 0666);
 	signal(SIGINT, handler_heredoc);
-	s = readline("> ");
-	while (s && ft_strcmp(s, token->content) && !g_exit_value)
+	s = ft_readline("> ");
+	while (s && ft_strcmp(s, limiter) && !g_exit_value)
 	{
 		s = line_expander(&s, env, 0, token->id);
 		ft_putstr_fd(s, fd);
 		ft_putstr_fd("\n", fd);
 		ft_free(&s);
-		s = readline("> ");
+		s = ft_readline("> ");
 	}
 	dup2(stdin_fd, STDIN_FILENO);
 	close(stdin_fd);
 	close(fd);
+	ft_free(&limiter);
 	ft_free(&s);
 	return (open(*file_name, O_RDWR));
 }

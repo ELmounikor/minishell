@@ -6,11 +6,17 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 15:20:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/07/22 13:00:59 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/20 15:16:23 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+char	*ft_readline(char *prompt)
+{
+	ft_putstr_fd(prompt, 1);
+	return (get_next_line(0));
+}
 
 void	ft_free(char **s)
 {

@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/20 16:09:49 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/20 19:23:31 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,16 @@ int	file_handler(t_cmd **cmd, t_list *token, int cmd_id, t_env *env)
 {
 	if (!is_file(token->id))
 		return (0);
-	if ((*cmd)->fd[1] < 0 || (*cmd)->fd[0] < 0)
-		return (1);
 	if (token->id == -7 || token->id == -77 || \
 	token->id == -70 || token->id == -770)
 	{
-		(*cmd)->fd[1] = -2;
+		g_exit_value = 1;
 		ft_putstr_fd("sh-sm: ", 2);
 		ft_putstr_fd(token->content, 2);
-		ft_putstr_fd(": ambiguous redirect\n", 2);
 	}
 	else if (token->id == -4 || token->id == -40)
 	{
-		(*cmd)->fd[0] = -2;
+		g_exit_value = 1;
 		ft_putstr_fd("sh-sm: ", 2);
 		ft_putstr_fd(token->content, 2);
 		ft_putstr_fd(": ambiguous redirect\n", 2);
@@ -80,7 +77,7 @@ void	cmd_filler(t_cmd **cmd, t_list **input, int cmd_id, t_env *env)
 	{
 		if (file_handler(cmd, (*input), cmd_id, env))
 		{
-			if ((*input)->id % 44 == 0 && g_exit_value == 1)
+			if (g_exit_value == 1)
 				break ;
 		}
 		else if ((*input)->content)

@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:17:01 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/20 18:00:10 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/20 19:13:56 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ t_list	*check(t_list *previous, t_list *current, t_list *head, t_env *env)
 	if (current && (current->id == 44 || current->id == 4 || \
 	current->id == 440 || current->id == 40 || current->id == 770 || \
 	current->id == 70 || current->id == 77 || current->id == 7) && \
-	!(current->content || (current->next && (current->next->id != 44 && \
+	!((current->content && current->content[0]) || (current->next && (current->next->id != 44 && \
 	current->next->id != 4 && current->next->id != 440 && current->next->id != \
 	40 && current->next->id != 770 && current->next->id != 70 && \
 	current->next->id != 77 && current->next->id != 7 && current->next->id != 1 \

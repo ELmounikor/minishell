@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 23:12:11 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/19 17:22:29 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/20 17:29:02 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@ void	pwd(char *p)
 		printf("%s\n", path);
 		free(path);
 	}
-	else
+	else if (p)
 		printf("%s\n", p);
 }

@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 16:02:20 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/20 12:02:58 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/20 18:03:23 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*get_value(t_env **env, char *str)
 	return (NULL);
 }
 
-void	change_pwd_cd(t_data *data, char *path)
+void	change_pwd_cd(t_data *data, char *path, char *arg)
 {
 	char	*cmd;
 
@@ -39,7 +39,17 @@ void	change_pwd_cd(t_data *data, char *path)
 	}
 	if (data->pwd)
 		free(data->pwd);
-	data->pwd = ft_strdup(path);
+	if (path)
+		data->pwd = ft_strdup(path);
+	else
+	{
+		ft_putstr_fd("cd: error retrieving current directory:", 2);
+		ft_putstr_fd("getcwd:cannot access parent directories:", 2);
+		ft_putstr_fd("No such file or directory\n", 2);
+		cmd = ft_strjoin(data->pwd, "/");
+		data->pwd = ft_strjoin(cmd, arg);
+		free(cmd);
+	}
 	if (ft_exist_value(data->env, "PWD", NULL) != 0)
 	{
 		ft_remove_element_list(&data->env, "PWD");
@@ -64,7 +74,7 @@ void	get_home(t_data *data)
 	{
 		r = chdir(path);
 		if (r == 0)
-			change_pwd_cd(data, path);
+			change_pwd_cd(data, path, NULL);
 	}
 }
 
@@ -80,7 +90,7 @@ void	cd(char **argv, t_data *data)
 	{
 		r = chdir(getenv("HOME"));
 		if (r == 0)
-			change_pwd_cd(data, getenv("HOME"));
+			change_pwd_cd(data, getenv("HOME"), argv[1]);
 	}
 	else
 	{
@@ -92,7 +102,7 @@ void	cd(char **argv, t_data *data)
 		}
 		r = chdir(argv[1]);
 		if (r == 0)
-			change_pwd_cd(data, getcwd(NULL, 0));
+			change_pwd_cd(data, getcwd(NULL, 0), argv[1]);
 		else
 		{
 			ft_putstr_fd("sh-sm: cd: ", 2);

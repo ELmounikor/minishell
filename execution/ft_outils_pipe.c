@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 15:35:42 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/11 17:34:20 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/20 15:27:10 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ char	**get_env_char(t_env *env)
 	int		i;
 	char	*join;
 
+	if (!env)
+		return (NULL);
 	size = ft_envsize(env);
 	str = (char **) malloc((size + 1) * sizeof(char *));
 	if (!str)

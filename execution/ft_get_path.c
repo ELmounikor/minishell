@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 19:38:16 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/19 12:40:31 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/20 14:12:46 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,14 @@
 char	**get_value_devise(t_env *env, char *p)
 {
 	int		i;
-	char	*str;
 	char	*path;
 	char	**mypaths;
 	char	*tmp;
 
-	str = NULL;
 	mypaths = NULL;
-	str = get_value(&env, p);
-	if (str != NULL)
+	path = get_value(&env, p);
+	if (path)
 	{
-		path = ft_substr(str, 5, ft_strlen(str));
 		mypaths = ft_split(path, ':');
 		i = 0;
 		while (mypaths[i])
@@ -35,7 +32,6 @@ char	**get_value_devise(t_env *env, char *p)
 			mypaths[i] = tmp;
 			i++;
 		}
-		i = 0;
 		free(path);
 	}
 	return (mypaths);
@@ -44,10 +40,14 @@ char	**get_value_devise(t_env *env, char *p)
 void	ft_free_char(char **p)
 {
 	int	i;
+	int	size;
 
-	i = 0;
-	while (p[i])
-		free(p[i++]);
+	size = 0;
+	while (p[size])
+		size++;
+	i = size - 1;
+	while (i >= 0)
+		free(p[i--]);
 	free(p);
 }
 

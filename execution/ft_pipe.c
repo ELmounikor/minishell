@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 17:40:36 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/19 18:34:06 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/20 15:37:04 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,16 @@ void	ft_wait_child(int *id, int nbr)
 
 void	ft_execute_cmd(t_cmd *cmd, t_data *data, int nbr_cmd)
 {
+	char	**envp;
+
 	if (ft_builtins(cmd->args[0], cmd, data, nbr_cmd) == 1)
 	{
+		envp = get_env_char(data->env);
 		cmd->path = ft_get_path(cmd->args[0], data->env);
-		if (execve(cmd->path, cmd->args, get_env_char(data->env)) == -1)
+		if (!cmd->path || !cmd->args
+			|| execve(cmd->path, cmd->args, envp) == -1)
 		{
+			ft_putstr_fd("sh-sm: ", 2);
 			ft_putstr_fd(cmd->args[0], 2);
 			ft_putstr_fd(": command not found\n", 2);
 			exit(127);

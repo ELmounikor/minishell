@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 16:02:20 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/19 19:25:55 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/20 12:02:58 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,12 @@ void	change_pwd_cd(t_data *data, char *path)
 	char	*cmd;
 
 	if (ft_exist_value(data->env, "OLDPWD", NULL) != 0)
+	{
 		ft_remove_element_list(&data->env, "OLDPWD");
-	cmd = ft_strjoin("OLDPWD=", data->pwd);
-	export_element(cmd, &data->env);
-	free(cmd);
+		cmd = ft_strjoin("OLDPWD=", data->pwd);
+		export_element(cmd, &data->env);
+		free(cmd);
+	}
 	if (data->pwd)
 		free(data->pwd);
 	data->pwd = ft_strdup(path);

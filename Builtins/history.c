@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 19:49:40 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/20 15:48:17 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/20 17:01:54 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,13 @@ void	print_history(char *s, unsigned long long n, unsigned long long i)
 	close(h);
 }
 
-void	get_history(char *s, long long int n)
+void	get_history(char *s, long long int n, int outfd)
 {
 	unsigned long long	i;
 	int					h;
 
 	ft_free(&s);
+	dup2(outfd, 1);
 	h = open("/tmp/.sh-sm_history", O_RDWR, 0666);
 	if (h < 0)
 		return ;
@@ -80,7 +81,7 @@ void	get_history(char *s, long long int n)
 	print_history(s, (unsigned long long) n, i);
 }
 
-int	handle_input(char **cmd)
+int	handle_input(char **cmd, int outfd)
 {
 	long long int	n;
 
@@ -92,15 +93,19 @@ int	handle_input(char **cmd)
 	}
 	else
 	{
-		get_history(cmd[0], n);
+		get_history(cmd[0], n, outfd);
 		return (0);
 	}
 }
 
 void	history(char **cmd)
 {
+	int	outfd;
+
+	outfd = dup(1);
+	dup2(2, 1);
 	if (!cmd[1])
-		get_history(cmd[0], -1);
+		get_history(cmd[0], -1, outfd);
 	else if (cmd[1])
 	{
 		if (ft_strncmp(cmd[1], "-c", 3) == 0)
@@ -109,10 +114,12 @@ void	history(char **cmd)
 			printf("sh-sm: %s: %s: : numeric argument required\n", \
 			cmd[0], cmd[1]);
 		else if (!cmd[2])
-			g_exit_value = handle_input(cmd);
+			g_exit_value = handle_input(cmd, outfd);
 		else
 			printf("sh-sm: %s: too many arguments\n", cmd[0]);
 	}
 	else
 		g_exit_value = 1;
+	dup2(outfd, 1);
+	close(outfd);
 }

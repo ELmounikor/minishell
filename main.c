@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:53:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/20 15:46:49 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/20 16:36:35 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*new_prompt(void)
 	close(h);
 	if (!quote_check(s))
 	{
-		printf("This command has unclosed quotes >_<\n");
+		ft_putstr_fd("sh-sm: unclosed quotes detected >_<\n", 2);
 		ft_free(&s);
 		return (0);
 	}
@@ -55,7 +55,6 @@ int	main(int ac, char **av, char **en)
 	data.pwd = ft_strdup(getenv("PWD"));
 	g_exit_value = 0;
 	history_reloader(ac);
-	//ft_envclear(&(data.env), &free);
 	while (1)
 	{
 		signal(SIGINT, handler_sig);
@@ -63,15 +62,11 @@ int	main(int ac, char **av, char **en)
 		s = new_prompt();
 		input = tokenizer(s, 0, 0, data.env);
 		cmd = cmd_extractor(input, data.env);
-		// //cmdprint(cmd);
 		if (cmd)
 			ft_pipe(cmd, cmd_count(input), &data);
 		free_cmds(cmd);
 		ft_lstclear(&input, &free);
 		ft_free(&s);
-		// printf("\n==================================================\n");
-		// system("leaks minishell");
-		// printf("\n==================================================\n");
 	}
 	//ft_envclear(&data.env, &free);
 	//free(data.pwd);

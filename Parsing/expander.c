@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:03:42 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/20 15:48:29 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/20 17:55:57 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ t_list	*getter(t_list **in, t_env *env)
 
 	token = *in;
 	input = NULL;
-	while (token)
+	while (token && token->id >= 0)
 	{
 		id = token->id;
 		check_redirection(&id, &token);

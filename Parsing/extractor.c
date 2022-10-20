@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/20 12:39:30 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/20 16:09:49 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,14 @@ int	file_handler(t_cmd **cmd, t_list *token, int cmd_id, t_env *env)
 	token->id == -70 || token->id == -770)
 	{
 		(*cmd)->fd[1] = -2;
+		ft_putstr_fd("sh-sm: ", 2);
 		ft_putstr_fd(token->content, 2);
 		ft_putstr_fd(": ambiguous redirect\n", 2);
 	}
 	else if (token->id == -4 || token->id == -40)
 	{
 		(*cmd)->fd[0] = -2;
+		ft_putstr_fd("sh-sm: ", 2);
 		ft_putstr_fd(token->content, 2);
 		ft_putstr_fd(": ambiguous redirect\n", 2);
 	}

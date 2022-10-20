@@ -21,26 +21,6 @@ void	ft_exit(char **cmd)
 	}
 }
 
-void	free_cmds(t_cmd **cmd)
-{
-	int	i;
-
-	if (!cmd)
-		return ;
-	i = -1;
-	while (cmd[++i])
-	{
-		ft_split_cleaner(cmd[i]->args);
-		if (cmd[i]->fd[0] > 0)
-			close(cmd[i]->fd[0]);
-		if (cmd[i]->fd[1] > 0)
-			close(cmd[i]->fd[1]);
-		free(cmd[i]);
-	}
-	free(cmd);
-	cmd = NULL;
-}
-
 char	*new_prompt(void)
 {
 	char	*s;

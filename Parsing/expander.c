@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:03:42 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/19 12:44:18 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/20 09:32:05 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,12 @@ char	*expander(t_list **t, t_env *env, int i, int j)
 					i++;
 				editor(&s, getval(ft_substr((*t)->content, j, i - j), env, t));
 			}
-		}
+		}/*
+		if (!s && j && !(j % 4 && j % 7))
+		{
+			j *= 2;
+			return (ft_strdup((*t)->content));
+		}*/
 		return (s);
 	}
 	return (ft_strdup((*t)->content));

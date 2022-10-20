@@ -6,21 +6,11 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:03:42 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/20 09:32:05 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/20 12:05:55 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	editor(char **s1, char *s2)
-{
-	char	*tmp;
-
-	tmp = ft_strjoin(*s1, s2);
-	ft_free(&s2);
-	ft_free(s1);
-	*s1 = tmp;
-}
 
 char	*getval(char *s1, t_env *env, t_list **token)
 {
@@ -49,35 +39,43 @@ char	*getval(char *s1, t_env *env, t_list **token)
 	return (0);
 }
 
-char	*expander(t_list **t, t_env *env, int i, int j)
+void	expander(t_list **t, t_env *env, char **s, int i)
+{
+	int	j;
+
+	while ((*t)->content && (*t)->content[i])
+	{
+		j = i;
+		while ((*t)->content[i] && !((*t)->content[i] == '$' && (\
+		ft_isalnum_((*t)->content[i + 1]) || (*t)->content[i + 1] \
+		== '?')))
+			i++;
+		editor(s, ft_substr((*t)->content, j, i - j));
+		if ((*t)->content[i] == '$')
+		{
+			j = ++i;
+			while ((ft_isalnum_((*t)->content[i]) && (*t)->content[j] != \
+			'?') || (i == j && (*t)->content[j] == '?'))
+				i++;
+			editor(s, getval(ft_substr((*t)->content, j, i - j), env, t));
+		}
+	}
+}
+
+char	*check_expand(t_list **t, t_env *env, int i, int *j)
 {
 	char	*s;
 
 	s = NULL;
-	if ((*t)->id && !((*t)->id % 3) && j % 44 && (j == 30 || (*t)->content[i]))
+	if ((*t)->id && !((*t)->id % 3) && *j % 44 && \
+	(*j == 30 || (*t)->content[i]))
 	{
-		while ((*t)->content && (*t)->content[i])
+		expander(t, env, &s, i);
+		if (!s && *j && *j % 100 && !(*j % 4 && *j % 7))
 		{
-			j = i;
-			while ((*t)->content[i] && !((*t)->content[i] == '$' && (\
-			ft_isalnum_((*t)->content[i + 1]) || (*t)->content[i + 1] \
-			== '?')))
-				i++;
-			editor(&s, ft_substr((*t)->content, j, i - j));
-			if ((*t)->content[i] == '$')
-			{
-				j = ++i;
-				while ((ft_isalnum_((*t)->content[i]) && (*t)->content[j] != \
-				'?') || (i == j && (*t)->content[j] == '?'))
-					i++;
-				editor(&s, getval(ft_substr((*t)->content, j, i - j), env, t));
-			}
-		}/*
-		if (!s && j && !(j % 4 && j % 7))
-		{
-			j *= 2;
-			return (ft_strdup((*t)->content));
-		}*/
+			*j = -*j;
+			s = ft_strdup((*t)->content);
+		}
 		return (s);
 	}
 	return (ft_strdup((*t)->content));
@@ -113,10 +111,10 @@ t_list	*getter(t_list **in, t_env *env)
 		check_redirection(&id, &token);
 		if (!token)
 			break ;
-		s = expander(&token, env, 0, id);
+		s = check_expand(&token, env, 0, &id);
 		while (token->id && token->id % 10 == 0)
 		{
-			editor(&s, expander(&token->next, env, 0, id));
+			editor(&s, check_expand(&token->next, env, 0, &id));
 			token = token->next;
 		}
 		ft_lstadd_back(&input, ft_lstnew(s, id));

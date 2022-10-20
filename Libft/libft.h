@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:35:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/19 17:41:28 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/20 12:08:41 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,6 @@ int				ft_isspace(int c);
 int				ft_isalnum_(int c);
 int				ft_isalnumstr(char *s);
 int				ft_strlen(const char *s);
+int				is_file(int id);
 long long int	ft_atoi(const char *str);
 #endif

@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/20 09:32:01 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/20 12:39:30 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,26 +40,23 @@ void	out_file_handler(t_list *token, int *fd_out)
 
 int	file_handler(t_cmd **cmd, t_list *token, int cmd_id, t_env *env)
 {
-	if (token->id != 7 && token->id != 77 && token->id != 4 && \
-	token->id != 44 && token->id != 70 && token->id != 770 && \
-	token->id != 40 && token->id != 440 && token->id != 88 && \
-	token->id != 880)
+	if (!is_file(token->id))
 		return (0);
 	if ((*cmd)->fd[1] < 0 || (*cmd)->fd[0] < 0)
-		return (1);/*
-	if (token->id == 14 || token->id == 77 || \
-	token->id == 140 || token->id == 770)
+		return (1);
+	if (token->id == -7 || token->id == -77 || \
+	token->id == -70 || token->id == -770)
 	{
-		(*cmd)->fd[1] = -1;
+		(*cmd)->fd[1] = -2;
 		ft_putstr_fd(token->content, 2);
 		ft_putstr_fd(": ambiguous redirect\n", 2);
 	}
-	else if (token->id == 8 || token->id == 80)
+	else if (token->id == -4 || token->id == -40)
 	{
-		(*cmd)->fd[0] = -1;
+		(*cmd)->fd[0] = -2;
 		ft_putstr_fd(token->content, 2);
 		ft_putstr_fd(": ambiguous redirect\n", 2);
-	}*/
+	}
 	else if (token->id % 7 == 0)
 		out_file_handler(token, &((*cmd)->fd[1]));
 	else if (token->id % 4 == 0)
@@ -101,9 +98,9 @@ t_cmd	**cmd_extractor(t_list *input, t_env *env)
 	cmd = (t_cmd **) malloc ((cmd_count(input) + 1) * sizeof (t_cmd *));
 	sizes = cmd_size(input);
 	i = -1;
-	while (cmd && input && ++i >= 0)
+	while (cmd && input && i >= -1)
 	{
-		cmd[i] = (t_cmd *) malloc (sizeof(t_cmd));
+		cmd[++i] = (t_cmd *) malloc (sizeof(t_cmd));
 		if (cmd[i])
 			cmd[i]->size = sizes[i] + 1;
 		cmd_filler(&cmd[i], &input, i, env);

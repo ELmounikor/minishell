@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 19:22:51 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/19 13:01:16 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/20 11:11:04 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,4 +92,14 @@ void	free_cmds(t_cmd **cmd)
 	}
 	free(cmd);
 	cmd = NULL;
+}
+
+void	editor(char **s1, char *s2)
+{
+	char	*tmp;
+
+	tmp = ft_strjoin(*s1, s2);
+	ft_free(&s2);
+	ft_free(s1);
+	*s1 = tmp;
 }

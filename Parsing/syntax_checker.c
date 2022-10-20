@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:17:01 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/17 18:36:17 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/20 12:17:24 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	print_redirection(t_list *tokens, t_list **tmp, t_list *head, t_env *env)
 	if (!tokens->next || !(tokens->next && \
 	!(tokens->next->id % 7 && tokens->next->id % 4)))
 		return (0);
-	printf ("syntax error near unexpected token '");
+	printf("syntax error near unexpected token '");
 	if (tokens->next->id % 77 == 0)
 		printf(">>'\n");
 	else if (tokens->next->id % 7 == 0)
@@ -59,19 +59,19 @@ t_list	*throw_error(t_list *tokens, t_list *head, t_env *env)
 	tokens->id = -1;
 	if (tokens->content)
 	{
-		printf ("syntax error near unexpected token '%s'\n", tokens->content);
+		printf("syntax error near unexpected token '%s'\n", tokens->content);
 		tmp = open_fake_heredoc(head, env);
 	}
 	else if (tokens->next && tokens->next->content)
 	{
-		printf ("syntax error near unexpected token '%s'\n", \
+		printf("syntax error near unexpected token '%s'\n", \
 		tokens->next->content);
 		tmp = open_fake_heredoc(head, env);
 	}
 	else if (!print_redirection(tokens, &tmp, head, env))
 	{
 		tmp = open_fake_heredoc(head, env);
-		printf ("syntax error near unexpected token `newline'\n");
+		printf("syntax error near unexpected token `newline'\n");
 	}
 	return (tmp);
 }

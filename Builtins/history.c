@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 19:49:40 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/17 14:36:10 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/20 15:48:17 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	history_reloader(int ac)
 	char	*s;
 	int		in;
 
-	ac = open("Libft/.sh_history", O_RDWR);
+	ac = open("/tmp/.sh-sm_history", O_RDWR);
 	if (ac > 0)
 	{
 		in = dup(STDIN_FILENO);
@@ -41,7 +41,7 @@ void	print_history(char *s, unsigned long long n, unsigned long long i)
 	unsigned long long	j;
 	int					h;
 
-	h = open("Libft/.sh_history", O_RDWR, 0666);
+	h = open("/tmp/.sh-sm_history", O_RDWR, 0666);
 	j = 0;
 	while (++j <= i - n)
 	{
@@ -64,7 +64,7 @@ void	get_history(char *s, long long int n)
 	int					h;
 
 	ft_free(&s);
-	h = open("Libft/.sh_history", O_RDWR, 0666);
+	h = open("/tmp/.sh-sm_history", O_RDWR, 0666);
 	if (h < 0)
 		return ;
 	i = 0;
@@ -104,7 +104,7 @@ void	history(char **cmd)
 	else if (cmd[1])
 	{
 		if (ft_strncmp(cmd[1], "-c", 3) == 0)
-			unlink("Libft/./.sh_history");
+			unlink("/tmp/.sh-sm_history");
 		else if (!ft_isnum(cmd[1]))
 			printf("sh-sm: %s: %s: : numeric argument required\n", \
 			cmd[0], cmd[1]);

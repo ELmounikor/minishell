@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:53:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/20 13:33:18 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/20 15:46:49 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*new_prompt(void)
 	s = readline("🤖sh-sm$ ");
 	if (!s)
 		ft_exit(NULL);
-	h = open("Libft/.sh_history", O_RDWR | O_APPEND | O_CREAT, 0666);
+	h = open("/tmp/.sh-sm_history", O_RDWR | O_APPEND | O_CREAT, 0666);
 	write(h, s, ft_strlen(s));
 	write(h, "\n", 1);
 	add_history(s);

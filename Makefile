@@ -6,7 +6,7 @@
 #    By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/20 12:58:47 by mel-kora          #+#    #+#              #
-#    Updated: 2022/10/17 16:24:22 by mel-kora         ###   ########.fr        #
+#    Updated: 2022/10/20 15:46:37 by mel-kora         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,7 +73,7 @@ CC		=	@gcc
 RM		=	@rm -rf
 LIB		=   -L ~/goinfre/.brew/opt/readline/lib
 INC		=	-I ~/goinfre/.brew/opt/readline/include
-CFLAGS	=	-Wall -Werror -Wextra -g -fsanitize=address
+CFLAGS	=	-Wall -Werror -Wextra #-g -fsanitize=address
 
 all:		${NAME}
 			@echo "\033[0;93m	<< all done by S&M! >> \033[0m"
@@ -95,7 +95,7 @@ clean:
 			@echo "\033[1;91m	--------->>> files deleted :} \033[0m"
 
 fclean:		clean
-			${RM} ${NAME} Libft/.sh_history
+			${RM} ${NAME} /tmp/.sh-sm_history
 		
 re:			fclean all
 

@@ -6,11 +6,59 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:47:34 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/17 15:32:25 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/21 17:38:27 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "builtins.h"
+
+char	*get_value(t_env **env, char *str)
+{
+	t_env	*tmp;
+
+	tmp = *env;
+	while (tmp)
+	{
+		if (ft_strncmp(tmp->variable, str, ft_strlen(tmp->variable) + 1) == 0)
+			return (tmp->value);
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
+
+void	ft_swap(t_env *tmp1, t_env *tmp2)
+{
+	char	*var;
+	char	*val;
+
+	var = tmp1->variable;
+	val = tmp1->value;
+	tmp1->variable = tmp2->variable;
+	tmp1->value = tmp2->value;
+	tmp2->variable = var;
+	tmp2->value = val;
+}
+
+void	ft_sort_list(t_env **l)
+{
+	t_env	*tmp1;
+	t_env	*tmp2;
+	int		r;
+
+	tmp1 = *l;
+	while (tmp1->next)
+	{
+		tmp2 = tmp1;
+		while (tmp2)
+		{
+			r = ft_strcmp(tmp1->variable, tmp2->variable);
+			if ((r > 0) || (r == 0 && ft_strcmp(tmp1->value, tmp2->value) > 0))
+				ft_swap(tmp1, tmp2);
+			tmp2 = tmp2->next;
+		}
+		tmp1 = tmp1->next;
+	}
+}
 
 int	get_number(const char	*str, int signe, int *err)
 {

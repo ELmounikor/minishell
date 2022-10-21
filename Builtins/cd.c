@@ -6,37 +6,33 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 16:02:20 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/20 18:03:23 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/21 17:43:39 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-char	*get_value(t_env **env, char *str)
+void	change_pwd_oldpwd(char *pwd, t_data *data)
 {
-	t_env	*tmp;
+	char	*cmd;
+	char	*p;
 
-	tmp = *env;
-	while (tmp)
+	if (ft_exist_value(data->env, pwd, NULL) != 0)
 	{
-		if (ft_strncmp(tmp->variable, str, ft_strlen(tmp->variable) + 1) == 0)
-			return (tmp->value);
-		tmp = tmp->next;
+		ft_remove_element_list(&data->env, pwd);
+		p = ft_strjoin(pwd, "=");
+		cmd = ft_strjoin(p, data->pwd);
+		export_element(cmd, &data->env);
+		free(cmd);
+		free(p);
 	}
-	return (NULL);
 }
 
 void	change_pwd_cd(t_data *data, char *path, char *arg)
 {
 	char	*cmd;
 
-	if (ft_exist_value(data->env, "OLDPWD", NULL) != 0)
-	{
-		ft_remove_element_list(&data->env, "OLDPWD");
-		cmd = ft_strjoin("OLDPWD=", data->pwd);
-		export_element(cmd, &data->env);
-		free(cmd);
-	}
+	change_pwd_oldpwd("OLDPWD", data);
 	if (data->pwd)
 		free(data->pwd);
 	if (path)
@@ -50,13 +46,7 @@ void	change_pwd_cd(t_data *data, char *path, char *arg)
 		data->pwd = ft_strjoin(cmd, arg);
 		free(cmd);
 	}
-	if (ft_exist_value(data->env, "PWD", NULL) != 0)
-	{
-		ft_remove_element_list(&data->env, "PWD");
-		cmd = ft_strjoin("PWD=", data->pwd);
-		export_element(cmd, &data->env);
-		free(cmd);
-	}
+	change_pwd_oldpwd("PWD", data);
 }
 
 void	get_home(t_data *data)
@@ -78,12 +68,38 @@ void	get_home(t_data *data)
 	}
 }
 
-void	cd(char **argv, t_data *data)
+void	ft_chdir(char **argv, t_data *data)
 {
 	int		r;
 	char	*path;
 
 	path = NULL;
+	if (argv[1][0] == '~')
+	{
+		chdir(getenv("HOME"));
+		path = &argv[1][2];
+		argv[1] = ft_strdup(path);
+	}
+	r = chdir(argv[1]);
+	if (r == 0)
+		change_pwd_cd(data, getcwd(NULL, 0), argv[1]);
+	else
+	{
+		ft_putstr_fd("sh-sm: cd: ", 2);
+		if (path)
+		{
+			ft_putstr_fd(getenv("HOME"), 2);
+			ft_putstr_fd("/", 2);
+		}
+		perror(argv[1]);
+		g_exit_value = 1;
+	}
+}
+
+void	cd(char **argv, t_data *data)
+{
+	int	r;
+
 	if (argv[1] == NULL)
 		get_home(data);
 	else if (ft_strncmp(argv[1], "~", ft_strlen(argv[1]) + 1) == 0)
@@ -93,26 +109,5 @@ void	cd(char **argv, t_data *data)
 			change_pwd_cd(data, getenv("HOME"), argv[1]);
 	}
 	else
-	{
-		if (argv[1][0] == '~')
-		{
-			chdir(getenv("HOME"));
-			path = &argv[1][2];
-			argv[1] = ft_strdup(path);
-		}
-		r = chdir(argv[1]);
-		if (r == 0)
-			change_pwd_cd(data, getcwd(NULL, 0), argv[1]);
-		else
-		{
-			ft_putstr_fd("sh-sm: cd: ", 2);
-			if (path)
-			{
-				ft_putstr_fd(getenv("HOME"), 2);
-				ft_putstr_fd("/", 2);
-			}
-			perror(argv[1]);
-			g_exit_value = 1;
-		}
-	}
+		ft_chdir(argv, data);
 }

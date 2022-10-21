@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 21:25:10 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/19 17:20:48 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/21 16:11:10 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	unset(char **argv, t_env **env)
 	{
 		if (ft_check_variable(argv[i]) == 1)
 		{
-			ft_putstr_fd("unset: \'", 2);
+			ft_putstr_fd("sh-sm: unset: \'", 2);
 			ft_putstr_fd(argv[i], 2);
 			ft_putstr_fd("\' : not a valid identifier\n", 2);
 			g_exit_value = 1;

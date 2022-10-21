@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 19:33:57 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/19 16:05:31 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/21 17:10:57 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	ft_exist(char *str, char c)
 	while (str[i])
 	{
 		if (str[i] == c)
-			return (1);
+			return (i);
 		i++;
 	}
 	return (0);

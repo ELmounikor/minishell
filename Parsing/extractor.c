@@ -87,7 +87,7 @@ t_cmd	**cmd_extractor(t_list *input, t_env *env)
 	if (!open_heredoc(input, env, &cmd, &sizes))
 		return (0);
 	i = -1;
-	while (cmd && input && g_exit_value == 0)
+	while (cmd && input)
 	{
 		cmd[++i] = (t_cmd *) malloc (sizeof(t_cmd));
 		if (cmd[i])

@@ -6,12 +6,12 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 19:38:16 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/20 14:12:46 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/21 15:25:44 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_pipe.h"
-
+#include <errno.h>
 char	**get_value_devise(t_env *env, char *p)
 {
 	int		i;
@@ -58,8 +58,20 @@ char	*ft_get_path(char *arg, t_env *env)
 	char	**mypaths;
 
 	i = 0;
-	if (access(arg, 0) == 0 && arg[0] == '/')
-		return (arg);
+	if (arg[0] == '/' || (arg[0] == '.' && arg[1] == '/'))
+	{
+		if (access(arg, 0) == 0)
+			return (arg);
+		else
+		{
+			ft_putstr_fd("sh-sm: ", 2);
+			perror(arg);
+			if (errno == 20)
+				exit(126);
+			else
+				exit(127);
+		}
+	}
 	mypaths = get_value_devise(env, "PATH");
 	while (mypaths && mypaths[i])
 	{

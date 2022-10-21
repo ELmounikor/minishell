@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_signal.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 18:13:50 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/17 15:59:28 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/21 16:13:41 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,7 @@ void	handler_sig(int signum)
 	else if (signum == SIGQUIT)
 	{
 		g_exit_value = 0;
-		//printf("dga\n");
 		rl_on_new_line();
-		//rl_replace_line("", 0);
 		rl_redisplay();
 	}
 }

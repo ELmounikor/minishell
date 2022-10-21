@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 13:37:08 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/19 17:17:01 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/21 16:28:51 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include "../Builtins/builtins.h"
 # include <signal.h>
+# include <errno.h>
 
 int		g_exit_value;
 int		**pipe_fd(int nbr_cmd);

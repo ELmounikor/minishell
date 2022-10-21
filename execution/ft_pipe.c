@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 17:40:36 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/21 14:44:57 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/21 16:28:21 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,18 +64,11 @@ void	change_pwd(t_data *data)
 	}
 }
 
-void	ft_pipe(t_cmd **cmd, int nbr_cmd, t_data *data)
+void	ft_pipe_child(int **fd, t_cmd **cmd, int nbr_cmd, t_data *data)
 {
-	int	**fd;
 	int	i;
 	int	*id;
 
-	change_pwd(data);
-	if (nbr_cmd == 1 && cmd[0]->fd[0]== 0 && cmd[0]->fd[1] == 0
-		&& ft_builtins(cmd[0]->args[0], cmd[0], data, nbr_cmd) == 0)
-		return ;
-	if (nbr_cmd > 1)
-		fd = pipe_fd(nbr_cmd);
 	id = (int *)malloc((nbr_cmd) * sizeof(int));
 	if (!id)
 		exit(1);
@@ -93,6 +86,21 @@ void	ft_pipe(t_cmd **cmd, int nbr_cmd, t_data *data)
 		}
 		i++;
 	}
-	ft_close(nbr_cmd - 1, fd);
+	if (fd)
+		ft_close(nbr_cmd - 1, fd);
 	ft_wait_child(id, nbr_cmd);
+}
+
+void	ft_pipe(t_cmd **cmd, int nbr_cmd, t_data *data)
+{
+	int	**fd;
+
+	fd = NULL;
+	change_pwd(data);
+	if (nbr_cmd == 1 && cmd[0]->fd[0] == 0 && cmd[0]->fd[1] == 0
+		&& ft_builtins(cmd[0]->args[0], cmd[0], data, nbr_cmd) == 0)
+		return ;
+	if (nbr_cmd > 1)
+		fd = pipe_fd(nbr_cmd);
+	ft_pipe_child(fd, cmd, nbr_cmd, data);
 }

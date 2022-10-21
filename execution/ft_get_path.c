@@ -6,12 +6,12 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 19:38:16 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/21 15:25:44 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/21 16:34:41 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_pipe.h"
-#include <errno.h>
+
 char	**get_value_devise(t_env *env, char *p)
 {
 	int		i;
@@ -51,13 +51,8 @@ void	ft_free_char(char **p)
 	free(p);
 }
 
-char	*ft_get_path(char *arg, t_env *env)
+char	*ft_check_directory(char *arg)
 {
-	int		i;
-	char	*path;
-	char	**mypaths;
-
-	i = 0;
 	if (arg[0] == '/' || (arg[0] == '.' && arg[1] == '/'))
 	{
 		if (access(arg, 0) == 0)
@@ -72,6 +67,20 @@ char	*ft_get_path(char *arg, t_env *env)
 				exit(127);
 		}
 	}
+	return (NULL);
+}
+
+char	*ft_get_path(char *arg, t_env *env)
+{
+	int		i;
+	char	*path;
+	char	**mypaths;
+	char	*res;
+
+	i = 0;
+	res = ft_check_directory(arg);
+	if (res)
+		return (res);
 	mypaths = get_value_devise(env, "PATH");
 	while (mypaths && mypaths[i])
 	{

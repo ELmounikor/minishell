@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 17:40:36 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/21 16:28:21 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/21 19:14:34 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	ft_pipe(t_cmd **cmd, int nbr_cmd, t_data *data)
 
 	fd = NULL;
 	change_pwd(data);
-	if (nbr_cmd == 1 && cmd[0]->fd[0] == 0 && cmd[0]->fd[1] == 0
+	if (nbr_cmd == 1 && cmd[0]->fd[1] == 0
 		&& ft_builtins(cmd[0]->args[0], cmd[0], data, nbr_cmd) == 0)
 		return ;
 	if (nbr_cmd > 1)

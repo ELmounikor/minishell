@@ -6,13 +6,13 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:17:01 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/21 09:38:15 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/21 16:11:52 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_list	*open_heredoc(t_list *head, t_env *env, int outfd)
+t_list	*open_fake_heredoc(t_list *head, t_env *env, int outfd)
 {
 	t_list	*tmp;
 	char	*s;
@@ -26,7 +26,7 @@ t_list	*open_heredoc(t_list *head, t_env *env, int outfd)
 	{
 		if (head->id && head->id % 44 == 0)
 		{
-			close(here_doc(head, 0, &s, env));
+			here_doc(head, 0, &s, env);
 			ft_free(&s);
 			if (g_exit_value)
 				break ;
@@ -50,7 +50,7 @@ int	print_redirection(t_list *tokens, t_list **tmp, t_list *head, t_env *env)
 		printf("<<'\n");
 	else if (tokens->next->id % 4 == 0)
 		printf("<'\n");
-	*tmp = open_heredoc(head, env, (tokens->id) * -1);
+	*tmp = open_fake_heredoc(head, env, (tokens->id) * -1);
 	return (1);
 }
 
@@ -63,17 +63,17 @@ t_list	*throw_error(t_list *tokens, t_list *head, t_env *env, int outfd)
 	{
 		printf("sh-sm: syntax error near unexpected token '%s'\n", \
 		tokens->content);
-		tmp = open_heredoc(head, env, outfd);
+		tmp = open_fake_heredoc(head, env, outfd);
 	}
 	else if (tokens->next && tokens->next->content)
 	{
 		printf("sh-sm: syntax error near unexpected token '%s'\n", \
 		tokens->next->content);
-		tmp = open_heredoc(head, env, outfd);
+		tmp = open_fake_heredoc(head, env, outfd);
 	}
 	else if (!print_redirection(tokens, &tmp, head, env))
 	{
-		tmp = open_heredoc(head, env, outfd);
+		tmp = open_fake_heredoc(head, env, outfd);
 		dup2(2, 1);
 		printf("sh-sm: syntax error near unexpected token `newline'\n");
 	}

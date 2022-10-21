@@ -6,64 +6,59 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/20 19:23:31 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/21 17:01:18 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	in_file_handler(t_list *token, int *fd_in, int cmd_id, t_env *env)
+int	checkout_heredoc(t_cmd ***cmd, t_list **input, char **s)
 {
-	char	*s;
-
-	s = NULL;
-	if (*fd_in > 0)
-		close(*fd_in);
-	if (token->id % 44 == 0)
+	ft_free(&((*input)->content));
+	(*input)->content = ft_strdup(*s);
+	ft_free(s);
+	if (g_exit_value)
 	{
-		*fd_in = here_doc(token, cmd_id, &s, env);
-		ft_free(&s);
+		if (*cmd)
+		{
+			free(*cmd);
+			*cmd = NULL;
+			return (0);
+		}
 	}
-	else if (token->id % 4 == 0)
-		*fd_in = handle_file(token->content, 'I', *fd_in);
-}
-
-void	out_file_handler(t_list *token, int *fd_out)
-{
-	if (*fd_out > 0)
-		close(*fd_out);
-	if (token->id % 77 == 0 && fd_out >= 0)
-		*fd_out = handle_file(token->content, 'A', *fd_out);
-	else if (token->id % 7 == 0 && fd_out >= 0)
-		*fd_out = handle_file(token->content, 'T', *fd_out);
-}
-
-int	file_handler(t_cmd **cmd, t_list *token, int cmd_id, t_env *env)
-{
-	if (!is_file(token->id))
-		return (0);
-	if (token->id == -7 || token->id == -77 || \
-	token->id == -70 || token->id == -770)
-	{
-		g_exit_value = 1;
-		ft_putstr_fd("sh-sm: ", 2);
-		ft_putstr_fd(token->content, 2);
-	}
-	else if (token->id == -4 || token->id == -40)
-	{
-		g_exit_value = 1;
-		ft_putstr_fd("sh-sm: ", 2);
-		ft_putstr_fd(token->content, 2);
-		ft_putstr_fd(": ambiguous redirect\n", 2);
-	}
-	else if (token->id % 7 == 0)
-		out_file_handler(token, &((*cmd)->fd[1]));
-	else if (token->id % 4 == 0)
-		in_file_handler(token, &((*cmd)->fd[0]), cmd_id, env);
 	return (1);
 }
 
-void	cmd_filler(t_cmd **cmd, t_list **input, int cmd_id, t_env *env)
+void	*open_heredoc(t_list *input, t_env *env, t_cmd ***cmd, int **sizes)
+{
+	char	*s;
+	int		cmd_id;
+
+	*cmd = (t_cmd **) malloc ((cmd_count(input) + 1) * sizeof (t_cmd *));
+	*sizes = cmd_size(input);
+	cmd_id = 0;
+	while (input)
+	{
+		while (input && input->id != 1)
+		{
+			if (is_file(input->id) && !(input->id % 44))
+			{
+				here_doc(input, cmd_id, &s, env);
+				if (!checkout_heredoc(cmd, &input, &s))
+					break ;
+			}
+			input = input->next;
+		}
+		cmd_id++;
+		if (!input || (input && is_file(input->id) && \
+		!(input->id % 44) && g_exit_value))
+			break ;
+		input = input->next;
+	}
+	return (*cmd);
+}
+
+void	cmd_filler(t_cmd **cmd, t_list **input)
 {
 	int	i;
 
@@ -75,12 +70,7 @@ void	cmd_filler(t_cmd **cmd, t_list **input, int cmd_id, t_env *env)
 	(*cmd)->fd[1] = 0;
 	while ((*input) && (*input)->id != 1 && (*cmd)->args)
 	{
-		if (file_handler(cmd, (*input), cmd_id, env))
-		{
-			if (g_exit_value == 1)
-				break ;
-		}
-		else if ((*input)->content)
+		if (!file_handler(cmd, (*input)) && (*input)->content)
 			(*cmd)->args[i++] = ft_strdup((*input)->content);
 		(*input) = (*input)->next;
 	}
@@ -94,22 +84,22 @@ t_cmd	**cmd_extractor(t_list *input, t_env *env)
 	int		*sizes;
 	int		i;
 
-	cmd = (t_cmd **) malloc ((cmd_count(input) + 1) * sizeof (t_cmd *));
-	sizes = cmd_size(input);
+	if (!open_heredoc(input, env, &cmd, &sizes))
+		return (0);
 	i = -1;
-	while (cmd && input && i >= -1)
+	while (cmd && input && g_exit_value == 0)
 	{
 		cmd[++i] = (t_cmd *) malloc (sizeof(t_cmd));
 		if (cmd[i])
 			cmd[i]->size = sizes[i] + 1;
-		cmd_filler(&cmd[i], &input, i, env);
-		if (!input || (input && input->id % 44 == 0 && g_exit_value == 1))
+		cmd_filler(&cmd[i], &input);
+		if (!input)
 			break ;
 		input = input->next;
 	}
 	free(sizes);
 	cmd[++i] = NULL;
-	if (!cmd || (input && input->id % 44 == 0 && g_exit_value == 1))
+	if (!cmd)
 	{
 		free_cmds(cmd);
 		return (0);

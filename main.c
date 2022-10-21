@@ -6,18 +6,20 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:53:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/21 09:04:23 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/21 17:22:54 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_exit(char **cmd)
+void	ft_exit(char *cmd)
 {
 	if (!cmd)
 	{
 		printf("exit\n");
-		exit(0);
+		if (g_exit_value == 258)
+			exit(2);
+		exit(g_exit_value);
 	}
 }
 
@@ -62,14 +64,14 @@ int	main(int ac, char **av, char **en)
 		s = new_prompt();
 		input = tokenizer(s, 0, 0, data.env);
 		cmd = cmd_extractor(input, data.env);
-		cmdprint(cmd);
+		// cmdprint(cmd);
 		if (cmd)
 			ft_pipe(cmd, cmd_count(input), &data);
 		free_cmds(cmd);
 		ft_lstclear(&input, &free);
 		ft_free(&s);
 	}
-	//ft_envclear(&data.env, &free);
-	//free(data.pwd);
+	ft_envclear(&data.env, &free);
+	free(data.pwd);
 	return (0);
 }

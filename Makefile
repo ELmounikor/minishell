@@ -6,7 +6,7 @@
 #    By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/20 12:58:47 by mel-kora          #+#    #+#              #
-#    Updated: 2022/10/20 17:24:19 by mel-kora         ###   ########.fr        #
+#    Updated: 2022/10/21 11:47:36 by mel-kora         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ SRCS	=	main.c\
 			Parsing/syntax_checker.c\
 			Parsing/extractor.c\
 			Parsing/file_handler.c\
+			Parsing/heredoc.c\
 			Parsing/get_nd_split.c\
 			Builtins/history.c\
 			Builtins/unset.c\

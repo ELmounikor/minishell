@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/21 09:07:20 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/21 17:20:39 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_list	*token_maker(char *s, int start, int finish, int id)
 
 int	lexer(char c, char next_c, int *id)
 {
-	int	i;
+	int			i;
 
 	i = 0;
 	if (!id)
@@ -96,6 +96,24 @@ t_list	*get_token(char *s, int *start, int *end, int id)
 	return (0);
 }
 
+void	check_max_heredoc(t_list *tokens)
+{
+	int	n_heredoc;
+
+	n_heredoc = 0;
+	while (tokens && n_heredoc <= 16)
+	{
+		if (tokens->id == 44 || tokens->id == 440)
+			n_heredoc++;
+		tokens = tokens->next;
+	}
+	if (n_heredoc > 16)
+	{
+		ft_putstr_fd("sh-sm: maximum here-document count exceeded\n", 2);
+		exit(2);
+	}
+}
+
 t_list	*tokenizer(char *s, int i, int j, t_env *env)
 {
 	t_list	*tokens;
@@ -121,5 +139,6 @@ t_list	*tokenizer(char *s, int i, int j, t_env *env)
 		}
 		ft_lstadd_back(&tokens, get_token(s, &j, &i, 0));
 	}
+	check_max_heredoc(tokens);
 	return (syntax_checker(&tokens, env));
 }

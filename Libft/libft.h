@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:35:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/20 16:52:00 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/21 09:50:13 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void			ft_lstiter(t_list *lst, void (*f)(void *));
 void			ft_free(char **s);
 void			ft_split_cleaner(char **output);
 void			ft_putstr_fd(char *s, int fd);
+void			editor(char **s1, char *s2);
 char			**ft_split(char const *s, char c);
 char			**ft_nsplit(char const *s, char *c);
 char			*str_edit(char *s);

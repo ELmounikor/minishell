@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 19:22:51 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/20 19:10:35 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/21 09:51:45 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,14 @@ char	*set_p(t_list **old_pos, t_list **old_next, t_list **token, t_env *env)
 	return (" \t\n");
 }
 
+void	reset_p(t_list *old_pos, t_list *old_next, t_list **token, int i)
+{
+	(*token)->next = old_next;
+	(*token) = old_pos;
+	if (i > 1)
+		(*token)->id = 0;
+}
+
 char	*get_nd_split(t_list **token, char *value, t_env *env, int i)
 {
 	t_list	*old_position;
@@ -41,9 +49,9 @@ char	*get_nd_split(t_list **token, char *value, t_env *env, int i)
 		(*token)->next = ft_lstnew(ft_strdup(dic[i++]), 0);
 		*token = (*token)->next;
 	}
-	(*token)->next = old_next;
-	(*token) = old_position;
-	(*token)->id = 0;
+	if (value && !ft_strchr(s, value[ft_strlen(value) - 1]))
+		(*token)->id = old_position->id;
+	reset_p(old_position, old_next, token, i);
 	if (value && !ft_strchr(s, value[0]))
 	{
 		s = ft_strdup(dic[0]);
@@ -92,14 +100,4 @@ void	free_cmds(t_cmd **cmd)
 	}
 	free(cmd);
 	cmd = NULL;
-}
-
-void	editor(char **s1, char *s2)
-{
-	char	*tmp;
-
-	tmp = ft_strjoin(*s1, s2);
-	ft_free(&s2);
-	ft_free(s1);
-	*s1 = tmp;
 }

@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 11:40:30 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/21 16:43:36 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/21 18:26:06 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,28 @@ char	*get_file_name(int cmd_id, int *file_id, int *stdin_fd)
 	return (file_name);
 }
 
+char	*get_val(char *s1, t_env *env)
+{
+	if (!ft_strcmp(s1, "?"))
+	{
+		ft_free(&s1);
+		return (ft_itoa(g_exit_value));
+	}
+	else if (!ft_strcmp(s1, "0"))
+	{
+		ft_free(&s1);
+		return (ft_strdup("sh-sm"));
+	}
+	while (env && s1)
+	{
+		if (!ft_strcmp(s1, env->variable))
+			return (ft_strdup(env->value));
+		env = env->next;
+	}
+	ft_free(&s1);
+	return (0);
+}
+
 char	*line_expander(char **line, t_env *env, int i, int j)
 {
 	char	*s;
@@ -61,7 +83,7 @@ char	*line_expander(char **line, t_env *env, int i, int j)
 				while ((ft_isalnum_((*line)[i]) && (*line)[j] != '?') || \
 				(i == j && (*line)[j] == '?'))
 					i++;
-				editor(&s, getval(ft_substr((*line), j, i - j), env, NULL));
+				editor(&s, get_val(ft_substr((*line), j, i - j), env));
 			}
 		}
 		ft_free(line);

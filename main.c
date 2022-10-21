@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:53:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/21 17:22:54 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/21 17:48:30 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,9 @@ int	main(int ac, char **av, char **en)
 		s = new_prompt();
 		input = tokenizer(s, 0, 0, data.env);
 		cmd = cmd_extractor(input, data.env);
+		// lstprint(input);
 		// cmdprint(cmd);
-		if (cmd)
+		if (cmd && cmd[0])
 			ft_pipe(cmd, cmd_count(input), &data);
 		free_cmds(cmd);
 		ft_lstclear(&input, &free);

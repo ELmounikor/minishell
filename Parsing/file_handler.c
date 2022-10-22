@@ -6,38 +6,37 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/21 16:39:25 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/22 14:25:41 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+void	file_error(char *file_name)
+{
+	g_exit_value = 1;
+	ft_putstr_fd("sh-sm: ", 2);
+	perror(file_name);
+}
+
 int	open_file(char *file_name, char code, int fd)
 {
-	int	file;
-
 	if (code == 'I')
 	{
 		fd = open(file_name, O_RDONLY);
 		if (fd < 0)
-		{
-			g_exit_value = 1;
-			perror(file_name);
-		}
+			file_error(file_name);
 		return (fd);
 	}
 	else if (code == 'A')
-		file = open(file_name, O_WRONLY | O_APPEND);
+		fd = open(file_name, O_WRONLY | O_APPEND);
 	else
-		file = open(file_name, O_WRONLY | O_TRUNC);
-	if (file == -1)
-		file = open(file_name, O_WRONLY | O_CREAT, 0666);
-	if (file == -1)
-	{
-		g_exit_value = 1;
-		perror(file_name);
-	}
-	return (file);
+		fd = open(file_name, O_WRONLY | O_TRUNC);
+	if (fd < 0)
+		fd = open(file_name, O_WRONLY | O_CREAT, 0666);
+	if (fd < 0)
+		file_error(file_name);
+	return (fd);
 }
 
 void	in_file_handler(t_list *token, int *fd_in)

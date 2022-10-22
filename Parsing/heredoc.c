@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 11:40:30 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/21 18:26:06 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/22 12:40:58 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,6 @@ void	here_doc(t_list *token, int cmd_id, char **file_name, t_env *env)
 	{
 		s = line_expander(&s, env, 0, token->id);
 		ft_putstr_fd(s, fd);
-		ft_putstr_fd("\n", fd);
 		ft_free(&s);
 		s = ft_readline("> ");
 	}

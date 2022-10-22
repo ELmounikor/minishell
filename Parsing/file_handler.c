@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/22 14:25:41 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/22 17:23:02 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,6 @@ int	open_file(char *file_name, char code, int fd)
 
 void	in_file_handler(t_list *token, int *fd_in)
 {
-	char		*s;
-
-	s = NULL;
 	if (*fd_in > 0)
 		close(*fd_in);
 	if (token->id == -4 || token->id == -40)

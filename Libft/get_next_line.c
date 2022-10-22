@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 15:20:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/20 15:16:23 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/22 15:43:46 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,13 @@
 
 char	*ft_readline(char *prompt)
 {
+	char	*s;
+
 	ft_putstr_fd(prompt, 1);
-	return (get_next_line(0));
+	s = get_next_line(0);
+	if (s)
+		s[ft_strlen(s) - 1] = 0;
+	return (s);
 }
 
 void	ft_free(char **s)

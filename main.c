@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:53:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/21 17:48:30 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/22 17:58:36 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,34 @@ char	*new_prompt(void)
 	return (s);
 }
 
+void	sm_sh_init(int ac, char **av, char **en, t_data	*data)
+{
+	char	**i_cmd;
+	int		pid;
+
+	(void) av;
+	i_cmd = (char **) malloc (3 * sizeof(char *));
+	if (i_cmd)
+	{
+		i_cmd[0] = ft_strdup("stty");
+		i_cmd[1] = ft_strdup("-echoctl");
+		i_cmd[2] = 0;
+		pid = fork();
+		if (pid == 0)
+		{
+			execve("/bin/stty", i_cmd, en);
+			exit(0);
+		}
+		while (wait(NULL) != -1)
+			;
+		ft_split_cleaner(i_cmd);
+	}
+	(*data).env = get_env(en);
+	(*data).pwd = ft_strdup(getenv("PWD"));
+	g_exit_value = 0;
+	history_reloader(ac);
+}
+
 int	main(int ac, char **av, char **en)
 {
 	t_list		*input;
@@ -52,11 +80,7 @@ int	main(int ac, char **av, char **en)
 	t_cmd		**cmd;
 	char		*s;
 
-	av = NULL;
-	data.env = get_env(en);
-	data.pwd = ft_strdup(getenv("PWD"));
-	g_exit_value = 0;
-	history_reloader(ac);
+	sm_sh_init(ac, av, en, &data);
 	while (1)
 	{
 		signal(SIGINT, handler_sig);
@@ -64,8 +88,6 @@ int	main(int ac, char **av, char **en)
 		s = new_prompt();
 		input = tokenizer(s, 0, 0, data.env);
 		cmd = cmd_extractor(input, data.env);
-		// lstprint(input);
-		// cmdprint(cmd);
 		if (cmd && cmd[0])
 			ft_pipe(cmd, cmd_count(input), &data);
 		free_cmds(cmd);

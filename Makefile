@@ -6,7 +6,7 @@
 #    By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/20 12:58:47 by mel-kora          #+#    #+#              #
-#    Updated: 2022/10/21 11:47:36 by mel-kora         ###   ########.fr        #
+#    Updated: 2022/10/22 16:07:52 by mel-kora         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -96,7 +96,7 @@ clean:
 			@echo "\033[1;91m	--------->>> files deleted :} \033[0m"
 
 fclean:		clean
-			${RM} ${NAME} /tmp/.sh-sm_history
+			${RM} ${NAME} #/tmp/.sh-sm_history
 		
 re:			fclean all
 

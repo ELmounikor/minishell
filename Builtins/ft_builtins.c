@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builtins.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 12:33:26 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/21 16:29:13 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/22 16:13:45 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	ft_builtins(char *args, t_cmd *cmd, t_data *data, int nbr_cmd)
 			cd(cmd->args, data);
 		else if (ft_strncmp(args, "exit", ft_strlen(args) + 1) == 0)
 			ft_exitt(cmd->args, nbr_cmd);
+		else if (ft_strncmp(args, "history", ft_strlen(args) + 1) == 0)
+			history(cmd->args);
 		else
 			return (1);
 	}

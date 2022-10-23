@@ -6,13 +6,25 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/21 17:45:15 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/23 19:03:57 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	checkout_heredoc(t_cmd ***cmd, t_list **input, char **s)
+int	is_file(t_list *token)
+{
+	if (token->id != 7 && token->id != 77 && token->id != 4 && \
+	token->id != 44 && token->id != 70 && token->id != 770 && \
+	token->id != 40 && token->id != 440 && token->id != 88 && \
+	token->id != 880 && token->id != -7 && token->id != -77 && \
+	token->id != -4 && token->id != -70 && token->id != -770 && \
+	token->id != -40)
+		return (0);
+	return (1);
+}
+
+int	checkout_heredoc(t_cmd ***cmd, int **sizes, t_list **input, char **s)
 {
 	ft_free(&((*input)->content));
 	(*input)->content = ft_strdup(*s);
@@ -22,6 +34,7 @@ int	checkout_heredoc(t_cmd ***cmd, t_list **input, char **s)
 		if (*cmd)
 		{
 			free(*cmd);
+			free(*sizes);
 			*cmd = NULL;
 			return (0);
 		}
@@ -41,16 +54,16 @@ void	*open_heredoc(t_list *input, t_env *env, t_cmd ***cmd, int **sizes)
 	{
 		while (input && input->id != 1)
 		{
-			if (is_file(input->id) && !(input->id % 44))
+			if (is_file(input) && !(input->id % 44))
 			{
 				here_doc(input, cmd_id, &s, env);
-				if (!checkout_heredoc(cmd, &input, &s))
+				if (!checkout_heredoc(cmd, sizes, &input, &s))
 					break ;
 			}
 			input = input->next;
 		}
 		cmd_id++;
-		if (!input || (input && is_file(input->id) && \
+		if (!input || (input && is_file(input) && \
 		!(input->id % 44) && g_exit_value))
 			break ;
 		input = input->next;
@@ -58,13 +71,14 @@ void	*open_heredoc(t_list *input, t_env *env, t_cmd ***cmd, int **sizes)
 	return (*cmd);
 }
 
-void	cmd_filler(t_cmd **cmd, t_list **input)
+void	cmd_filler(t_cmd **cmd, t_list **input, int cmd_size)
 {
 	int	i;
 
 	i = 0;
 	if (!(*cmd))
 		return ;
+	(*cmd)->size = cmd_size;
 	(*cmd)->args = (char **) malloc ((*cmd)->size * sizeof(char *));
 	(*cmd)->fd[0] = 0;
 	(*cmd)->fd[1] = 0;
@@ -90,9 +104,7 @@ t_cmd	**cmd_extractor(t_list *input, t_env *env)
 	while (cmd && input)
 	{
 		cmd[++i] = (t_cmd *) malloc (sizeof(t_cmd));
-		if (cmd[i])
-			cmd[i]->size = sizes[i] + 1;
-		cmd_filler(&cmd[i], &input);
+		cmd_filler(&cmd[i], &input, sizes[i] + 1);
 		if (!input)
 			break ;
 		input = input->next;

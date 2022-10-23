@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:35:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/21 09:50:13 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/23 18:52:52 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,5 @@ int				ft_isspace(int c);
 int				ft_isalnum_(int c);
 int				ft_isalnumstr(char *s);
 int				ft_strlen(const char *s);
-int				is_file(int id);
 long long int	ft_atoi(const char *str);
 #endif

@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 14:21:31 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/22 16:40:18 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/23 19:04:37 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void		free_cmds(t_cmd **cmds);
 void		ft_exit(char *cmd);
 int			file_handler(t_cmd **cmd, t_list *token);
 int			quote_check(char *s);
+int			is_file(t_list *token);
 char		*get_nd_split(t_list **token, char *value, t_env *env, int i);
 char		*getval(char *s1, t_env *env, t_list **token);
 char		*new_prompt(void);

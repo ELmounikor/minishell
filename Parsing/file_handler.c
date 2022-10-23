@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/22 17:23:02 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/23 19:03:30 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	out_file_handler(t_list *token, int *fd_out)
 
 int	file_handler(t_cmd **cmd, t_list *token)
 {
-	if (!is_file(token->id))
+	if (!is_file(token))
 		return (0);
 	if ((*cmd)->fd[1] < 0 || (*cmd)->fd[0] < 0)
 		return (1);

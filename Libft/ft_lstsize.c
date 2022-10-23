@@ -6,11 +6,11 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 21:02:44 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/20 14:37:07 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/23 19:03:47 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
 int	ft_lstsize(t_list *lst)
 {
@@ -70,7 +70,7 @@ int	*cmd_size(t_list *lst)
 		size[++i] = 0;
 		while (lst && lst->id != 1)
 		{
-			if (!is_file(lst->id) && lst->content)
+			if (!is_file(lst) && lst->content)
 				size[i]++;
 			lst = lst->next;
 		}
@@ -78,16 +78,4 @@ int	*cmd_size(t_list *lst)
 			lst = lst->next;
 	}
 	return (size);
-}
-
-int	is_file(int id)
-{
-	if (id != 7 && id != 77 && id != 4 && \
-	id != 44 && id != 70 && id != 770 && \
-	id != 40 && id != 440 && id != 88 && \
-	id != 880 && id != -7 && id != -77 && \
-	id != -4 && id != -70 && id != -770 && \
-	id != -40)
-		return (0);
-	return (1);
 }

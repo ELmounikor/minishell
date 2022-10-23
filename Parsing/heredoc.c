@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 11:40:30 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/22 15:49:46 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/23 19:11:16 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void	handler_heredoc(int sig)
 		g_exit_value = 1;
 		write(1, "\n", 1);
 		close(0);
+		rl_on_new_line();
 	}
 }
 
@@ -112,14 +113,14 @@ void	here_doc(t_list *token, int cmd_id, char **file_name, t_env *env)
 	*file_name = get_file_name(cmd_id);
 	fd = open(*file_name, O_RDWR | O_TRUNC | O_CREAT, 0666);
 	signal(SIGINT, handler_heredoc);
-	s = ft_readline("> ");
+	s = readline("> ");
 	while (s && ft_strcmp(s, token->content) && !g_exit_value)
 	{
 		s = line_expander(&s, env, 0, token->id);
 		ft_putstr_fd(s, fd);
 		ft_putstr_fd("\n", fd);
 		ft_free(&s);
-		s = ft_readline("> ");
+		s = readline("> ");
 	}
 	dup2(stdin_fd, STDIN_FILENO);
 	close(stdin_fd);

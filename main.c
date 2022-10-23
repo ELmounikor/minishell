@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:53:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/22 17:58:36 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/23 16:01:39 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,11 @@ char	*new_prompt(void)
 	if (!s)
 		ft_exit(NULL);
 	h = open("/tmp/.sh-sm_history", O_RDWR | O_APPEND | O_CREAT, 0666);
-	write(h, s, ft_strlen(s));
-	write(h, "\n", 1);
+	if (s && s[0])
+	{
+		write(h, s, ft_strlen(s));
+		write(h, "\n", 1);
+	}
 	add_history(s);
 	close(h);
 	if (!quote_check(s))

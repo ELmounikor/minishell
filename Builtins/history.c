@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 19:49:40 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/24 18:49:58 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/22 17:00:11 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	history_reloader(int ac)
 		while (s)
 		{
 			add_history(s);
-			ft_free(&s);
+			free(s);
 			s = ft_readline(0);
 		}
 		dup2(in, STDIN_FILENO);

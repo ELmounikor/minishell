@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 16:02:20 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/24 15:26:51 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/24 17:31:16 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,7 @@ void	change_pwd_cd(t_data *data, char *path, char *arg)
 	if (data->pwd)
 		free(data->pwd);
 	if (path)
-	{
 		data->pwd = ft_strdup(path);
-		free(path);
-	}
 	else
 	{
 		ft_putstr_fd("cd: error retrieving current directory:", 2);

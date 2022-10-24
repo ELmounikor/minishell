@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 19:38:16 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/21 16:34:41 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/24 12:57:44 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,13 @@ char	**get_value_devise(t_env *env, char *p)
 void	ft_free_char(char **p)
 {
 	int	i;
-	int	size;
 
-	size = 0;
-	while (p[size])
-		size++;
-	i = size - 1;
-	while (i >= 0)
-		free(p[i--]);
+	i = 0;
+	while (p[i])
+	{
+		free(p[i]);
+		i++;
+	}
 	free(p);
 }
 

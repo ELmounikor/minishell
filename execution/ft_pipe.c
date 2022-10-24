@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 17:40:36 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/23 16:29:52 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/24 15:43:34 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,10 @@ void	ft_execute_cmd(t_cmd *cmd, t_data *data, int nbr_cmd)
 			ft_putstr_fd("sh-sm: ", 2);
 			ft_putstr_fd(cmd->args[0], 2);
 			ft_putstr_fd(": command not found\n", 2);
+			ft_free_char(envp);
 			exit(127);
 		}
+		ft_free_char(envp);
 	}
 	else
 		exit(g_exit_value);
@@ -89,6 +91,7 @@ void	ft_pipe_child(int **fd, t_cmd **cmd, int nbr_cmd, t_data *data)
 	if (fd)
 		ft_close(nbr_cmd - 1, fd);
 	ft_wait_child(id, nbr_cmd);
+	free(id);
 }
 
 void	ft_pipe(t_cmd **cmd, int nbr_cmd, t_data *data)

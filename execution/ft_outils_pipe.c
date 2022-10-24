@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 15:35:42 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/20 15:27:10 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/24 15:47:12 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,10 @@ void	ft_close(int argc, int **fd)
 		close(fd[i][1]);
 		i++;
 	}
+	i = 0;
+	while (i < argc)
+		free(fd[i++]);
+	free(fd);
 }
 
 char	**get_env_char(t_env *env)
@@ -70,6 +74,7 @@ char	**get_env_char(t_env *env)
 		join = ft_strjoin(env->variable, "=");
 		str[i] = ft_strjoin(join, env->value);
 		i++;
+		free(join);
 		env = env->next;
 	}
 	str[i] = 0;

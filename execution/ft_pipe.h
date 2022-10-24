@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 13:37:08 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/21 16:28:51 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/24 12:58:35 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,5 @@ char	*ft_get_path(char *arg, t_env *env);
 void	handler_sig(int signum);
 void	handler_child(int sig);
 void	handler_fake(int sig);
+void	ft_free_char(char **p);
 #endif

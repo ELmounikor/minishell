@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 11:40:30 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/23 19:11:16 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/24 19:21:07 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,8 @@ void	handler_heredoc(int sig)
 {
 	if (sig == SIGINT)
 	{
-		g_exit_value = 1;
 		write(1, "\n", 1);
 		close(0);
-		rl_on_new_line();
 	}
 }
 
@@ -122,8 +120,8 @@ void	here_doc(t_list *token, int cmd_id, char **file_name, t_env *env)
 		ft_free(&s);
 		s = readline("> ");
 	}
+	ft_free(&s);
+	close(fd);
 	dup2(stdin_fd, STDIN_FILENO);
 	close(stdin_fd);
-	close(fd);
-	ft_free(&s);
 }

@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:53:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/23 16:01:39 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/24 18:52:16 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ char	*new_prompt(void)
 	{
 		write(h, s, ft_strlen(s));
 		write(h, "\n", 1);
+		add_history(s);
 	}
-	add_history(s);
 	close(h);
 	if (!quote_check(s))
 	{

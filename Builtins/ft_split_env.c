@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 18:28:43 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/24 12:49:20 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/24 15:57:01 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	*count_words(char	*str, char c)
 	}
 	return (t);
 }
-/*
+
 char	**ft_malloc_split(int s, char *str, char c)
 {
 	char	**t;
@@ -53,24 +53,15 @@ char	**ft_malloc_split(int s, char *str, char c)
 		ft_perror("malloc");
 	free(size);
 	return (t);
-}*/
+}
 
 char	**ft_split_env(char *str, char c)
 {
 	char	**t;
-	int		*size;
 	int		i;
 	int		k;
 
-	t = (char **)malloc(3 * sizeof(char *));
-	if (!t)
-		ft_perror("malloc");
-	size = count_words(str, c);
-	t[0] = (char *)malloc((size[0] + 1) * sizeof(char));
-	t[1] = (char *)malloc((size[1] + 1) * sizeof(char));
-	free(size);
-	if (!t[0] || !t[1])
-		ft_perror("malloc");
+	t = ft_malloc_split(3, str, c);
 	i = 0;
 	k = 0;
 	while (str[i] && str[i] != c)

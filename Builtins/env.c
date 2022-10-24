@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 16:13:57 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/19 18:26:24 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/24 12:58:09 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ t_env	*get_env(char **en)
 	{
 		f = ft_split_env(en[i], '=');
 		ft_lstadd_back_env(&l, ft_lstnew_env(f[0], f[1]));
+		ft_free_char(f);
 		i++;
 	}
 	return (l);

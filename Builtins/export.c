@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 18:24:00 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/21 17:30:56 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/24 13:32:50 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,13 @@
 void	print_export(t_env *env)
 {
 	t_env	*tmp;
+	t_env	*tmp1;
 
 	if (!env)
 		return ;
 	tmp = ft_copy_env(env);
 	ft_sort_list(&tmp);
+	tmp1 = tmp;
 	while (tmp)
 	{
 		if (tmp->value != NULL)
@@ -28,6 +30,7 @@ void	print_export(t_env *env)
 			printf("declare -x %s\n", tmp->variable);
 		tmp = tmp->next;
 	}
+	ft_envclear(&tmp1, &free);
 }
 
 void	ft_add_export_element(char **f, t_env **envp)
@@ -55,7 +58,7 @@ void	ft_add_export_element(char **f, t_env **envp)
 	add_env(f, envp, p);
 }
 
-void	ft_check_error_export(char **f, int i, char *cmd)
+int	ft_check_error_export(char **f, int i, char *cmd)
 {
 	char	*sub;
 
@@ -73,8 +76,10 @@ void	ft_check_error_export(char **f, int i, char *cmd)
 		ft_putstr_fd(cmd, 2);
 		ft_putstr_fd("\' : not a valid identifier\n", 2);
 		g_exit_value = 1;
-		return ;
 	}
+	if (sub)
+		free(sub);
+	return (g_exit_value);
 }
 
 void	export_element(char *cmd, t_env **envp)
@@ -85,9 +90,13 @@ void	export_element(char *cmd, t_env **envp)
 	f = ft_split_env(cmd, '=');
 	i = ft_exist(cmd, '=');
 	if (i == 0)
+	{
+		free(f[1]);
 		f[1] = NULL;
-	ft_check_error_export(f, i, cmd);
-	ft_add_export_element(f, envp);
+	}
+	if (ft_check_error_export(f, i, cmd) == 0)
+		ft_add_export_element(f, envp);
+	ft_free_char(f);
 }
 
 void	export(char **cmd, t_env **envp)

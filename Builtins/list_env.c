@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 17:10:20 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/19 17:12:06 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/24 12:54:34 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ t_env	*ft_lstnew_env(char *variable, char *value)
 	l = (t_env *)malloc(sizeof(t_env));
 	if (!l)
 		return (0);
-	l->variable = variable;
-	l->value = value;
+	l->variable = ft_strdup(variable);
+	l->value = ft_strdup(value);
 	l->next = NULL;
 	return (l);
 }

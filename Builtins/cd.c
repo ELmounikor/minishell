@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 16:02:20 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/21 17:43:39 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/24 15:26:51 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ void	change_pwd_cd(t_data *data, char *path, char *arg)
 	if (data->pwd)
 		free(data->pwd);
 	if (path)
+	{
 		data->pwd = ft_strdup(path);
+		free(path);
+	}
 	else
 	{
 		ft_putstr_fd("cd: error retrieving current directory:", 2);
@@ -65,21 +68,14 @@ void	get_home(t_data *data)
 		r = chdir(path);
 		if (r == 0)
 			change_pwd_cd(data, path, NULL);
+		free(path);
 	}
 }
 
-void	ft_chdir(char **argv, t_data *data)
+void	ft_chdir(char **argv, t_data *data, char *path)
 {
 	int		r;
-	char	*path;
 
-	path = NULL;
-	if (argv[1][0] == '~')
-	{
-		chdir(getenv("HOME"));
-		path = &argv[1][2];
-		argv[1] = ft_strdup(path);
-	}
 	r = chdir(argv[1]);
 	if (r == 0)
 		change_pwd_cd(data, getcwd(NULL, 0), argv[1]);
@@ -94,11 +90,14 @@ void	ft_chdir(char **argv, t_data *data)
 		perror(argv[1]);
 		g_exit_value = 1;
 	}
+	if (path)
+		free(path);
 }
 
 void	cd(char **argv, t_data *data)
 {
-	int	r;
+	int		r;
+	char	*path;
 
 	if (argv[1] == NULL)
 		get_home(data);
@@ -109,5 +108,17 @@ void	cd(char **argv, t_data *data)
 			change_pwd_cd(data, getenv("HOME"), argv[1]);
 	}
 	else
-		ft_chdir(argv, data);
+	{
+		path = NULL;
+		if (argv[1][0] == '~' && argv[1][1] == '/')
+		{
+			chdir(getenv("HOME"));
+			if (argv[1][2] == '\0')
+				return ;
+			path = ft_strdup(&argv[1][2]);
+			free(argv[1]);
+			argv[1] = ft_strdup(path);
+		}
+		ft_chdir(argv, data, path);
+	}
 }

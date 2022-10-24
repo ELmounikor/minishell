@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_env.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 18:28:43 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/17 13:52:10 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/24 12:49:20 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,23 @@ int	*count_words(char	*str, char c)
 	}
 	return (t);
 }
+/*
+char	**ft_malloc_split(int s, char *str, char c)
+{
+	char	**t;
+	int		*size;
+
+	t = (char **)malloc((s + 1) * sizeof(char *));
+	if (!t)
+		ft_perror("malloc");
+	size = count_words(str, c);
+	t[0] = (char *)malloc((size[0] + 1) * sizeof(char));
+	t[1] = (char *)malloc((size[1] + 1) * sizeof(char));
+	if (!t[0] || !t[1])
+		ft_perror("malloc");
+	free(size);
+	return (t);
+}*/
 
 char	**ft_split_env(char *str, char c)
 {
@@ -45,12 +62,13 @@ char	**ft_split_env(char *str, char c)
 	int		i;
 	int		k;
 
-	t = (char **)malloc(2 * sizeof(char *));
+	t = (char **)malloc(3 * sizeof(char *));
 	if (!t)
 		ft_perror("malloc");
 	size = count_words(str, c);
 	t[0] = (char *)malloc((size[0] + 1) * sizeof(char));
 	t[1] = (char *)malloc((size[1] + 1) * sizeof(char));
+	free(size);
 	if (!t[0] || !t[1])
 		ft_perror("malloc");
 	i = 0;
@@ -64,5 +82,6 @@ char	**ft_split_env(char *str, char c)
 	while (str[i])
 		t[1][k++] = str[i++];
 	t[1][k] = '\0';
+	t[2] = 0;
 	return (t);
 }

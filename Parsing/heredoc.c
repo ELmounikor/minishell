@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 11:40:30 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/24 19:21:07 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/25 17:25:13 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void	handler_heredoc(int sig)
 {
 	if (sig == SIGINT)
 	{
+		g_exit_value = 1;
 		write(1, "\n", 1);
 		close(0);
 	}

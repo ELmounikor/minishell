@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 16:02:20 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/25 17:05:31 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/25 17:21:25 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,9 @@ void	get_home(t_data *data)
 		r = chdir(path);
 		if (r == 0)
 			change_pwd_cd(data, path, NULL);
-		free(path);
+			//if(path)
+				//free(path);
+		//free(path);
 	}
 }
 

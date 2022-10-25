@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 14:21:31 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/24 19:03:43 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/25 17:59:50 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include "Builtins/builtins.h"
 
 /*functions*/
-void		here_doc(t_list *token, int cmd_id, char **file_name, t_env *env);
+void		heredoc(t_list *token, int cmd_id, char **file_name, t_env *env);
 void		rl_replace_line(const char *text, int clear_undo);
 void		rl_clear_history(void);
 void		get_history(char *s, long long int n, int outfd);

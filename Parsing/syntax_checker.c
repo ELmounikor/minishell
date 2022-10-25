@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:17:01 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/21 16:11:52 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/25 18:02:57 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_list	*open_fake_heredoc(t_list *head, t_env *env, int outfd)
 	{
 		if (head->id && head->id % 44 == 0)
 		{
-			here_doc(head, 0, &s, env);
+			heredoc(head, 0, &s, env);
 			ft_free(&s);
 			if (g_exit_value)
 				break ;

@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:53:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/25 17:23:17 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/25 19:22:46 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,16 @@ char	*new_prompt(void)
 	int		h;
 
 	s = readline("🤖sh-sm$ ");
-	if (!s)
-		ft_exit(NULL);
-	h = open("/tmp/.sh-sm_history", O_RDWR | O_APPEND | O_CREAT, 0666);
+	// if (!s)
+		// ft_exit(NULL);
 	if (s && s[0])
 	{
+		h = open("/tmp/.sh-sm_history", O_RDWR | O_APPEND | O_CREAT, 0666);
 		write(h, s, ft_strlen(s));
 		write(h, "\n", 1);
 		add_history(s);
+		close(h);
 	}
-	close(h);
 	if (!quote_check(s))
 	{
 		ft_putstr_fd("sh-sm: unclosed quotes detected >_<\n", 2);
@@ -53,7 +53,6 @@ void	sm_sh_init(int ac, char **av, char **en, t_data	*data)
 	char	**i_cmd;
 	int		pid;
 
-	(void) av;
 	i_cmd = (char **) malloc (3 * sizeof(char *));
 	if (i_cmd)
 	{
@@ -74,6 +73,7 @@ void	sm_sh_init(int ac, char **av, char **en, t_data	*data)
 	(*data).pwd = ft_strdup(getenv("PWD"));
 	g_exit_value = 0;
 	history_reloader(ac);
+	(void) av;
 }
 
 int	main(int ac, char **av, char **en)
@@ -96,9 +96,6 @@ int	main(int ac, char **av, char **en)
 		free_cmds(cmd);
 		ft_lstclear(&input, &free);
 		ft_free(&s);
-	printf("==============================================\n");
-	system("leaks minishell");
-	printf("==============================================\n");
 	}
 	ft_envclear(&data.env, &free);
 	free(data.pwd);

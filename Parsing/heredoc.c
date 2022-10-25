@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 11:40:30 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/25 17:25:13 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/25 18:08:49 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,28 +40,6 @@ char	*get_file_name(int cmd_id)
 	return (file_name);
 }
 
-char	*get_val(char *s1, t_env *env)
-{
-	if (!ft_strcmp(s1, "?"))
-	{
-		ft_free(&s1);
-		return (ft_itoa(g_exit_value));
-	}
-	else if (!ft_strcmp(s1, "0"))
-	{
-		ft_free(&s1);
-		return (ft_strdup("sh-sm"));
-	}
-	while (env && s1)
-	{
-		if (!ft_strcmp(s1, env->variable))
-			return (ft_strdup(env->value));
-		env = env->next;
-	}
-	ft_free(&s1);
-	return (0);
-}
-
 char	*line_expander(char **line, t_env *env, int i, int j)
 {
 	char	*s;
@@ -82,7 +60,7 @@ char	*line_expander(char **line, t_env *env, int i, int j)
 				while ((ft_isalnum_((*line)[i]) && (*line)[j] != '?') || \
 				(i == j && (*line)[j] == '?'))
 					i++;
-				editor(&s, get_val(ft_substr((*line), j, i - j), env));
+				editor(&s, getval(ft_substr((*line), j, i - j), env, NULL));
 			}
 		}
 		ft_free(line);
@@ -101,17 +79,12 @@ void	handler_heredoc(int sig)
 	}
 }
 
-void	here_doc(t_list *token, int cmd_id, char **file_name, t_env *env)
+void	write_in_heredoc(char *file_name, t_list *token, t_env *env)
 {
-	int			fd;
-	int			stdin_fd;
-	char		*s;
+	char	*s;
+	int		fd;
 
-	g_exit_value = 0;
-	stdin_fd = dup(STDIN_FILENO);
-	*file_name = get_file_name(cmd_id);
-	fd = open(*file_name, O_RDWR | O_TRUNC | O_CREAT, 0666);
-	signal(SIGINT, handler_heredoc);
+	fd = open(file_name, O_RDWR | O_TRUNC | O_CREAT, 0666);
 	s = readline("> ");
 	while (s && ft_strcmp(s, token->content) && !g_exit_value)
 	{
@@ -123,6 +96,17 @@ void	here_doc(t_list *token, int cmd_id, char **file_name, t_env *env)
 	}
 	ft_free(&s);
 	close(fd);
+}
+
+void	heredoc(t_list *token, int cmd_id, char **file_name, t_env *env)
+{
+	int	stdin_fd;
+
+	g_exit_value = 0;
+	stdin_fd = dup(STDIN_FILENO);
+	*file_name = get_file_name(cmd_id);
+	signal(SIGINT, handler_heredoc);
+	write_in_heredoc(*file_name, token, env);
 	dup2(stdin_fd, STDIN_FILENO);
 	close(stdin_fd);
 }

@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/21 10:11:29 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/24 18:05:20 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/25 18:03:42 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	*open_heredoc(t_list *input, t_env *env, t_cmd ***cmd, int **sizes)
 		{
 			if (is_file(input) && !(input->id % 44))
 			{
-				here_doc(input, cmd_id, &s, env);
+				heredoc(input, cmd_id, &s, env);
 				if (!checkout_heredoc(cmd, sizes, &input, &s))
 					return (0);
 			}

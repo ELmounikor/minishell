@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 18:24:00 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/24 13:32:50 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/25 17:06:24 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ void	ft_add_export_element(char **f, t_env **envp)
 	else
 	{
 		sub = ft_substr(f[0], 0, p - 1);
-		free(f[0]);
+		if (f[0])
+			free(f[0]);
 		f[0] = sub;
 		p = 1;
 	}
@@ -91,7 +92,8 @@ void	export_element(char *cmd, t_env **envp)
 	i = ft_exist(cmd, '=');
 	if (i == 0)
 	{
-		free(f[1]);
+		if (f[1])
+			free(f[1]);
 		f[1] = NULL;
 	}
 	if (ft_check_error_export(f, i, cmd) == 0)

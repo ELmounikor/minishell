@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 16:02:20 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/24 17:31:16 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/25 17:05:31 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@ void	change_pwd_oldpwd(char *pwd, t_data *data)
 		p = ft_strjoin(pwd, "=");
 		cmd = ft_strjoin(p, data->pwd);
 		export_element(cmd, &data->env);
-		free(cmd);
-		free(p);
+		if (cmd)
+			free(cmd);
+		if (p)
+			free(p);
 	}
 }
 
@@ -44,7 +46,8 @@ void	change_pwd_cd(t_data *data, char *path, char *arg)
 		ft_putstr_fd("No such file or directory\n", 2);
 		cmd = ft_strjoin(data->pwd, "/");
 		data->pwd = ft_strjoin(cmd, arg);
-		free(cmd);
+		if (cmd)
+			free(cmd);
 	}
 	change_pwd_oldpwd("PWD", data);
 }

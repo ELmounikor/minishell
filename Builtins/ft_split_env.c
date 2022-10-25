@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 18:28:43 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/24 15:57:01 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/25 17:07:41 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ char	**ft_malloc_split(int s, char *str, char c)
 	t[1] = (char *)malloc((size[1] + 1) * sizeof(char));
 	if (!t[0] || !t[1])
 		ft_perror("malloc");
-	free(size);
+	if (size)
+		free(size);
 	return (t);
 }
 

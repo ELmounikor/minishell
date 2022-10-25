@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 17:40:36 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/24 18:43:06 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/25 17:10:29 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ void	ft_pipe_child(int **fd, t_cmd **cmd, int nbr_cmd, t_data *data)
 	if (fd)
 		ft_close(nbr_cmd - 1, fd);
 	ft_wait_child(id, nbr_cmd);
-	free(id);
+	if (id)
+		free(id);
 }
 
 void	ft_pipe(t_cmd **cmd, int nbr_cmd, t_data *data)
@@ -112,6 +113,7 @@ void	ft_pipe(t_cmd **cmd, int nbr_cmd, t_data *data)
 		i = 0;
 		while (i < nbr_cmd - 1)
 			free(fd[i++]);
-		free(fd);
+		if (fd)
+			free(fd);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 19:38:16 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/24 12:57:44 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/25 17:10:09 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ void	ft_free_char(char **p)
 		free(p[i]);
 		i++;
 	}
-	free(p);
+	if (p)
+		free(p);
 }
 
 char	*ft_check_directory(char *arg)
@@ -89,7 +90,8 @@ char	*ft_get_path(char *arg, t_env *env)
 			ft_free_char(mypaths);
 			return (path);
 		}
-		free(path);
+		if (path)
+			free(path);
 		i++;
 	}
 	if (mypaths)

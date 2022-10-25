@@ -29,8 +29,8 @@ char	*new_prompt(void)
 	int		h;
 
 	s = readline("🤖sh-sm$ ");
-	// if (!s)
-		// ft_exit(NULL);
+	if (!s)
+		ft_exit(NULL);
 	if (s && s[0])
 	{
 		h = open("/tmp/.sh-sm_history", O_RDWR | O_APPEND | O_CREAT, 0666);

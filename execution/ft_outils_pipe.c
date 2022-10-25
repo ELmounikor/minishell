@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 15:35:42 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/24 15:47:12 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/24 18:40:01 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ int	**pipe_fd(int nbr_cmd)
 	int	**fd;
 	int	i;
 
-	fd = (int **) malloc((nbr_cmd - 1) * sizeof(int *));
+	fd = (int **) malloc(nbr_cmd * sizeof(int *));
 	if (!fd)
 		exit(1);
 	i = 0;
-	while (i < nbr_cmd - 1)
+	while (i < nbr_cmd)
 	{
 		fd[i] = (int *)malloc(2 * sizeof(int));
 		if (!fd[i])
@@ -29,7 +29,7 @@ int	**pipe_fd(int nbr_cmd)
 		i++;
 	}
 	i = 0;
-	while (i < nbr_cmd - 1)
+	while (i < nbr_cmd)
 	{
 		if (pipe(fd[i]) < 0)
 			exit(1);
@@ -49,10 +49,6 @@ void	ft_close(int argc, int **fd)
 		close(fd[i][1]);
 		i++;
 	}
-	i = 0;
-	while (i < argc)
-		free(fd[i++]);
-	free(fd);
 }
 
 char	**get_env_char(t_env *env)

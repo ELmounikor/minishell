@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 16:02:20 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/25 18:01:56 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/10/26 18:17:00 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,16 @@ void	get_home(t_data *data)
 void	ft_chdir(char **argv, t_data *data, char *path)
 {
 	int		r;
+	char	*tmp;
 
 	r = chdir(argv[1]);
 	if (r == 0)
-		change_pwd_cd(data, getcwd(NULL, 0), argv[1]);
+	{
+		tmp = getcwd(NULL, 0);
+		change_pwd_cd(data, tmp, argv[1]);
+		if (tmp)
+			free(tmp);
+	}
 	else
 	{
 		ft_putstr_fd("sh-sm: cd: ", 2);

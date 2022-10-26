@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/21 16:53:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/26 18:17:43 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/26 18:59:39 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ int	main(int ac, char **av, char **en)
 		free_cmds(cmd);
 		ft_lstclear(&input, &free);
 		ft_free(&s);
-		//system("leaks minishell");
 	}
 	ft_envclear(&data.env, &free);
 	free(data.pwd);

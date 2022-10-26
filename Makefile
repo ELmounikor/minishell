@@ -6,7 +6,7 @@
 #    By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/20 12:58:47 by mel-kora          #+#    #+#              #
-#    Updated: 2022/10/26 18:17:41 by mel-kora         ###   ########.fr        #
+#    Updated: 2022/10/26 19:00:15 by mel-kora         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,12 +61,6 @@ SRCS	=	main.c\
 			execution/ft_get_path.c\
 			execution/ft_outils_pipe.c\
 			execution/ft_signal.c\
-			#Builtins/ft_pipex/childs.c\
-			#Builtins/ft_pipex/ft_utils_list.c\
-			#Builtins/ft_pipex/get_cmd_path.c\
-			#Builtins/ft_pipex/pipex.c\
-			#Builtins/ft_pipex/pipex_bonus.c\
-			#Builtins/ft_pipex/pipex_bonuso.c\
 
 OBJS	=	${SRCS:.c=.o}
 NAME	=	minishell
@@ -74,7 +68,7 @@ CC		=	@gcc
 RM		=	@rm -rf
 LIB		=   -L ~/goinfre/.brew/opt/readline/lib
 INC		=	-I ~/goinfre/.brew/opt/readline/include
-CFLAGS	=	-Wall -Werror -Wextra -g -fsanitize=address
+CFLAGS	=	-Wall -Werror -Wextra #-g -fsanitize=address
 
 all:		${NAME}
 			@echo "\033[0;93m	<< all done by S&M! >> \033[0m"

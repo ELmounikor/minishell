@@ -6,30 +6,11 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 21:23:10 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/16 20:07:21 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/26 16:47:01 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-void	flager(char *s, char *c)
-{
-	int	flag[3];
-
-	flag[0] = -1;
-	flag[1] = 0;
-	flag[2] = 0;
-	while (s && s[++flag[0]])
-	{
-		if (s[flag[0]] == 34 && flag[1] % 2 == 0)
-			flag[2]++;
-		else if (s[flag[0]] == 39 && flag[2] % 2 == 0)
-			flag[1]++;
-		while (ft_strchr(c, s[flag[0]]) && \
-		!(flag[2] % 2 == 0 && flag[1] % 2 == 0))
-			s[flag[0]] *= -1;
-	}
-}
 
 static int	arraysize(char const *s, char *c)
 {
@@ -88,7 +69,6 @@ static char	**allocation(char const *s, char *c)
 	int		*sizes;
 	int		i;
 
-	flager((char *) s, c);
 	size = arraysize(s, c);
 	output = (char **) malloc((size + 1) * sizeof(char *));
 	if (!output || !s)
@@ -130,9 +110,8 @@ char	**ft_nsplit(char const *s, char *c)
 		while (ft_strchr(c, s[k]) && s[k])
 			k++;
 		while (j < sizes[i] && s[k] && !ft_strchr(c, s[k]))
-				output[i][j++] = ft_unflag(s[k++], c);
+				output[i][j++] = ft_convert(s[k++]);
 		output[i][j] = '\0';
-		output[i] = str_edit(output[i]);
 	}
 	free(sizes);
 	output[i] = NULL;

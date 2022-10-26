@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/12 12:44:23 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/16 19:05:22 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/26 16:48:44 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,34 +81,9 @@ void	ft_split_cleaner(char **output)
 	free(output);
 }
 
-char	*str_edit(char *s)
+char	ft_convert(int c)
 {
-	char	*new_s;
-	int		i;
-	int		j;
-
-	if (!(s && s[0] == s[ft_strlen(s) - 1] && (s[0] == 34 || s[0] == 39)))
-		return (s);
-	new_s = (char *) malloc (ft_strlen(s) - 1);
-	if (!new_s)
-	{
-		perror("malloc error");
-		exit(0);
-	}
-	i = 1;
-	j = 0;
-	while (s[i] && s[i + 1])
-		new_s[j++] = s[i++];
-	new_s[j] = 0;
-	ft_free(&s);
-	return (new_s);
-}
-
-char	ft_convert(char s, char c)
-{
-	if (s == -1)
-		return (' ');
-	if (s == -2)
-		return (c);
-	return (s);
+	if (c < 0)
+		return (c * -1);
+	return (c);
 }

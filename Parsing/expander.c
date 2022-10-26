@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:03:42 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/25 17:29:15 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/26 17:00:53 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	expander(t_list **t, t_env *env, char **s, int i)
 		j = i;
 		while ((*t)->content[i] && !((*t)->content[i] == '$' && (\
 		ft_isalnum_((*t)->content[i + 1]) || (*t)->content[i + 1] \
-		== '?')))
+		== '?' || (*t)->id == 30)))
 			i++;
 		editor(s, ft_substr((*t)->content, j, i - j));
 		if ((*t)->content[i] == '$')

@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/17 13:43:28 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/16 18:56:29 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/26 15:41:25 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,4 @@ void	ft_putstr_fd(char *s, int fd)
 		write (fd, &s[i], 1);
 		i++;
 	}
-}
-
-char	ft_unflag(char s, char *c)
-{
-	if (ft_strchr(c, s))
-		return (s * -1);
-	return (s);
 }

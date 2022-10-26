@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 16:35:22 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/23 18:52:52 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/26 16:44:28 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,7 @@ char			*ft_strnstr(const char *hay, const char *nee, int len);
 char			*ft_substr(char const *s, unsigned int start, size_t len);
 char			*ft_itoa(int n);
 char			*ft_readline(char *prompt);
-char			ft_convert(char c, char s);
-char			ft_unflag(char s, char *c);
+char			ft_convert(int c);
 int				*cmd_size(t_list *lst);
 int				cmd_count(t_list *lst);
 int				ft_lstsize(t_list *lst);

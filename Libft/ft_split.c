@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 21:23:10 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/16 20:11:55 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/26 16:46:02 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,8 @@ void	flag(char *s, char c)
 			flag[2]++;
 		else if (s[flag[0]] == 39 && flag[2] % 2 == 0)
 			flag[1]++;
-		if (s[flag[0]] == ' ' && !(flag[2] % 2 == 0 && flag[1] % 2 == 0))
-			s[flag[0]] = -1;
 		if (s[flag[0]] == c && !(flag[2] % 2 == 0 && flag[1] % 2 == 0))
-			s[flag[0]] = -2;
+			s[flag[0]] *= -1;
 	}
 }
 
@@ -131,9 +129,8 @@ char	**ft_split(char const *s, char c)
 		while (s[k] == c && s[k])
 			k++;
 		while (j < sizes[i] && s[k] && s[k] != c)
-				output[i][j++] = ft_convert(s[k++], c);
+				output[i][j++] = ft_convert(s[k++]);
 		output[i][j] = '\0';
-		output[i] = str_edit(output[i]);
 	}
 	free(sizes);
 	output[i] = NULL;

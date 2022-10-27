@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:03:42 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/27 16:06:47 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/27 17:20:50 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 char	*getval(char *s1, t_env *env, t_list **token)
 {
-	t_env	*head;
-
-	head = env;
 	if (!ft_strcmp(s1, "?"))
 	{
 		ft_free(&s1);
@@ -28,7 +25,7 @@ char	*getval(char *s1, t_env *env, t_list **token)
 		{
 			ft_free(&s1);
 			if (token && *token && ((*token)->id == 3 || (*token)->id == 30))
-				return (get_nd_split(token, env->value, head, 0));
+				return (get_nd_split(token, env->value, 0));
 			return (ft_strdup(env->value));
 		}
 		env = env->next;

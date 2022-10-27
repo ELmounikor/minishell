@@ -6,22 +6,16 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 19:22:51 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/27 16:10:14 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/27 17:17:41 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*set_p(t_list **old_pos, t_list **old_next, t_list **token, t_env *env)
+char	*set_p(t_list **old_pos, t_list **old_next, t_list **token)
 {
 	*old_pos = (*token);
 	*old_next = (*token)->next;
-	while (env)
-	{
-		if (!ft_strcmp("IFS", env->variable))
-			return (env->value);
-		env = env->next;
-	}
 	return (" \t\n");
 }
 
@@ -33,14 +27,14 @@ void	reset_p(t_list *old_pos, t_list *old_next, t_list **token, int i)
 		(*token)->id = 0;
 }
 
-char	*get_nd_split(t_list **token, char *value, t_env *env, int i)
+char	*get_nd_split(t_list **token, char *value, int i)
 {
 	t_list	*old_position;
 	t_list	*old_next;
 	char	**dic;
 	char	*s;
 
-	s = set_p(&old_position, &old_next, token, env);
+	s = set_p(&old_position, &old_next, token);
 	dic = ft_nsplit(value, s);
 	if (value && !ft_strchr(s, value[i]))
 		i++;

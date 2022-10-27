@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/16 19:22:51 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/26 16:56:59 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/27 16:10:14 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ char	*get_nd_split(t_list **token, char *value, t_env *env, int i)
 {
 	t_list	*old_position;
 	t_list	*old_next;
-	char	*s;
 	char	**dic;
+	char	*s;
 
 	s = set_p(&old_position, &old_next, token, env);
 	dic = ft_nsplit(value, s);

@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 21:23:10 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/26 16:47:01 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/10/27 16:07:13 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,10 +107,10 @@ char	**ft_nsplit(char const *s, char *c)
 	while (++i < arraysize(s, c))
 	{
 		j = 0;
-		while (ft_strchr(c, s[k]) && s[k])
+		while (s[k] && ft_strchr(c, s[k]))
 			k++;
 		while (j < sizes[i] && s[k] && !ft_strchr(c, s[k]))
-				output[i][j++] = ft_convert(s[k++]);
+				output[i][j++] = s[k++];
 		output[i][j] = '\0';
 	}
 	free(sizes);

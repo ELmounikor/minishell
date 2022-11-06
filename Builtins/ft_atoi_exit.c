@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 14:47:34 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/24 15:40:58 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/11/06 17:59:35 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ char	*get_value(t_env **env, char *str)
 	tmp = *env;
 	while (tmp)
 	{
-		if (ft_strncmp(tmp->variable, str, ft_strlen(tmp->variable) + 1) == 0)
+		if (tmp->variable && ft_strncmp(tmp->variable,
+				str, ft_strlen(tmp->variable) + 1) == 0)
 			return (tmp->value);
 		tmp = tmp->next;
 	}

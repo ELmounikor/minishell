@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:03:42 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/10/27 17:20:50 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/11/06 19:43:10 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ char	*getval(char *s1, t_env *env, t_list **token)
 		if (!ft_strcmp(s1, env->variable))
 		{
 			ft_free(&s1);
+			if (token && *token && ((*token)->id == 40 || (*token)->id == 70 || \
+			(*token)->id == 770 || (*token)->id == 4 || (*token)->id == 7 || \
+			(*token)->id == 77) && (ft_strchr(env->value, ' ') || \
+			ft_strchr(env->value, '\t') || ft_strchr(env->value, '\n')))
+				return (NULL);
 			if (token && *token && ((*token)->id == 3 || (*token)->id == 30))
 				return (get_nd_split(token, env->value, 0));
 			return (ft_strdup(env->value));
@@ -80,14 +85,25 @@ char	*check_expand(t_list **t, t_env *env, int i, int *j)
 
 void	check_redirection(int *id, t_list **token)
 {
+	int		flag;
+	t_list	*tok;
+
 	if (((*token)->id == 4 || (*token)->id == 44 || (*token)->id == 7 || \
 	(*token)->id == 77 || (*token)->id == 40 || (*token)->id == 440 || \
 	(*token)->id == 70 || (*token)->id == 770) && !(*token)->content && \
 	(*token)->next)
 		(*token) = (*token)->next;
-	if ((*id == 44 || *id == 440) && ((*token)->id == 5 || (*token)->id == 6 || \
-	(*token)->id == 50 || (*token)->id == 60 || (*token)->id == 100 || \
-	(*token)->id == 30))
+	flag = 0;
+	tok = *token;
+	while (tok && (tok)->id && (tok)->id % 10 == 0 && flag == 0)
+	{
+		if (((tok)->id == 5 || (tok)->id == 6 || \
+	(tok)->id == 50 || (tok)->id == 60))
+		flag = 1;
+		(tok) = (tok)->next;
+	}
+	if ((*id == 44 || *id == 440) && (flag == 1 || \
+	tok->id == 5 || tok->id == 6))
 		*id *= 2;
 	else if (!(*token)->id && (*token)->content && !(*token)->content[0])
 		(*token) = (*token)->next;

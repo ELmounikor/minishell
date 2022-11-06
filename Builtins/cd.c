@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 16:02:20 by sennaama          #+#    #+#             */
-/*   Updated: 2022/11/06 15:31:08 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/11/06 19:30:56 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,19 @@ void	change_pwd_cd(t_data *data, char *path, char *arg)
 	char	*cmd;
 
 	change_pwd_oldpwd("OLDPWD", data);
-	if (data->pwd)
-		free(data->pwd);
 	if (path)
+	{
+		if (data->pwd)
+			free(data->pwd);
 		data->pwd = ft_strdup(path);
+	}
 	else
 	{
 		ft_putstr_fd("cd: error retrieving current directory:", 2);
 		ft_putstr_fd("getcwd:cannot access parent directories:", 2);
 		ft_putstr_fd("No such file or directory\n", 2);
 		cmd = ft_strjoin(data->pwd, "/");
+		ft_free(&data->pwd);
 		data->pwd = ft_strjoin(cmd, arg);
 		if (cmd)
 			free(cmd);

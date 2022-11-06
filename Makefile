@@ -6,7 +6,7 @@
 #    By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/20 12:58:47 by mel-kora          #+#    #+#              #
-#    Updated: 2022/10/27 17:23:10 by mel-kora         ###   ########.fr        #
+#    Updated: 2022/11/06 17:20:26 by mel-kora         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,9 +66,9 @@ OBJS	=	${SRCS:.c=.o}
 NAME	=	minishell
 CC		=	@gcc
 RM		=	@rm -rf
-LIB		=   -L ~/goinfre/.brew/opt/readline/lib
-INC		=	-I ~/goinfre/.brew/opt/readline/include
-CFLAGS	=	-Wall -Werror -Wextra #-g -fsanitize=address
+LIB		=   -L ~/goinfre/homebrew/opt/readline/lib
+INC		=	-I ~/goinfre/homebrew/opt/readline/include
+CFLAGS	=	-Wall -Werror -Wextra -g -fsanitize=address
 
 all:		${NAME}
 			@echo "\033[0;93m	<< all done by S&M! >> \033[0m"

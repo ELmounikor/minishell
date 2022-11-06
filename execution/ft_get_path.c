@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_get_path.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 19:38:16 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/25 17:10:09 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/11/06 17:43:40 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,13 @@ char	*ft_check_directory(char *arg)
 {
 	if (arg[0] == '/' || (arg[0] == '.' && arg[1] == '/'))
 	{
-		if (access(arg, 0) == 0)
+		if (access(arg, X_OK) == 0)
 			return (arg);
 		else
 		{
 			ft_putstr_fd("sh-sm: ", 2);
 			perror(arg);
-			if (errno == 20)
+			if (errno == 20 || access(arg, F_OK) == 0)
 				exit(126);
 			else
 				exit(127);

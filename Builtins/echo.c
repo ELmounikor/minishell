@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 14:37:19 by sennaama          #+#    #+#             */
-/*   Updated: 2022/11/06 15:47:39 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/11/06 17:28:55 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	echo(char **argv)
 		return ;
 	}
 	n = 0;
-	while (verifie_n(argv[1 + n]) == 1)
+	while (argv[1 + n] && verifie_n(argv[1 + n]) == 1)
 		n++;
 	i = 1 + n;
 	while (argv[i])

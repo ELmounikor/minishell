@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 16:02:20 by sennaama          #+#    #+#             */
-/*   Updated: 2022/11/06 12:48:51 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/11/06 15:31:08 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,6 @@ void	ft_chdir(char **argv, t_data *data, char *path)
 	else
 	{
 		ft_putstr_fd("sh-sm: cd: ", 2);
-		if (path)
-		{
-			ft_putstr_fd(getenv("HOME"), 2);
-			ft_putstr_fd("/", 2);
-		}
 		perror(argv[1]);
 		g_exit_value = 1;
 	}

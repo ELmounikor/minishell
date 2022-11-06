@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 14:37:19 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/20 15:59:02 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/11/06 15:47:39 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,18 @@ void	echo(char **argv)
 		printf("\n");
 		return ;
 	}
-	n = verifie_n(argv[1]);
+	n = 0;
+	while (verifie_n(argv[1 + n]) == 1)
+		n++;
 	i = 1 + n;
 	while (argv[i])
 	{
-		if (verifie_n(argv[i]) == 1 && n == 1)
-			i++;
-		else
-		{
-			if (argv[i + 1])
-				printf("%s ", argv[i]);
-			else if (!argv[i + 1] && n == 1)
-				printf("%s", argv[i]);
-			else if (!argv[i + 1] && n == 0)
-				printf("%s\n", argv[i]);
-			i++;
-		}
+		if (argv[i + 1])
+			printf("%s ", argv[i]);
+		else if (!argv[i + 1] && n != 0)
+			printf("%s", argv[i]);
+		else if (!argv[i + 1] && n == 0)
+			printf("%s\n", argv[i]);
+		i++;
 	}
 }

@@ -6,7 +6,7 @@
 #    By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/20 12:58:47 by mel-kora          #+#    #+#              #
-#    Updated: 2022/11/06 17:20:26 by mel-kora         ###   ########.fr        #
+#    Updated: 2022/11/07 09:58:46 by mel-kora         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,7 @@ CC		=	@gcc
 RM		=	@rm -rf
 LIB		=   -L ~/goinfre/homebrew/opt/readline/lib
 INC		=	-I ~/goinfre/homebrew/opt/readline/include
-CFLAGS	=	-Wall -Werror -Wextra -g -fsanitize=address
+CFLAGS	=	-Wall -Werror -Wextra #-g -fsanitize=address
 
 all:		${NAME}
 			@echo "\033[0;93m	<< all done by S&M! >> \033[0m"

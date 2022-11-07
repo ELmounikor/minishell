@@ -6,7 +6,7 @@
 /*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 18:24:00 by sennaama          #+#    #+#             */
-/*   Updated: 2022/10/25 17:06:24 by sennaama         ###   ########.fr       */
+/*   Updated: 2022/11/07 14:11:22 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,13 @@ int	ft_check_error_export(char **f, int i, char *cmd)
 		ft_putstr_fd(cmd, 2);
 		ft_putstr_fd("\' : not a valid identifier\n", 2);
 		g_exit_value = 1;
+		if (sub)
+			free(sub);
+		return (g_exit_value);
 	}
 	if (sub)
 		free(sub);
-	return (g_exit_value);
+	return (0);
 }
 
 void	export_element(char *cmd, t_env **envp)
@@ -111,7 +114,7 @@ void	export(char **cmd, t_env **envp)
 	{
 		i = 1;
 		while (cmd[i])
-		{
+		{ 
 			if (cmd[i][0] != '=')
 				export_element(cmd[i], envp);
 			else

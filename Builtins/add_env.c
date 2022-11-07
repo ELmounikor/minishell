@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 19:33:57 by sennaama          #+#    #+#             */
-/*   Updated: 2022/11/06 18:01:38 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/11/07 09:05:50 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	add_element(char *s1, char *s2, t_env **envp)
 				tmp->variable, ft_strlen(s1) + 1) == 0)
 		{
 			f = ft_strjoin(tmp->value, s2);
-			free(tmp->value);
+			ft_free(&tmp->value);
 			tmp->value = f;
 			return ;
 		}

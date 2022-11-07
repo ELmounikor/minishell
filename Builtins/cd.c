@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sennaama <sennaama@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 16:02:20 by sennaama          #+#    #+#             */
-/*   Updated: 2022/11/06 19:30:56 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/11/07 09:11:58 by sennaama         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,9 +118,9 @@ void	cd(char **argv, t_data *data)
 		{
 			path = ft_strdup(&argv[1][2]);
 			path1 = ft_strjoin(getenv("HOME"), "/");
-			free(argv[1]);
+			ft_free(&argv[1]);
 			argv[1] = ft_strjoin(path1, path);
-			free(path1);
+			ft_free(&path1);
 		}
 		ft_chdir(argv, data, path);
 	}

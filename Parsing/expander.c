@@ -6,7 +6,7 @@
 /*   By: mel-kora <mel-kora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:03:42 by mel-kora          #+#    #+#             */
-/*   Updated: 2022/11/06 19:43:10 by mel-kora         ###   ########.fr       */
+/*   Updated: 2022/11/07 10:18:09 by mel-kora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@ char	*getval(char *s1, t_env *env, t_list **token)
 		ft_free(&s1);
 		return (ft_itoa(g_exit_value));
 	}
-	while (env && s1)
+	while (env && s1 && env->variable)
 	{
 		if (!ft_strcmp(s1, env->variable))
 		{
+			if (!env->value)
+				break ;
 			ft_free(&s1);
 			if (token && *token && ((*token)->id == 40 || (*token)->id == 70 || \
 			(*token)->id == 770 || (*token)->id == 4 || (*token)->id == 7 || \
